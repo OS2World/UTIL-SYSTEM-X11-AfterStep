@@ -1,0 +1,2 @@
+ps -k xlock & xlock -nolock -mode swarm -inroot
+

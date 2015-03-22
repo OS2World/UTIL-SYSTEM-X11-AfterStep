@@ -1,0 +1,7 @@
+#------------------------------------------------------------------------
+# Ident
+#
+# Just choose colors and a fonts
+*IdentBack MidnightBlue
+*IdentFore Yellow
+*IdentFont -adobe-helvetica-medium-r-*-*-12-*-*-*-*-*-*-*

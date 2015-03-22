@@ -1,0 +1,38 @@
+#------------------------------------------------------------------------
+# Audio
+#
+# NOTEs for OS2 port:
+#   1. The default value of AudioPath is %MMBASE%\sounds
+#   2. You can use 'builtin-mci' for *AudioPlayCmd to use the builtin MCI command
+#
+#*AudioPath                      ~/GNUstep/Library/AfterStep/desktop/sounds
+#*AudioPath                      /XFree86/lib/X11/afterstep/desktop/sounds
+#
+# For debugging with my soundless notebook 
+*AudioPlayCmd                   builtin-mci
+*AudioDelay                     1
+*Audio startup startup.wav
+*Audio shutdown shutdown.wav
+*Audio iconify eeeooop.wav
+*Audio deiconify wooeep.wav
+
+#*Audio  startup                 meepmeep.au
+#*Audio  shutdown                clink.au
+#*Audio  add_window              bong.au
+#*Audio  raise_window            drip.au
+#*Audio  lower_window            drip.au
+#*Audio  focus_change            drip.au
+#*Audio  destroy_window          crash.au
+#*Audio  iconify                 meepmeep.au
+#*Audio  deiconify               ploop.au
+#*Audio  toggle_paging           fwop.au
+#*Audio  new_page                beaming.au
+#*Audio  new_desk                beam_trek.au
+#*Audio  configure_window        huh.au
+#*Audio  window_name             bong.au
+#*Audio  icon_name               beep.au
+#*Audio  res_class               bong.au
+#*Audio  res_name                beep.au
+#*Audio  end_windowlist          twang.au
+
+

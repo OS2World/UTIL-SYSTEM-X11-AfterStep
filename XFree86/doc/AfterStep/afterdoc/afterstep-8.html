@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Draft//EN">
+<HTML>
+<HEAD>
+<TITLE>AfterStep FAQ: Miscellany</TITLE>
+</HEAD>
+<BODY>
+<A HREF="afterstep-7.html">Previous</A>
+<A HREF="afterstep-9.html">Next</A>
+<A HREF="afterstep.html#toc8">Contents</A>
+<HR>
+<H2><A NAME="s8">8. Miscellany</A></H2>
+
+<P>
+<H2><A NAME="ss8.1">8.1 How do I use Microsoft Windows (tm) True Type fonts ?</A>
+</H2>
+
+<P>Information from David Mihm (<CODE>davemann@ionet.net</CODE>), posted in the AfterStep
+mailing list:
+<P>You are looking for a server for True Type fonts.  A blurb about one
+of the few programs to provide this server to any WM:
+<P>
+<BLOCKQUOTE><CODE>
+Xfstt means "X11 Font Server for TT fonts" TT
+fonts are generally regarded to be the best
+scalable fonts for low resolution devices like
+screens.
+</CODE></BLOCKQUOTE>
+<P>This server can be obtained from sunsite: 
+<A HREF="ftp://sunsite.unc.edu/pub/Linux/X11/fonts/">ftp://sunsite.unc.edu/pub/Linux/X11/fonts/</A><P>You might want to check freshmeat to see if there are newer versions.
+<P>According to F. Nicolaas Benders (<CODE>benders@slackworks.com</CODE>), there may be
+difficulties with the server:
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+I've been running the 0.97 version and it works well with one major problem.
+Whenever I start it, it automatically slams my CPU and won't let go until it's
+killed.  I refuse to believe that a font server should need more than 50% of my
+proccessor time constantly, has anyone else had any experience with this?
+</PRE>
+</CODE></BLOCKQUOTE>
+<P>
+<H2><A NAME="ss8.2">8.2 What is this WindowMaker I keep hearing about in the list?</A>
+</H2>
+
+<P>WindowMaker a new NeXT-like window manager that is being developed by Alfredo
+Kojima (<CODE>kojima@inf.ufrgs.br</CODE>) with the support of a lot of other people. It
+will support many OpenStep/GNUStep-ish features, and there is talk that it may
+be the `next-generation _asnl', and even the window manager of choice for
+GNUstep. You can download it from 
+<A HREF="http://www.windowmaker.org">http://www.windowmaker.org</A><P>However, be advised that WindowMaker is still in a early stage of development,
+so don't plan on using it for real work for now unless you want to cope with a
+lot of unimplemented features. But it is advancing very fast, so you may also
+want to take a good look at it.
+<P>
+<H2><A NAME="ss8.3">8.3 What is ASCP?</A>
+</H2>
+
+<P>ASCP stands for `AfterStep Control Panel', and is a program that allows you to
+configure AfterStep while imitating the NEXTSTEP control panel look and feel.
+It makes really easy to configure AfterStep without manually fiddling with the
+.steprc file. You can download it from 
+<A HREF="http://www.inf.ufrgs.br/~kojima/ascp.html">http://www.inf.ufrgs.br/~kojima/ascp.html</A> ; be sure to backup your
+.steprc file before using it, because it still has some bugs and problems.
+<P>WARNING 1: Due to changes introduced in AfterStep 1.0pre4 and posterior
+versions, the files written by ASCP cause AfterStep to behave very strangely,
+particularily the Wharf. So please don't use ASCP for configuring 1.0pre4 until
+this is fixed. If you accidentally did and you don't have a backup of your
+.steprc, follow the directions below to fix it:
+<P>WARNING 2: AfterStep doesn't use .steprc since version 1.2, so you will have to
+run it in 'compatibility' mode:
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+ afterstep -f yeoldsteprc
+</PRE>
+</CODE></BLOCKQUOTE>
+<P>For this reason, ASCP is not really compatible with the latest versions of
+AfterStep.  A new configuration utility is planned, but is not yet ready.
+<P>
+<OL>
+<LI> In your  .steprc, locate the lines that start with
+
+<BLOCKQUOTE><CODE>
+<PRE>
+       *Wharf &quot;&quot; ...
+</PRE>
+</CODE></BLOCKQUOTE>
+
+</LI>
+<LI> The empty double quotes are the ones causing the trouble. You have to
+give each Wharf entry a unique label there, inside the double quotes.
+</LI>
+<LI> Restart and it should be fixed.</LI>
+</OL>
+<P>In case you are interested, this happens because 1.0pre4 introduced the
+`swallow-exec' capability in the standard distribution. This uses the labels to
+know which Wharf items have multiple meanings, so if all the labels are the
+same, Wharf superimposes all the icons on one.
+<P>
+<H2><A NAME="ss8.4">8.4 What is TkStep and why do I want it?</A>
+</H2>
+
+<P>TkStep is a modified version of Tk that implements the NEXTSTEP look and feel.
+If you use wishstep instead of wish to run your applications, all your Tcl/Tk
+programs will suddenly have a renewed and great new look!
+<P>You may also want it because ASCP needs it. 
+<P>You can get it at 
+<A HREF="http://www.inf.ufrgs.br/~kojima/tkstep.html">http://www.inf.ufrgs.br/~kojima/tkstep.html</A>; you
+need to have Tcl7.5/Tk4.1 to run it.  There is also a version of TkStep for
+Tk8.0.  See 
+<A HREF="http://www.fga.de/~ograf/TkStep.shtml">http://www.fga.de/~ograf/TkStep.shtml</A>.
+<P>
+<HR>
+<A HREF="afterstep-7.html">Previous</A>
+<A HREF="afterstep-9.html">Next</A>
+<A HREF="afterstep.html#toc8">Contents</A>
+</BODY>
+</HTML>

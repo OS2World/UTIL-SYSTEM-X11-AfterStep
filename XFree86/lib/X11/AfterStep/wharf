@@ -1,0 +1,158 @@
+##########################################################################
+# Wharf
+#
+#------------------------------------------------------------------------       
+# Background
+#
+#   0 - No texture
+#   1 - Wharf-style gradient                            ^-
+#   2 - Horizontal one way gradient                     ¯-_
+#   3 - Horizontal from top/bottom to center            =-=
+#   4 - Vertical one way gradient from left to right    ||| | |  | |
+#   5 - Vertical from left/right to center              >>>>>><<<<<<
+# 128 - User defined pixmap
+
+*WharfTextureType	1
+#*WharfTextureColor	DarkBlue DarkGreen
+*WharfTextureColor	#d0d0d0         #606060
+#*WharfPixmap		ASBBlockDefault.xpm
+#*WharfPixmap		ASBBlock.xpm
+*WharfBgColor           grey50
+*WharfMaxColors		50
+*WharfAnimate
+*WharfAnimateMain
+
+#------------------------------------------------------------------------
+# Buttons
+#
+*WharfFullPush
+#*WharfNoPush
+#*WharfNoBorder
+
+#------------------------------------------------------------------------
+# Geometry
+#
+#*WharfForceSize
+#*WharfRows		1
+*WharfColumns		1
+*WharfGeometry		-2+2
+
+#------------------------------------------------------------------------
+# Sound
+#
+# Warning 1: It seems that there are some bugs in ASSound, so use it at your own risk.
+# Warning 2: Warf's sound is played by ASSound which may conlict with the Audio module
+#            for some events. (eg. close_folder v.s. destroy win)
+#
+# NOTE for OS/2: use the builtin-in MCI command, if WharfPlayer is not set
+#
+#*WharfPlayer		auplay
+#*WharfAudioPath	/XFree86/lib/X11/AfterStep/desktop/sounds
+#*WharfSound		push drip.au
+#*WharfSound		close_folder cowbell.au
+#*WharfSound		open_folder cowbell.au
+#*WharfSound		close_main xxx.au
+#*WharfSound		open_main xxx.au
+#*WharfSound		drop xxx.au
+
+#------------------------------------------------------------------------
+# Entries
+#
+
+#
+# Pagers : if you use these, don't start Pager from autoexec file !
+#
+#*Wharf WPager - SwallowModule "WPager" WPager 0 0
+#*Wharf XPager - SwallowModule "XPager" XPager 1 1
+#*Wharf YPager - SwallowModule "YPager" YPager 2 2
+#*Wharf ZPager - SwallowModule "ZPager" ZPager 3 3 
+
+#
+# AfterStep documentation
+#
+*Wharf afterstepdoc AfterStep3.xpm Exec "-" xterm -e "xlynx /XFree86/doc/AfterStep/afterdoc/afterstep.html"
+
+#
+# Pager
+#*Wharf Pager - SwallowModule "Pager" Pager 0 0
+
+#
+# Time
+#
+*Wharf asclock - MaxSwallow "asclock" asclock -shape -24
+
+#
+# CD Player
+#
+#*Wharf ascd - Swallow "ascd" ascd
+
+#
+# System load
+#
+#*Wharf xload - Swallow "xload" xload -nolabel -hl red -fg yellow -update 5
+*Wharf asload - Swallow "asload" asload -shape -led red
+
+#
+# Mail
+#
+#*Wharf asmail - Swallow "asmail" asmail -geometry +0+0
+
+# Rxvt
+#*Wharf rxvt Monitor.xpm Exec "-" rxvt -sl 500 -vb
+*Wharf xterm Monitor.xpm Exec "-" xterm
+
+# Chinese Rxvt
+#*Wharf crxvt CMonitor.xpm Exec "-" start/n/min xcin & crxvt
+
+# Netscape
+#*Wharf netscape netscape.xpm Exec "-" netscape
+
+# GIMP
+*Wharf gimp 3dpaint.xpm Exec "-" gimp
+
+# XV
+*Wharf xv monalisa.xpm Exec "-" xv
+
+# LyX
+*Wharf lyx Publish.xpm Exec "-" lyx
+
+# xman
+*Wharf xman bookshelf.xpm Exec "-" xman
+
+# xfig
+*Wharf xfig CAD.xpm Exec "-" xfig
+
+# change to WPS
+*Wharf wps wps.xpm  Exec "-" dtfocus
+
+#
+# Misc
+#
+*Wharf Misc FileFolders.xpm Folders
+ #
+ # Screen saver
+ #
+ *Wharf xlock Earth.xpm  Exec "-" xlock -nolock -nice 0 -mode random
+ #
+ # Restart
+ #
+ *Wharf Recycler Recycler.xpm Restart "" afterstep
+ #
+ # Exit
+ #
+ *Wharf QuitForm ShutDown2.xpm Module "QuitForm" Form QuitForm
+ #
+*Wharf ~Folders
+#
+# Drag & Drop pictures
+#
+#*Wharf nil nil DropExec "image" xli %s
+#*Wharf image monalisa.xpm Exec "image" xpaint
+#
+# Drag & Drop files
+#
+#*Wharf astrash - MaxSwallow "astrash" astrash -shape
+#
+############################################################################
+
+

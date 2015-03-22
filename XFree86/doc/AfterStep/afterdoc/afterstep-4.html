@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Draft//EN">
+<HTML>
+<HEAD>
+<TITLE>AfterStep FAQ: AfterStep Configuration</TITLE>
+</HEAD>
+<BODY>
+<A HREF="afterstep-3.html">Previous</A>
+<A HREF="afterstep-5.html">Next</A>
+<A HREF="afterstep.html#toc4">Contents</A>
+<HR>
+<H2><A NAME="s4">4. AfterStep Configuration</A></H2>
+
+<P>
+<H2><A NAME="ss4.1">4.1 What's a .steprc, and why do I need it anyway?</A>
+</H2>
+
+<P>In versions of AfterStep prior to version 1.2, all configuration is handled
+in a single file.  This is the .steprc file; it should be in your home
+directory if you're running these versions.  New versions of AfterStep don't
+use this file, preferring the GNUstep/Library standard instead.  See below.
+<P>
+<H2><A NAME="ss4.2">4.2 I'm using AfterStep 1.4, and I can't find the .steprc.  Why?</A>
+</H2>
+
+<P>AfterStep now uses a directory structure to handle desktop customization. 
+Versions through 1.4 need a full set of directories in each user's home
+directory.  In other words, you need to copy everything in
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+[AfterStepPath]/GNUstep/Library/AfterStep/
+</PRE>
+</CODE></BLOCKQUOTE>
+<P>to
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+~/GNUstep/Library/AfterStep/
+</PRE>
+</CODE></BLOCKQUOTE>
+<P>There were several changes to this directory structure between version 1.4.0
+and 1.4.4; these changes are beyond the scope of this document.  But for
+help configuring 1.4.4, see :
+<A HREF="http://www.via.ayuda.com/~smw/afterstep/configs/index.html">http://www.via.ayuda.com/~smw/afterstep/configs/index.html</A>.
+<P>The &nbsp/GNUstep/Library/AfterStep arrangement is, admittedly, somewhat
+inefficient, because there are always at least two copies of everything on any
+system running AfterStep.
+As of version post 1.4.5, it is possible to add only those files which you have
+changed to the directory structure in your home directory, and everything else
+uses the default installation in /usr/share/afterstep.
+<P>
+<H2><A NAME="ss4.3">4.3 What are "look", "feel", "desktop", etc. files?</A>
+</H2>
+
+<P>The various elements of the desktop have been separated out, in order that they
+can each be customized independently.  Look files and feel files allow you to
+customize the desktop in almost an infinite number of ways.  Note that any
+functional changes you make in a look file (like adjusting the number of
+buttons that appear on a window titlebar) must also be reflected in a
+corresponding feel file: the "feel" handles how you interact with windows,
+while the "look" controls their appearance.  This is handy if you want your
+windows always to respond in more or less the same way, but want them to look
+differently depending on the task you're performing, the machine you're on, or
+whatever.
+<P>
+<H2><A NAME="ss4.4">4.4 I hate the &nbsp/GNUstep/* hierarchy.  Why can't I have my .steprc in</A>
+version 1.4.x?</H2>
+
+<P>You can.  Use the -f switch to force AfterStep to read from a file.  Please
+notice that not everything will work with your old .steprc file "right out
+of the box"; but if you like the old version that much, why upgrade anyway?
+<P>
+<H2><A NAME="ss4.5">4.5 I'm using RedHat, and I can't find the configuration files you've mentioned.</A>
+</H2>
+
+<P>RedHat apparently includes a look-alike to AfterStep which is actually a
+hack of fvwm-2.  <EM>It is not AfterStep</EM>, although some RH distributions
+also contain the real AfterStep.  RedHat has, as of this writing, agreed to
+change the name of their "hacked" version, in order to reduce confusion, and
+include the real AfterStep in post 5.0 releases.
+<P>
+<HR>
+<A HREF="afterstep-3.html">Previous</A>
+<A HREF="afterstep-5.html">Next</A>
+<A HREF="afterstep.html#toc4">Contents</A>
+</BODY>
+</HTML>

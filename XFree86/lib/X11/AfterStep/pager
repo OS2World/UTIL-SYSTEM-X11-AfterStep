@@ -1,0 +1,82 @@
+#------------------------------------------------------------------------
+# Pager
+#
+
+# Generalities
+HiBackColor Grey20
+HiForeColor White
+StickyPagerIcon
+
+# Pager-executable's name specific options
+*PagerBack           Grey20
+*PagerFore           White
+*PagerFont           -adobe-helvetica-bold-o-*-*-10-*-*-*-*-*-*-*
+*PagerSmallFont      5x8 
+*PagerHilight        black
+*PagerGeometry       -0-1
+*PagerXPM            0       ~/GNUstep/Library/AfterStep/non-configurable/desk0/background
+*PagerXPM            1       ~/GNUstep/Library/AfterStep/non-configurable/desk1/background
+*PagerXPM            2       ~/GNUstep/Library/AfterStep/non-configurable/desk2/background
+*PagerXPM            3       ~/GNUstep/Library/AfterStep/non-configurable/desk3/background
+# use *PagerRedrawBg 0 with xearth, xfishtank, ...
+*PagerRedrawBg       1
+*PagerAlign          0
+*PagerLabel          0       Work
+*PagerLabel          1       Misc
+*PagerLabel          2       WWW & Mail
+*PagerLabel          3       Games
+*PagerRows	     1
+#*PagerColumns        1
+
+*WPagerBack           lightblue
+*WPagerFore           White
+*WPagerFont           -adobe-helvetica-bold-o-*-*-10-*-*-*-*-*-*-*
+*WPagerSmallFont      5x8
+*WPagerHilight        #000044
+*WPagerGeometry       -0-1
+*WPagerXPM            0       ~/GNUstep/Library/AfterStep/non-configurable/desk0/background
+*WPagerAlign          0
+*WPagerLabel          0       Work
+*WPagerRedrawBg       1
+*WPagerRows           1
+#*WPagerColumns        1
+
+*XPagerBack           Grey20
+*XPagerFore           White
+*XPagerFont           -adobe-helvetica-bold-o-*-*-10-*-*-*-*-*-*-*
+*XPagerSmallFont      5x8
+*XPagerHilight        #000044
+*XPagerGeometry       -0-1
+*XPagerXPM            1       ~/GNUstep/Library/AfterStep/non-configurable/desk1/background
+*XPagerAlign          0
+*XPagerLabel          1       WWW
+*XPagerRedrawBg       1
+*XPagerRows           1
+*XPagerColumns        1
+
+*YPagerBack           Grey20
+*YPagerFore           White
+*YPagerFont           -adobe-helvetica-bold-o-*-*-10-*-*-*-*-*-*-*
+*YPagerSmallFont      5x8
+*YPagerHilight        #000044
+*YPagerGeometry       -0-1
+*YPagerXPM            2       ~/GNUstep/Library/AfterStep/non-configurable/desk2/background
+*YPagerAlign          0
+*YPagerLabel          2       Mail
+*YPagerRedrawBg       1
+*YPagerRows           1
+*YPagerColumns        1
+
+*ZPagerBack           Grey20
+*ZPagerFore           White
+*ZPagerFont           adobe-helvetica-bold-o-*-*-10-*-*-*-*-*-*-*
+*ZPagerSmallFont      5x8
+*ZPagerHilight        #000044
+*ZPagerGeometry       -0-1
+*ZPagerXPM            3       ~/GNUstep/Library/AfterStep/non-configurable/desk3/background
+*ZPagerAlign          0
+*ZPagerLabel          3       Games
+*ZPagerRedrawBg       1
+*ZPagerRows           1
+*ZPagerColumns        1
+

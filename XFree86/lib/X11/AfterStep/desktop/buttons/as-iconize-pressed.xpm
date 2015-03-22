@@ -1,0 +1,23 @@
+/* XPM */
+static char * image_name[] = {
+"15 15 5 1",
+" 	c #5F5F5F5F5F5F",
+".	c #FFFFFFFFFFFF",
+"X	c #BFBFBFBFBFBF",
+"o	c #000000000000",
+"O	c #BABABABABABA",
+"              .",
+" XXXXXXXXXXXX..",
+" XooooooooooX..",
+" XooooooooooX..",
+" XooooooooooX..",
+" XoOOOOOOOOoX..",
+" XoOOOOOOOOoX..",
+" XoOOOOOOOOoX..",
+" XoOOOOOOOOoX..",
+" XoOOOOOOOOoX..",
+" XoOOOOOOOOoX..",
+" XooooooooooX..",
+" XXXXXXXXXXXX..",
+" ..............",
+"..............."};

@@ -1,0 +1,76 @@
+##########################################################################
+# Look
+#
+#------------------------------------------------------------------------
+# Colors
+#
+
+HiForeColor             Grey70
+StdForeColor            Grey20
+StickyForeColor         DarkGrey
+MenuForeColor           Midnightblue
+
+
+HiBackColor             #303080
+StdBackColor            #bfbfbf
+StickyBackColor         Grey55
+MenuBackColor           Grey55
+MenuStippleColor        Grey20
+
+#------------------------------------------------------------------------
+# Textures : avoid them on 8bpp !
+#
+#   0 - No texture
+#   1 - Wharf-style gradient                            ^-
+#   2 - Horizontal one way gradient                     ¯-_
+#   3 - Horizontal from top/bottom to center            =-=
+#   4 - Vertical one way gradient from left to right    ||| | |  | |
+#   5 - Vertical from left/right to center              >>>>>><<<<<<
+#
+#                      title   unfocused  sticky   menutitle  menuitem
+TextureTypes             0       0         0          0         0
+#
+# Number of colors : default is 10 on 8bpp screens, 32 on 16 bpp and 128 on 32
+#TextureMaxColors       10      10      10      10
+#
+# Textures/Pixmaps on windows lowbar ?
+#TexturedHandle
+#
+# Gradient on windows title ?
+#GradientText
+#
+# Now the textures : you must choose between pixmap & gradient !
+#
+#TitlePixmap             back.xpm
+#ButtonPixmap            back.xpm
+#STitlePixmap            back.xpm
+#UTitlePixmap            back.xpm
+#
+#TitleTextureColor      #000010         #0000DD
+#UTitleTextureColor     #000010         #0000DD
+#TextGradientColor      #FFFF00         #FF0000
+#STitleTextureColor     #000010         #0000DD
+#MTitleTextureColor     #000010         #0000DD
+#MenuTextureColor       #000010         #0000DD
+
+#------------------------------------------------------------------------
+# Texts
+#
+Font                    fixed
+WindowFont              -b&h-lucida-medium-r-*-*-12-*-75-*-*-*-*-*
+IconFont                -adobe-helvetica-medium-r-*-*-8-*-*-*-*-*-*-*
+IconBox			54 -64 -1 -1
+TitleTextAlign          1
+#TitlebarNoPush
+
+#------------------------------------------------------------------------
+# TitleButtons : [1] [3] [5] [7] [9] (title) [0] [8] [6] [4] [2]
+#
+TitleButton 1 as-switchwindow-a.xpm as-switchwindow-a-pressed.xpm
+TitleButton 2 as-kill.xpm as-kill-pressed.xpm
+TitleButton 3 as-menu-a.xpm as-menu-a-pressed.xpm
+TitleButton 4 as-shade-a.xpm as-shade-a-pressed.xpm
+TitleButton 6 as-iconize.xpm as-iconize-pressed.xpm
+#
+##########################################################################
+

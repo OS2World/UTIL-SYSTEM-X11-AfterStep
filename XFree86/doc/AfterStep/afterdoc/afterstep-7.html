@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Draft//EN">
+<HTML>
+<HEAD>
+<TITLE>AfterStep FAQ: General usage, features and bugs</TITLE>
+</HEAD>
+<BODY>
+<A HREF="afterstep-6.html">Previous</A>
+<A HREF="afterstep-8.html">Next</A>
+<A HREF="afterstep.html#toc7">Contents</A>
+<HR>
+<H2><A NAME="s7">7. General usage, features and bugs</A></H2>
+
+<P>
+<H2><A NAME="ss7.1">7.1 Why does AfterStep get slower and slower until I restart it?</A>
+</H2>
+
+<P>Apparently there was a bug in versions up to 1.0pre3 (probably a
+memory leak) that caused this behavior. We know that setting your
+TextureMaxColors to something small, like `16 16 16 16' or `32 32 32
+32', will stop this problem. It also seems to happen only with XFree86
+in 32-bpp mode (or 16? Please give me confirmation), and if you're in
+8-bpp or a different X server, it doesn't seem to cause a problem.
+<P>This problem was solved in 1.0pre4, as far as we know. Upgrade!
+<P>
+<H2><A NAME="ss7.2">7.2 Click-to-focus dies</A>
+</H2>
+
+<P>Sometimes, after I've been running AfterStep for a while in click-to- focus
+mode, I can't shift the focus from one window to another by clicking.  I have
+to iconify and deiconify the window to shift focus, or pick it from the popup
+list.
+<P>This is a strange bug, that is (sometimes at least) caused by having the
+NumLock key activated. It is present up to 1.0pre4, so check your NumLock key.
+<P>This problem is solved in 1.0pre5, so you should upgrade if you're still having
+this problem
+<P>
+<H2><A NAME="ss7.3">7.3 What is this `Shade' thing?</A>
+</H2>
+
+<P>Shade is a window function that is often seen on the Macintosh system.  In
+theory, it makes a window disappear except for the title bar.  For example, an
+Xterm normally looks like this:
+<P>
+<PRE>
+
+         |------------------------------|
+         |             Xterm            |
+         |------------------------------|
+         |                              |
+         |                              |
+         |                              |
+         |                              |
+         |                              |
+         |------------------------------|
+</PRE>
+<P>
+<P>Shade is set by default to take effect when one double clicks on the title bar
+of the window.  When shade takes effect, the Xterm looks like this:
+<P>
+<PRE>
+
+         |------------------------------|
+         |             Xterm            |
+         |------------------------------|
+</PRE>
+<P>This is nice for saving desktop space and for window management purposes.  Some
+prefer it to iconifying the windows.
+<P>Up to 1.0pre3, Shade didn't work correctly, because it worked by resizing the
+window to a height of 0 pixels, which some applications didn't like.
+<P>In 1.0pre4 and posterior versions, Shade works by making the application think
+that it is being iconified, so it works with all applications again. It has the
+problem, though, that shaded windows become `sticky' and appear in all the
+pages in the virtual desktop.
+<P>We will try to solve this problem soon.
+<P>
+<H2><A NAME="ss7.4">7.4 When I restart AfterStep, it kills X. What gives?</A>
+</H2>
+
+<P>This was a bug that occured in AfterStep betas. If you experience this bug, you
+are running an old release of AfterStep. Upgrade to v1.0pre4 or later to fix
+this. This is, incidentally, something you should probably do anyway,
+considering the wealth of features your are missing.
+<P>
+<H2><A NAME="ss7.5">7.5 What is swallow-exec?</A>
+</H2>
+
+<P>It's a feature introduced in the distribution in 1.0pre4 (it previously existed
+as a separate patch) that allows you to associate an action to an entry in the
+Wharf corresponding to a swallowed application. So for example you can have
+asmail in the Wharf, and have it configured so that when you click on it, it
+warps to your email reading window. If your email reader is exmh, the required
+lines would be:
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+       *Wharf &quot;asmail&quot; nil Swallow     &quot;asmail&quot; asmail &
+       *Wharf &quot;asmail&quot; nil Warp        &quot;-&quot; exmh
+</PRE>
+</CODE></BLOCKQUOTE>
+<P>Note how both lines have the same label `asmail', which tells Wharf that those
+two go together. You can use any AfterStep function instead of `Warp'. For
+example, if you want the xload icon to fire a top window when clicked, you can
+have something like this:
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+       *Wharf &quot;xload&quot; nil Swallow      &quot;xload&quot; xload -geometry 48x48-1-1 &
+       *Wharf &quot;xload&quot; nil Exec &quot;Top&quot; xterm +sb -T Top -n Top -e top &
+</PRE>
+</CODE></BLOCKQUOTE>
+<P>By the way, this feature is responsible for a strange bug. See the next
+question.
+<P>
+<H2><A NAME="ss7.6">7.6 I upgraded to 1.0pre4 or later, and now the Wharf doesn't work.  What</A>
+happens? </H2>
+
+<P>This is not a bug, it's a feature :-). No, really, this behavior was introduced
+due to the introduction of the `Swallow-exec' capability in 1.0pre4. To fix it,
+do the following:
+<P>
+<OL>
+<LI> In your  .steprc, locate the lines that start with
+
+<BLOCKQUOTE><CODE>
+<PRE>
+       *Wharf &quot;&quot; ...
+</PRE>
+</CODE></BLOCKQUOTE>
+
+</LI>
+<LI> The could be also nil, or any other label that is the same for all the
+Wharf entries. These repeated labels are the ones causing the trouble. You have
+to give each Wharf entry a unique label there, like `xload', `asmail', `Pager',
+etc.
+</LI>
+<LI> Restart and it should be fixed.</LI>
+</OL>
+<P>Of course, the better answer is to upgrade to 1.4.x or later, and re-configure
+your Wharf.
+<P>
+<HR>
+<A HREF="afterstep-6.html">Previous</A>
+<A HREF="afterstep-8.html">Next</A>
+<A HREF="afterstep.html#toc7">Contents</A>
+</BODY>
+</HTML>

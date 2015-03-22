@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Draft//EN">
+<HTML>
+<HEAD>
+<TITLE>AfterStep FAQ: Getting and installing AfterStep</TITLE>
+</HEAD>
+<BODY>
+<A HREF="afterstep-1.html">Previous</A>
+<A HREF="afterstep-3.html">Next</A>
+<A HREF="afterstep.html#toc2">Contents</A>
+<HR>
+<H2><A NAME="s2">2. Getting and installing AfterStep</A></H2>
+
+<P>
+<H2><A NAME="ss2.1">2.1 Where do I get AfterStep?</A>
+</H2>
+
+<P>The main AfterStep resources on the net are below.
+<P>
+<UL>
+<LI>WWW Page
+
+<P>The official WWW page is at 
+<A HREF="http://www.afterstep.org">http://www.afterstep.org</A><P>Alas, it is way too old; but as of this writing is being updated by a new Web
+team.
+<P>
+</LI>
+<LI>FTP Site
+
+<P>The FTP site, 
+<A HREF="ftp://ftp.afterstep.org/pub/">ftp://ftp.afterstep.org/pub/</A>, is the best place to
+get AfterStep. It also supports uploads:
+<A HREF="ftp://ftp.afterstep.org/incoming/">ftp://ftp.afterstep.org/incoming/</A>.
+A link to the FTP site is provided from the Web site.
+<P>
+</LI>
+<LI>Other Resources: 
+
+<P>There are also some useful things to be found on the following two pages.  The
+first is the current, official AfterStep Customization Page; go to it if you're
+looking for really useful stuff.  The second is rather out of date, but still
+nice-looking, and possibly useful:
+<P>
+<P>
+<A HREF="http://www.via.ayuda.com/~smw/afterstep/">AfterStep Customization Page</A><P>
+<P>
+<A HREF="http://www.iis.ee.ethz.ch/~kiwi/AfterStep/">Kiwi's Page</A></LI>
+</UL>
+<P>
+<H2><A NAME="ss2.2">2.2 What is the latest version of AfterStep?</A>
+</H2>
+
+<P>The latest public version is 1.4.5, released on April 1998.
+In Summer 1998, version 2.0 should be available.
+<P>
+<H2><A NAME="ss2.3">2.3 I've compiled AfterStep for my system but every time I try to use it I</A>
+receive the message: Cannot open display. What should I do?</H2>
+
+<P>AfterStep is an X window manager and cannot be run from the terminal.
+It must be run through X.  The easiest way to do that is to either
+create or edit your own  .xinitrc file (which contains a list of the
+programs you wish to load upon startup) and add the line exec
+afterstep to the end.  This last exec'd line is significant in that it
+says to shut down X when that program is terminated.  Now that you
+have that file, simply startup X in your customary manner, most likely
+startx or xinit.  Now you're off and running.  Good luck!  
+<P>
+<H2><A NAME="ss2.4">2.4 How can I install AfterStep without being root?</A>
+</H2>
+
+<P>This is fairly easy. You will have to install all the files under your
+home directory. The usual recommendation is to use the same
+directories as suggested in the installation procedure, but replacing
+/usr/local by your home directory. For example, if you home directory
+is  /home/blah you would use directories like /home/blah/bin,
+/home/blah/etc,  /home/blah/lib, etc.
+<P>Compile AfterStep following the manual installation procedure until the
+install step. Then, do the following (make sure to create the
+destination directories first if they don't exist. All the source
+paths are relative to the AfterStep source directory):
+<P>
+<OL>
+<LI> Copy  afterstep/afterstep to  $HOME/bin/.</LI>
+<LI> Copy  modules/*/(binaries) to  $HOME/bin/.</LI>
+<LI> Copy  apps/*/(binaries) to  $HOME/bin/.</LI>
+<LI> Copy  GNUstep/ to  $HOME/.</LI>
+<LI> Edit  $HOME/GNUstep/Library/AfterStep/base.* to reflect the above paths
+in the lines starting with ModulePath and PixmapPath.</LI>
+<LI> Put  $HOME/bin in your path.</LI>
+</OL>
+<P>You should be set. Feel free to modify this procedure according to
+your particular needs or the particular setup of your machine/account.
+<P>
+<HR>
+<A HREF="afterstep-1.html">Previous</A>
+<A HREF="afterstep-3.html">Next</A>
+<A HREF="afterstep.html#toc2">Contents</A>
+</BODY>
+</HTML>

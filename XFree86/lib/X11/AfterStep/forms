@@ -1,0 +1,221 @@
+#------------------------------------------------------------------------
+# Forms
+#
+# Quit
+*QuitFormGrabServer
+*QuitFormWarpPointer
+*QuitFormFont          *helvetica*m*o*n*12*
+*QuitFormButtonFont    *helvetica*m*o*n*12*
+*QuitFormFore          Black
+*QuitFormBack          #bfbfbf
+*QuitFormItemFore      Gold
+*QuitFormItemBack      Grey50
+*QuitFormCommand       Beep
+*QuitFormLine          center
+*QuitFormText          "AfterStep : Do you really want to logout ?"
+*QuitFormLine          expand
+*QuitFormButton   quit      "Logout"  ^M
+*QuitFormCommand  Quit
+*QuitFormButton   quit      "Cancel"  ^[
+*QuitFormCommand  Nop
+
+
+# FTP
+*FTPFormWarpPointer
+*FTPFormFore            gold
+*FTPFormBack            black
+*FTPFormItemFore        black
+*FTPFormItemBack        grey60
+*FTPFormFont            *helvetica*m*o*n*12*
+*FTPFormButtonFont      *helvetica*m*o*n*12*
+*FTPFormInputFont       *helvetica*m*o*n*12*
+*FTPFormLine            expand
+*FTPFormSelection       CommonTarget    single
+*FTPFormChoice          Oak             oak.sfasu.edu   off     "Oak"
+*FTPFormChoice          CdRom           cdrom.com       off     "CdRom"
+*FTPFormChoice          SunSite         sunsite.unc.edu off     "SunSite"
+*FTPFormChoice          FUnet           ftp.funet.fi    off     "FUnet"
+*FTPFormLine            center
+*FTPFormText            "Or somewhere else:"
+*FTPFormInput           CustomTarget    20      ""
+*FTPFormLine            expand
+*FTPFormButton          quit            "Go"    ^M
+*FTPFormCommand         Exec "-" xterm -fg white -T FTP -e ftp $(CommonTarget) $ (CustomTarget)
+*FTPFormButton          restart         "Clear"
+*FTPFormButton          quit            "Cancel" ^[
+*FTPFormCommand         Nop
+
+# Xgrabsc
+*XGRABSCFormWarpPointer
+*XGRABSCFormFore            gold
+*XGRABSCFormBack            black
+*XGRABSCFormItemFore        black
+*XGRABSCFormItemBack        grey60
+*XGRABSCFormFont            *helvetica*m*o*n*12*
+*XGRABSCFormButtonFont      *helvetica*m*o*n*12*
+*XGRABSCFormInputFont       *helvetica*m*o*n*12*
+*XGRABSCFormLine            expand
+*XGRABSCFormLine            center
+*XGRABSCFormText            "Wait before screenshot:"
+*XGRABSCFormInput           WaitTarget    2      "1"
+*XGRABSCFormText            "Save screenshot to:"
+*XGRABSCFormInput           SaveTarget    35      "~/screenshot.xpm"
+*XGRABSCFormLine            expand
+*XGRABSCFormButton          quit            "Go"    ^M
+*XGRABSCFormCommand         Exec "-" xgrabsc -root -o $(SaveTarget) -bm -s $(WaitTarget) 
+*XGRABSCFormButton          restart         "Clear"
+*XGRABSCFormButton          quit            "Cancel" ^[
+*XGRABSCFormCommand         Nop
+
+# Xgrab
+*XGRABFormWarpPointer
+*XGRABFormFore            gold
+*XGRABFormBack            black
+*XGRABFormItemFore        black
+*XGRABFormItemBack        grey60
+*XGRABFormFont            *helvetica*m*o*n*12*
+*XGRABFormButtonFont      *helvetica*m*o*n*12*
+*XGRABFormInputFont       *helvetica*m*o*n*12*
+*XGRABFormLine            expand
+*XGRABFormLine            center
+*XGRABFormText            "Wait before windowshot:"
+*XGRABFormInput           WaitTarget    2      "1"
+*XGRABFormText            "Save windowshot to:"
+*XGRABFormInput           SaveTarget    35      "~/windowshot.xpm"
+*XGRABFormLine            expand
+*XGRABFormButton          quit            "Go"    ^M
+*XGRABFormCommand         Exec "-" xgrabsc -click -o $(SaveTarget) -bm -s $(WaitTarget)
+
+*XGRABFormButton          restart         "Clear"
+*XGRABFormButton          quit            "Cancel" ^[
+*XGRABFormCommand         Nop
+
+# Xlock
+*XLOCKFormWarpPointer
+*XLOCKFormFore            gold
+*XLOCKFormBack            black
+*XLOCKFormItemFore        black
+*XLOCKFormItemBack        grey60
+*XLOCKFormFont            *helvetica*m*o*n*12*
+*XLOCKFormButtonFont      *helvetica*m*o*n*12*
+*XLOCKFormInputFont       *helvetica*m*o*n*12*
+*XLOCKFormLine            expand
+*XLOCKFormSelection       CommonTarget    single
+# Run this localy to update modelist
+# xlock -help 2>&1 | awk "BEGIN{item = 0}  /^$/ {next}  /one of:/ {ok=1; next}  /^[ \t]*[a-z]/ && ok==1  {  if (/random/) { next };  if (item == 0) { print \"*XLOCKFormLine   expand\" };  printf(\"*XLOCKFormChoice %-10s %-10s off %-10s \\n\", \$1, \$1, \$1) ;  item = (item+1)%5 ;  }"
+*XLOCKFormLine   expand
+*XLOCKFormChoice ant        ant        off "ant"       
+*XLOCKFormChoice bat        bat        off "bat"        
+*XLOCKFormChoice blot       blot       off "blot"       
+*XLOCKFormChoice bounce     bounce     off "bounce"     
+*XLOCKFormChoice braid      braid      off "braid"      
+*XLOCKFormLine   expand
+*XLOCKFormChoice bug        bug        off "bug"        
+*XLOCKFormChoice clock      clock      off "clock"      
+*XLOCKFormChoice demon      demon      off "demon"      
+*XLOCKFormChoice flame      flame      off "flame"      
+*XLOCKFormChoice forest     forest     off "forest"     
+*XLOCKFormLine   expand
+*XLOCKFormChoice galaxy     galaxy     off "galaxy"     
+*XLOCKFormChoice geometry   geometry   off "geometry"   
+*XLOCKFormChoice grav       grav       off "grav"       
+*XLOCKFormChoice helix      helix      off "helix"      
+*XLOCKFormChoice hop        hop        off "hop"        
+*XLOCKFormLine   expand
+*XLOCKFormChoice hyper      hyper      off "hyper"      
+*XLOCKFormChoice image      image      off "image"      
+*XLOCKFormChoice kaleid     kaleid     off "kaleid"     
+*XLOCKFormChoice laser      laser      off "laser"      
+*XLOCKFormChoice life       life       off "life"       
+*XLOCKFormLine   expand
+*XLOCKFormChoice life1d     life1d     off "life1d"     
+*XLOCKFormChoice life3d     life3d     off "life3d"     
+*XLOCKFormChoice marquee    marquee    off "marquee"    
+*XLOCKFormChoice maze       maze       off "maze"       
+*XLOCKFormChoice mountain   mountain   off "mountain"   
+*XLOCKFormLine   expand
+*XLOCKFormChoice nose       nose       off "nose"       
+*XLOCKFormChoice petal      petal      off "petal"      
+*XLOCKFormChoice pyro       pyro       off "pyro"       
+*XLOCKFormChoice qix        qix        off "qix"        
+*XLOCKFormChoice rock       rock       off "rock"       
+*XLOCKFormLine   expand
+*XLOCKFormChoice rotor      rotor      off "rotor"      
+*XLOCKFormChoice shape      shape      off "shape"      
+*XLOCKFormChoice slip       slip       off "slip"       
+*XLOCKFormChoice sphere     sphere     off "sphere"     
+*XLOCKFormChoice spiral     spiral     off "spiral"     
+*XLOCKFormLine   expand
+*XLOCKFormChoice spline     spline     off "spline"     
+*XLOCKFormChoice swarm      swarm      off "swarm"      
+*XLOCKFormChoice swirl      swirl      off "swirl"      
+*XLOCKFormChoice triangle   triangle   off "triangle"   
+*XLOCKFormChoice wator      wator      off "wator"      
+*XLOCKFormLine   expand
+*XLOCKFormChoice world      world      off "world"      
+*XLOCKFormChoice worm       worm       off "worm"       
+*XLOCKFormChoice blank      blank      off "blank"      
+*XLOCKFormChoice random     random     on  "random"
+*XLOCKFormLine   expand
+*XLOCKFormButton          quit            "Go"    ^M
+*XLOCKFormCommand         Exec "-" xlock -nolock -mode $(CommonTarget)
+*XLOCKFormButton          restart         "Clear"
+*XLOCKFormButton          quit            "Cancel" ^[
+*XLOCKFormCommand         Nop
+
+*RUNFormWarpPointer
+*RUNFormFore            gold
+*RUNFormBack            black
+*RUNFormItemFore        black
+*RUNFormItemBack        grey60
+*RUNFormFont            *helvetica*m*o*n*12*
+*RUNFormButtonFont      *helvetica*m*o*n*12*
+*RUNFormInputFont       *helvetica*m*o*n*12*
+*RUNFormLine            expand
+*RUNFormLine            center
+*RUNFormText            "Run Command"
+*RUNFormInput           CustomTarget    50      ""
+*RUNFormLine            expand
+*RUNFormButton          quit            "Go"    ^M
+*RUNFormCommand         Exec "-" xterm -fg white -bg black -T Run -e $(CustomTarget)
+*RUNFormButton          restart         "Clear"
+*RUNFormButton          quit            "Cancel" ^[
+*RUNFormCommand         Nop
+
+*HELPFormWarpPointer
+*HELPFormFore            gold
+*HELPFormBack            black
+*HELPFormItemFore        black
+*HELPFormItemBack        grey60
+*HELPFormFont            *helvetica*m*o*n*12*
+*HELPFormButtonFont      *helvetica*m*o*n*12*
+*HELPFormInputFont       *helvetica*m*o*n*12*
+*HELPFormLine            expand
+*HELPFormLine            center
+*HELPFormText            "Find help about"
+*HELPFormInput           CustomTarget    50      ""
+*HELPFormLine            expand
+*HELPFormButton          quit            "Go"    ^M
+*HELPFormCommand         Exec "-" xterm -fg white -bg black -T Help -e man $(CustomTarget)
+*HELPFormButton          restart         "Clear"
+*HELPFormButton          quit            "Cancel" ^[
+*HELPFormCommand         Nop
+
+*FINDFormWarpPointer
+*FINDFormFore            gold
+*FINDFormBack            black
+*FINDFormItemFore        black
+*FINDFormItemBack        grey60
+*FINDFormFont            *helvetica*m*o*n*12*
+*FINDFormButtonFont      *helvetica*m*o*n*12*
+*FINDFormInputFont       *helvetica*m*o*n*12*
+*FINDFormLine            expand
+*FINDFormLine            center
+*FINDFormText            "Find file"
+*FINDFormInput           CustomTarget    50      ""
+*FINDFormLine            expand
+*FINDFormButton          quit            "Go"    ^M
+*FINDFormCommand         Exec "-" xterm -fg white -bg black -T Find -e sh -c "locate $(CustomTarget) | less"
+*FINDFormButton          restart         "Clear"
+*FINDFormButton          quit            "Cancel" ^[
+*FINDFormCommand         Nop

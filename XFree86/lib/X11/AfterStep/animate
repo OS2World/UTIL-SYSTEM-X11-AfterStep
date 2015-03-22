@@ -1,0 +1,15 @@
+#------------------------------------------------------------------------
+# Animate
+#
+*AnimateColor Yellow
+*AnimateDelay 1
+*AnimateIterations 25
+*AnimateTwist 1
+*AnimateZoom 1
+*AnimateWidth 3
+#*AnimateResize Turn
+#*AnimateResize Twist
+#*AnimateResize Random
+*AnimateResize Flip
+#*AnimateResize Zoom
+

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Draft//EN">
+<HTML>
+<HEAD>
+<TITLE>AfterStep FAQ: Problems After Installation</TITLE>
+</HEAD>
+<BODY>
+<A HREF="afterstep-2.html">Previous</A>
+<A HREF="afterstep-4.html">Next</A>
+<A HREF="afterstep.html#toc3">Contents</A>
+<HR>
+<H2><A NAME="s3">3. Problems After Installation</A></H2>
+
+<P>
+<H2><A NAME="ss3.1">3.1 How do I enable sound in AfterStep?</A>
+</H2>
+
+<P>First, make sure you have compiled the Linux kernel with sound support and that
+the sound works ; try :
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+cat [some au file] &gt; /dev/audio
+</PRE>
+</CODE></BLOCKQUOTE>
+<P>Then, edit &nbsp/GNUstep/Library/AfterStep/audio file.
+You should see (if you don't, add them) lines like these:
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+         *AudioPlayCmd /usr/bin/showaudio
+         *AudioDir /usr/X11/lib/X11/afterstep/sounds
+         *AudioDelay 1
+</PRE>
+</CODE></BLOCKQUOTE>
+<P>
+<P>If these aren't there, add them.  Verify that the AudioPlayCmd is a
+valid program and that the sounds you want to play are in
+/usr/share/afterstep/desktop/sounds/ (or set it to the appropriate
+directory).
+<P>
+<P>Below that section, you sould see many lines like this:
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+         #*Audio startup gong.au
+</PRE>
+</CODE></BLOCKQUOTE>
+<P>Simply remove the comment (#) from the beginning of the line and if
+you wish, set the startup event to some other au file.  The format is:
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+       Audio [event] [sound]
+</PRE>
+</CODE></BLOCKQUOTE>
+<P>Do that for the rest of the Audio events, and as one AfterStepper put it,
+you'll literally add new bells and whistles to AfterStep.
+<P>Note that some people still have a few problems with audio.  If you are
+still having trouble, <EM>and you've read this and followed the instructions
+carefully</EM>, you might want to ask questions on the mailing list.
+<P>
+<H2><A NAME="ss3.2">3.2 I grabbed TkStep and Tcl7.6 and tried to install TkStep, but it doesn't</A>
+work </H2>
+
+<P>TkStep still doesn't work with Tcl7.6. Try Tcl 7.5.  [A question: has anyone
+tried this recently?]  There is a version of TkStep for Tk8.0; see below for
+more information about TkStep.
+<P>
+<H2><A NAME="ss3.3">3.3 Why doesn't ASCP run on my system?</A>
+</H2>
+
+<P>ASCP needs TkStep, a version of Tk implemented by Alfredo Kojima
+(<CODE>kojima@inf.ufrgs.br</CODE>) (and now maintained by Oliver Graf and Steve Murray)
+that gives Tk the NEXTSTEP look-and-feel, and implements a few new widgets,
+like font and color choosers. You can download it from :
+<A HREF="http://www.fga.de/~ograf/TkStep.shtml">http://www.fga.de/~ograf/TkStep.shtml</A>; see below for information
+about ASCP.  ASCP does not yet work with the new configurations anyway
+(i.e. post 1.2), so you might not need to worry about this.  It may not work
+with the latest versions of TkStep, either.
+<P>A new version of ASCP which will not depend on TkStep (but on something
+more standard) is on work.
+<P>
+<H2><A NAME="ss3.4">3.4 I don't want so many desktops in version 1.4.x or later; I want to change</A>
+feature xyz in version 1.4.x or later.</H2>
+
+<P>Just edit the relevant file under &nbsp/GNUstep/Library/AfterStep.  See the
+section on configuration for details.
+<P>
+<H2><A NAME="ss3.5">3.5 I keep losing things on the desktop; the desktop is bigger than my pager</A>
+indicates.</H2>
+
+<P>This is a known bug.  So far, no-one has figured out what the problem is.
+<P>
+<H2><A NAME="ss3.6">3.6 I'm running Solaris, and have had problems with the alphasort()</A>
+function.</H2>
+
+<P>There are still a few problems with AfterStep and Solaris, but this one
+has been patched.  You can find the patch in the mailing-list archives.  You
+should also check the information in the README.Solaris file, and see :
+<A HREF="http://www.primate.wisc.edu/software/imake-stuff/">http://www.primate.wisc.edu/software/imake-stuff/</A>.
+<P>
+<HR>
+<A HREF="afterstep-2.html">Previous</A>
+<A HREF="afterstep-4.html">Next</A>
+<A HREF="afterstep.html#toc3">Contents</A>
+</BODY>
+</HTML>

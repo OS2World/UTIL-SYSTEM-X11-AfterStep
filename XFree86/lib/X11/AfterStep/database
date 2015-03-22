@@ -1,0 +1,33 @@
+##########################################################################
+# Windows styles :
+# (please send me more style links : programs -> defaults icon from AfterStep)
+#
+
+# Use "WM_CLASS" : get it with xprop or Ident module
+
+Style   "*"             Icon AfterStep3.xpm
+Style   "Wharf"         NoTitle, Sticky, StaysOnTop, WindowListSkip, NoHandles
+Style   "Zharf"         NoTitle, Sticky, StaysOnTop, WindowListSkip, NoHandles
+Style   "Pager"         NoTitle, Sticky, StaysOnTop, WindowListSkip, NoHandles
+Style   "WinList"       NoTitle, Sticky, StaysOnTop, WindowListSkip, NoHandles
+Style   "Banner"        NoTitle, Sticky, StaysOnTop, WindowListSkip, NoHandles
+Style   "*clock"        StaysOnTop, WindowListSkip, NoHandles
+Style   "ghostview"     Icon text.xpm
+Style   "gimp"          Icon 3dpaint.xpm
+Style   "XTerm"         Icon Monitor.xpm
+#Style   "*term"         Icon linux-penguin.xpm
+Style   "Untitled*"     Icon AfterStep3.xpm
+Style   "xcalc"         Icon xcalc.xpm
+Style   "xli"           Icon monalisa.xpm
+Style   "xv"            Icon monalisa.xpm
+Style   "xman"          Icon xman.xpm
+Style   "netscape"      StartsOnDesk 2
+Style   "XMcd"          StartsOnDesk 1, Icon CDrom.xpm
+Style   "xfmail"        StartsOnDesk 2
+Style   "crxvt*"        Icon CMonitor.xpm
+Style   "xcin"          NoTitle, Sticky, StaysOnTop, WindowListSkip, NoHandles
+#Style   "*term"         Icon linux-penguin.xpm
+#Style   "*doom"         StartsOnDesk 3
+#Style   "xpi"           StartsOnDesk 3
+#
+##########################################################################

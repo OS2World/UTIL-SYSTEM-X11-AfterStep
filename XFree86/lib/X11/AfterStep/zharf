@@ -1,0 +1,23 @@
+#Definitions used by the modules
+*ZharfFore Grey70
+*ZharfBack Grey40
+
+*ZharfGeometry	-2-2
+*ZharfRows	1
+*ZharfFont	-adobe-helvetica-medium-r-*-*-12-*-*-*-*-*-*-*
+
+#*Zharf Resize  Resize      Resize
+#*Zharf Move    Move        Move
+#*Zharf Lower   Down        Lower
+#*Zharf Raise   Up          Raise
+#*Zharf Kill    Kill        Destroy
+
+#*Zharf xiterm linux-penguin.xpm Exec "xiterm" xterm -fg wheat -bg black
+#*Zharf xmcd   CDrom.xpm         Exec "xmcd" xmcd
+#*Zharf xman   Bookshelf.xpm     Exec "xman" xman
+#*Zharf top    cpuchip.xpm       Exec "xwpe" xwpe
+#*Zharf netscape netscape.xpm    Exec "netscape" netscape
+#*Zharf -      -                 SwallowModule "Pager" Pager 0
+#*Zharf asload -                 Swallow "asload" asload -shape -led red
+
+*Zharf(5x1) - zpgblock.xpm SwallowModule "Pager" Pager 0 1

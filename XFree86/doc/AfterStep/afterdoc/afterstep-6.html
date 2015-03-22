@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Draft//EN">
+<HTML>
+<HEAD>
+<TITLE>AfterStep FAQ: Modules</TITLE>
+</HEAD>
+<BODY>
+<A HREF="afterstep-5.html">Previous</A>
+<A HREF="afterstep-7.html">Next</A>
+<A HREF="afterstep.html#toc6">Contents</A>
+<HR>
+<H2><A NAME="s6">6. Modules</A></H2>
+
+<P>
+<H2><A NAME="ss6.1">6.1 How do I get multiple Wharfs/Pagers on the screen?</A>
+</H2>
+
+<P>                                      
+It's pretty easy. You just have to have the Wharf exist under several different
+names, and then configure each of them using its name. For example, if you make
+a link to  Wharf called  MyWharf (type man ln if you don't know how to make
+links), you would use lines like these in your
+&nbsp/GNUstep/Library/AfterStep/wharf file :
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+       *MyWharfAnimate
+       *MyWharf &quot;label&quot; Icon.xpm Exec &quot;something&quot; something
+</PRE>
+</CODE></BLOCKQUOTE>
+<P>Same for the Pager.
+<P>Note: Apparently, due to the way the Wharf configuration file parser works,
+links with names like  Wharf2 (i.e. the same original name with characters
+appended to it) will not work: the parser will think you are referring to the
+original module and will get confused.  You have to give each link a
+distinctive name.
+<P>
+<H2><A NAME="ss6.2">6.2 How can I get ASclock to appear properly in Wharf?</A>
+</H2>
+
+<P>First, you need AfterStep 0.98 beta 4 or later. These version have the
+MaxSwallow option. Then, add a command such as this to the wharf file or line
+(depending on whether you use .steprc):
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+         *Wharf asclock nil MaxSwallow &quot;asclock&quot; asclock -12 -shape &
+</PRE>
+</CODE></BLOCKQUOTE>
+<P>You can omit the `-12' to be in 24 hour time.
+<P>
+<H2><A NAME="ss6.3">6.3 How do I configure asclock to use fewer colors? </A>
+</H2>
+
+<P>When installing, after executing configure, asclock configure should be lauched
+by default.  Otherwise, go to the  modules/asclock directory and do the
+following:
+<OL>
+<LI> Execute sh configure</LI>
+<LI> Several menus will appear, asking for the default language for dates
+(yes, you can change it!) and the number of colors used.  There is one option
+to use 2-bit color, resulting in an asclock that uses only 4 colors, but still
+looks pretty good.</LI>
+<LI> Done. Now go and compile asclock as usual.</LI>
+</OL>
+<P>
+<HR>
+<A HREF="afterstep-5.html">Previous</A>
+<A HREF="afterstep-7.html">Next</A>
+<A HREF="afterstep.html#toc6">Contents</A>
+</BODY>
+</HTML>

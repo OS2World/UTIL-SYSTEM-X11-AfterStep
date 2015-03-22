@@ -1,0 +1,104 @@
+##########################################################################
+# Look by James Tucker
+#
+#------------------------------------------------------------------------
+# Colors :
+#
+# 0) Standard window colors
+#
+#Meny Background
+HiForeColor      Black
+#Outline of Menu and other Apps also text color of title in window
+#w/o focus
+StdForeColor     RoyalBlue3
+#Lines around windows
+StickyForeColor  Blue
+#Text Color for menus
+MenuForeColor    Wheat
+
+#mediumblue
+HiBackColor      MediumBlue
+#navyblue
+StdBackColor     NavyBlue
+#mediumseagreen
+StickyBackColor  MediumSeaGreen
+#blue
+MenuBackColor    Blue
+#black
+MenuStippleColor Black
+#
+# 2) Textures : avoid them on 8bpp !
+#
+#   0 - No texture
+#   1 - Wharf-style gradient                            ^-
+#   2 - Horizontal one way gradient                     ¯-_
+#   3 - Horizontal from top/bottom to center            =-=
+#   4 - Vertical one way gradient from left to right    ||| | |  | |
+#   5 - Vertical from left/right to center              >>>>>><<<<<<
+# 128 - User defined pixmap
+#
+# 2-1) Texture types
+#
+#                      title  unfocused sticky  menutitle menu
+#TextureTypes            4       1       1       3       1
+TextureTypes            128       128       128       5       5
+#ButtonTextureType       128
+#
+# 2-2) Maximum colors allowed
+#
+# Number of colors : default is 10 on 8bpp screens, 32 on 16 bpp and 128 on >
+#TextureMaxColors       10      10      10      10
+#ButtonMaxColors        10
+#
+# 2-3) Now the pixmap
+#
+TitlePixmap            Surreal.xpm
+STitlePixmap           Surreal.xpm
+UTitlePixmap           Surreal.xpm
+#ButtonPixmap           ASBBlockMarble.xpm
+#
+# 2-4) Or the gradients (can't choose both, except for TextGradientColor)
+#
+#TitleTextureColor      #000077         Sienna
+#UTitleTextureColor     #000010         #0000DD
+#STitleTextureColor     #001000         #00DD00
+MTitleTextureColor     #000077         Sienna
+#MTitleTextureColor     #000077         Sienna
+MenuTextureColor       #000010         #0000DD
+#MenuTextureColor       #000010         #0000DD
+#ButtonTextureColor     #FF0000         #0000FF
+# This the texture colors of the highlighted window, top -> bottom
+#TextGradientColor      #FF7F50         #191970
+TextGradientColor      #FFFF00         #FF0000
+#ButtonBgColor          #bfbfbf
+#
+# 2-5) Various texturing options
+#
+#  Textures/Pixmaps on windows lowbar ?
+TexturedHandle
+#  Gradient on windows title ?
+GradientText
+#  Border around iconifyied windows ?
+ButtonNoBorder
+
+#------------------------------------------------------------------------
+# Texts
+#
+Font                    -*-helvetica-medium-o-*-*-14-140-*-*-*-*-*-*
+WindowFont              -*-helvetica-bold-o-*-*-15-140-*-*-*-*-*-*
+IconFont                -adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-*-*
+IconBox                 54 -64 -1 -1
+TitleTextAlign          2
+#TitlebarNoPush
+
+#------------------------------------------------------------------------
+# TitleButtons : [1] [3] [5] [7] [9] (title) [0] [8] [6] [4] [2]
+#
+TitleButton 1 1.xpm 1p.xpm
+TitleButton 2 2.xpm 2p.xpm
+TitleButton 3 3.xpm 3p.xpm
+TitleButton 4 4.xpm 4p.xpm
+TitleButton 6 5.xpm 5p.xpm
+#
+##########################################################################
+

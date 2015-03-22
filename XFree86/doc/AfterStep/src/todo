@@ -1,0 +1,127 @@
+Feel free to do any of the following things (and more if you want) then mail
+us a patch.
+
+               Thanks for contributing to AfterStep effort !
+
+						Guylhem <guylhem@oeil.qc.ca>
+
+*****************************************************************************
+
+Modify apps to work perfectly on solaris
+
+Add a second title pixmap that would only reside directly beneath the title
+words
+
+Change defaults menus to include '&' shortcuts
+
+Wharf bug : -0 -0 don't work well, you have to use -1 -1 instead
+
+Bug : the little border over titlebars & handlings becomes the same color of
+the rootbg time to time.
+
+Wharf : display the label field (currently not used) of a button when the mouse
+pointer is over it.
+
+Correct icon label code : if the text needs clipping, the leading part of the
+text is removed, instead of the trailing part !!!!
+
+Put all the patches in AS, then check the mixup, especially memory leaks
+
+Add MaxSwallowModule to Wharf (for pagers)
+
+use different options for menus (hilight, text, borders, bg) instead of stdfg
+& stdbg ...
+
+support for scaling a pixmap for titlebars and menu items instead of tiling
+
+textured or gradient handles that arent the same as the titlebar
+
+add tile / center option to pager xpm
+
+make asmail use PixmapPath from base file (like wharf & zharf do)
+
+complete StartOnDesk (i.e. Style "xemacs" StartsOnDesk 1 Page 4) so that not
+all applications that starts in Desk 1 will start in the top left page.
+
+add option to avoid WinList covers other windows
+
+add option to avoid all XWarpPointers, passed to modules
+
+include nice .xinitrc sample with xmodmap -e "keycode 22 = BackSpace"
+& all classical stuff 
+
+make modules use the -f single file
+
+add NO_MULTIPLE_DESKTOPS as compile time option
+
+an intelligent iconbox, 64x64, opening like wharf folders to reduce desktop
+usage
+
+Removed linux specific asppp, asrack, astuner & asmodem from standard
+distribution ; create patches to make them work on other unices if you want to
+find them back here
+
+Add to Pager the feature to show in little windows nonxpm files too ; avoid
+unnecessary redraws (especially with big jpegs :)
+
+Add many lacking free(chars ), add more XFreePixmap in Pager.c
+
+Merge ASSound & Audio
+
+Change unix sockets to more X stuff ala XClientMessages
+
+Animate support for Animated Logos (Multiple XPM)
+
+open a little window with window name if mouse stays more than 1 s on window
+in the Pager
+
+delete system(), too much unsecure !
+
+Compile time option for SHADE != STICKY
+
+If two directories have the same name, errors were reported : try to fix this
+
+AfterStep support for animated icons (idem)
+
+Press shade, move the window, press window actions -> menu appears
+in the old position !!!!
+
+manpages for : asload, asmix, asppp, astuner
+
+fix ßß stuff
+
+use zap/help button to drag windows in the Pager
+
+include nicer sounds & configure Audio module for them !
+
+include ASCP compatible with AF 1.4 in current distribution
+
+use db for 'database' rather than current "Styles" : include a frontend
+to add/modify/delete things in this database
+
+include a default database configuration for many common Xprogs, choosing
+icons from the ones AF provides, etc.
+
+use windowmaker-like persistent menus
+
+use enlightenment-like pixmaps for windows decoration (titlebar, borders ...)
+
+recode everything in C++ and get rid of original TWM parts & copyright (big
+move to full GPL !), then add some scheme as compile time option for dynamic
+configuration (like scvwm)
+
+recode wharf to be DND "feedable" + use right click on a icon to configure its
+options (command line, name, icon.xpm, ...)
+
+create AfterVoice to talk to AfterStep
+
+use locales
+
+include OpaqueWindowZoom & Rotation, cf. Animate.c  (any demomaker to help ?)
+
+add menuconfig interface for AF's configure.h
+(like the one for sunsite's xiterm)
+
+code a *extish  window filemanager
+
+create a asman better & easyier to use than xman (for GetHelp function)

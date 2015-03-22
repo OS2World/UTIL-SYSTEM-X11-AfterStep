@@ -1,0 +1,18 @@
+#------------------------------------------------------------------------
+# Tasks list
+#
+*WinListBack Grey40
+*WinListFore Grey70
+*WinListFont -adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-*-*
+*WinListAction Click1 Iconify -1,Focus
+*WinListAction Click2 Shade
+*WinListAction Click3 Iconify
+*WinListUseSkipList
+*WinListUseIconNames
+*WinListGeometry +0+0
+# maxwidth for a vertical winlist or actual width for horizontal taskbar
+*WinListMaxWidth 798
+# down (vertical winlist) or across (horizontal titlebar) ?
+*WinListOrientation across
+#*WinListLeftJustify
+#*WinListNoAnchor

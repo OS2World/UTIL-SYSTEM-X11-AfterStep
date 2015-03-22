@@ -1,0 +1,22 @@
+# 02/17/1998 (GPLed) by Guylhem Aznar <guylhem@danmark.linux.eu.org>
+
+               ########################################
+               # AfterStep v1.4 Default Configuration #
+               ########################################
+
+##########################################################################
+# Directories
+#
+ModulePath		/XFree86/bin/
+IconPath		/XFree86/include/X11/bitmaps/
+PixmapPath		/XFree86/include/X11/pixmaps/;~/GNUstep/Library/AfterStep/desktop/buttons/;/XFree86/lib/X11/afterstep/desktop/buttons/;~/GNUstep/Library/AfterStep/desktop/icons/16bpp/;/XFree86/lib/X11/afterstep/desktop/icons/16bpp/;~/GNUstep/Library/AfterStep/desktop/icons/common/;/XFree86/lib/X11/afterstep/desktop/icons/common/;~/GNUstep/Library/AfterStep/desktop/backgrounds/;/XFree86/lib/X11/afterstep/desktop/backgrounds/
+#
+##########################################################################
+
+##########################################################################
+# Virtual desktop
+#
+DeskTopSize 2x2
+DeskTopScale 32
+#
+##########################################################################

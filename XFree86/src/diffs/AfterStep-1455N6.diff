@@ -1,0 +1,3270 @@
+diff -c -r -N AfterStep-1.4.5.55N6.orig/Imakefile AfterStep-1.4.5.55N6/Imakefile
+*** AfterStep-1.4.5.55N6.orig/Imakefile	Wed May 13 09:33:20 1998
+--- AfterStep-1.4.5.55N6/Imakefile	Thu May 28 22:43:54 1998
+***************
+*** 12,17 ****
+--- 12,18 ----
+  #define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+  
+  
++ #ifndef OS2Architecture
+  SUBDIRS = \
+  	lib \
+  	src/afterstep \
+***************
+*** 40,56 ****
+--- 41,85 ----
+  	src/asmixer \
+  	src/asprint \
+  	doc/afterdoc
++ #else
++ SUBDIRS = \
++ 	lib \
++ 	src/afterstep \
++ 	src/afsound \
++ 	src/afanimate \
++ 	src/afaudio \
++ 	src/afauto \
++ 	src/afbanner \
++ 	src/afclean \
++ 	src/afform \
++ 	src/afident \
++ 	src/afsave \
++ 	src/afscroll \
++ 	src/afpager \
++ 	src/afpager_noxpm \
++ 	src/afwharf \
++ 	src/afwinlist \
++ 	src/afzharf \
++ 	src/ascd \
++ 	src/asclock \
++ 	src/asload \
++ 	src/asmail
++ #endif
+  MakeSubdirs($(SUBDIRS))
+  
++ #ifndef OS2Architecture
+  install::
+  	if [ -d $(DESTDIR)/usr/share/afterstep/ ] ; \
+  	then mv $(DESTDIR)/usr/share/afterstep/ $(DESTDIR)/usr/share/oldafterstep ; \
+  	fi
+  	mkdir -p $(DESTDIR)/usr/share
+  	cp -R afterstep $(DESTDIR)/usr/share/afterstep
++ #endif
+  
+  mrproper::
+  	rm -fr config.cache config.log config.status Makefile.bak *.orig
+  
+  autoconf::
+  	autoheader configure.in > include/os-dependant.h ; autoconf configure.in > configure
++ 
++ DependSubdirs($(SUBDIRS))
+diff -c -r -N AfterStep-1.4.5.55N6.orig/include/configure.h AfterStep-1.4.5.55N6/include/configure.h
+*** AfterStep-1.4.5.55N6.orig/include/configure.h	Wed May 13 09:33:52 1998
+--- AfterStep-1.4.5.55N6/include/configure.h	Thu May 28 22:41:38 1998
+***************
+*** 4,9 ****
+--- 4,10 ----
+  
+  /* To override imake default compiler, undef OVERRIDE_COMPILER in Imakefiles */
+  
++ #if !defined(__EMX__) && !defined(OS2Architecture)
+  #define OVERRIDE_COMPILER CC=cc
+  
+  /* Where AfterStep will install its binaries & man pages */
+***************
+*** 18,30 ****
+--- 19,41 ----
+  #define AFTER_BPMDIR	"/usr/X11R6/include/X11/bitmaps"
+  #define AFTER_XPMDIR	"/usr/X11R6/include/X11/pixmaps"
+  #define AFTER_SHAREDIR	"/usr/share/afterstep"
++ #else
++ #define AFTER_MOD_DIR	"/XFree86/bin/"
++ #define AFTER_BPMDIR	"/XFree86/include/X11/bitmaps"
++ #define AFTER_XPMDIR	"/XFree86/include/X11/pixmaps"
++ #define AFTER_SHAREDIR	"/XFree86/lib/X11/AfterStep"
++ #endif
+  
+  /* Home directories NEEDED */
+  
+  #define GNUSTEP		"~/GNUstep"
+  #define GNUSTEPLIB	"~/GNUstep/Library"
+  #define AFTER_DIR	"~/GNUstep/Library/AfterStep"
++ #ifndef __EMX__
+  #define AFTER_SAVE 	"~/GNUstep/Library/AfterStep/.workspace_state"
++ #else
++ #define AFTER_SAVE 	"~/GNUstep/Library/AfterStep/.workspace_state.cmd"
++ #endif
+  #define AFTER_NONCF	"~/GNUstep/Library/AfterStep/non-configurable"
+  #define AFTER_NONCFDESK	"~/GNUstep/Library/AfterStep/non-configurable/desk%d"
+  
+***************
+*** 69,75 ****
+  
+  #define ANIM_STEP       10 
+  #define ANIM_STEP_MAIN  10
+! #define ANIM_DELAY      10
+   
+  
+  /***************************************************************************
+--- 80,86 ----
+  
+  #define ANIM_STEP       10 
+  #define ANIM_STEP_MAIN  10
+! #define ANIM_DELAY      5
+   
+  
+  /***************************************************************************
+***************
+*** 88,94 ****
+   * If you don't like this default, you can use xless, xman ...
+   ***************************************************************************/
+  
+! #define HELPCOMMAND     "xiterm -e man"
+  
+  /***************************************************************************
+   * #define NO_ICON_BACKGROUND
+--- 99,105 ----
+   * If you don't like this default, you can use xless, xman ...
+   ***************************************************************************/
+  
+! #define HELPCOMMAND     "xman"
+  
+  /***************************************************************************
+   * #define NO_ICON_BACKGROUND
+diff -c -r -N AfterStep-1.4.5.55N6.orig/include/os-dependant.h AfterStep-1.4.5.55N6/include/os-dependant.h
+*** AfterStep-1.4.5.55N6.orig/include/os-dependant.h	Wed May 13 09:33:52 1998
+--- AfterStep-1.4.5.55N6/include/os-dependant.h	Thu May 28 22:42:24 1998
+***************
+*** 39,45 ****
+  #define STDC_HEADERS 1
+  
+  /* Define if you can safely include both <sys/time.h> and <time.h>.  */
+! #define TIME_WITH_SYS_TIME 1
+  
+  /* Define to `int' if <sys/types.h> doesn't define.  */
+  /* #undef uid_t */
+--- 39,45 ----
+  #define STDC_HEADERS 1
+  
+  /* Define if you can safely include both <sys/time.h> and <time.h>.  */
+! /*#define TIME_WITH_SYS_TIME 1*/
+  
+  /* Define to `int' if <sys/types.h> doesn't define.  */
+  /* #undef uid_t */
+***************
+*** 51,66 ****
+  #define HAVE_GETHOSTNAME 1
+  
+  /* Define if you have the seteuid function.  */
+! #define HAVE_SETEUID 1
+  
+  /* Define if you have the setutent function.  */
+! #define HAVE_SETUTENT 1
+  
+  /* Define if you have the uname function.  */
+  #define HAVE_UNAME 1
+  
+  /* Define if you have the unsetenv function.  */
+! #define HAVE_UNSETENV 1
+  
+  /* Define if you have the <dirent.h> header file.  */
+  #define HAVE_DIRENT_H 1
+--- 51,66 ----
+  #define HAVE_GETHOSTNAME 1
+  
+  /* Define if you have the seteuid function.  */
+! /*#define HAVE_SETEUID 1*/
+  
+  /* Define if you have the setutent function.  */
+! /*#define HAVE_SETUTENT 1*/
+  
+  /* Define if you have the uname function.  */
+  #define HAVE_UNAME 1
+  
+  /* Define if you have the unsetenv function.  */
+! /*#define HAVE_UNSETENV 1*/
+  
+  /* Define if you have the <dirent.h> header file.  */
+  #define HAVE_DIRENT_H 1
+diff -c -r -N AfterStep-1.4.5.55N6.orig/lib/findiconfile.c AfterStep-1.4.5.55N6/lib/findiconfile.c
+*** AfterStep-1.4.5.55N6.orig/lib/findiconfile.c	Wed May 13 09:33:52 1998
+--- AfterStep-1.4.5.55N6/lib/findiconfile.c	Thu May 28 22:30:14 1998
+***************
+*** 6,11 ****
+--- 6,15 ----
+  
+  #include "../include/aftersteplib.h"
+  
++ #ifdef __EMX__
++ extern const char *__XOS2RedirRoot(const char *);
++ #endif
++ 
+  /****************************************************************************
+   *
+   * Find the specified icon file somewhere along the given path.
+***************
+*** 58,64 ****
+--- 62,72 ----
+      }
+      /* Search each element of the pathlist for the icon file */
+      while ((pathlist) && (*pathlist)) {
++ #ifndef __EMX__
+  	dir_end = strchr(pathlist, ':');
++ #else
++ 	dir_end = strchr(pathlist, ';');
++ #endif
+  	if (dir_end != NULL) {
+  	    strncpy(path, pathlist, dir_end - pathlist);
+  	    path[dir_end - pathlist] = 0;
+***************
+*** 77,82 ****
+--- 85,95 ----
+  	    strcpy(path, realfilename);
+  	    free(realfilename);
+  	}
++ #ifdef __EMX__
++ 	if (path[0] == '/')
++ 	  strcpy(path, __XOS2RedirRoot(path));
++ 	if (path[strlen(path)-1] != '/')
++ #endif
+  	strcat(path, "/");
+  	strcat(path, icon);
+  
+diff -c -r -N AfterStep-1.4.5.55N6.orig/lib/getfdwidth.c AfterStep-1.4.5.55N6/lib/getfdwidth.c
+*** AfterStep-1.4.5.55N6.orig/lib/getfdwidth.c	Wed May 13 09:33:52 1998
+--- AfterStep-1.4.5.55N6/lib/getfdwidth.c	Thu May 28 22:30:14 1998
+***************
+*** 1,3 ****
+--- 1,6 ----
++ #ifdef __EMX__
++ #include <os2emx.h>
++ #endif
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <unistd.h>
+***************
+*** 9,14 ****
+--- 12,24 ----
+  int GetFdWidth(void)
+  {
+      int r;
++ #if defined __EMX__
++ /* refer to emx source code */
++   long req_count=0, handle_count;
++   if (DosSetRelMaxFH(&req_count, &handle_count) == 0)
++     return handle_count;
++   else
++     return 255;
+  #ifdef STDC_HEADERS
+      r = sysconf(_SC_OPEN_MAX);
+  #else
+***************
+*** 18,22 ****
+--- 28,33 ----
+      return (r > FD_SETSIZE ? FD_SETSIZE : r);
+  #else
+      return r;
++ #endif
+  #endif
+  }
+diff -c -r -N AfterStep-1.4.5.55N6.orig/lib/homeanddirs.c AfterStep-1.4.5.55N6/lib/homeanddirs.c
+*** AfterStep-1.4.5.55N6.orig/lib/homeanddirs.c	Sun May 24 05:02:04 1998
+--- AfterStep-1.4.5.55N6/lib/homeanddirs.c	Thu May 28 22:30:46 1998
+***************
+*** 6,16 ****
+--- 6,23 ----
+   *
+   */
+  
++ #ifdef __EMX__
++ #include <sys/types.h>
++ #endif
+  #include <stdio.h>
+  #include <unistd.h>
+  #include <limits.h>
+  #include <dirent.h>
+  #include <sys/stat.h>
++ #ifdef __EMX__
++ #include <stddef.h>
++ #define PATH_MAX MAXPATHLEN
++ #endif
+  
+  #include "../include/configure.h"
+  #include "../include/afterstep.h"
+diff -c -r -N AfterStep-1.4.5.55N6.orig/lib/Imakefile AfterStep-1.4.5.55N6/lib/Imakefile
+*** AfterStep-1.4.5.55N6.orig/lib/Imakefile	Wed May 13 09:33:52 1998
+--- AfterStep-1.4.5.55N6/lib/Imakefile	Thu May 28 22:30:16 1998
+***************
+*** 7,9 ****
+--- 7,14 ----
+         copystring.o mygetostype.o getfdwidth.o homeanddirs.o
+  
+  NormalLibraryTarget(afterstep, $(OBJS))
++ 
++ #ifdef OS2Architecture
++ clean::
++ 	rm -rf exports
++ #endif
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afanimate/Animate.c AfterStep-1.4.5.55N6/src/afanimate/Animate.c
+*** AfterStep-1.4.5.55N6.orig/src/afanimate/Animate.c	Wed May 13 09:33:46 1998
+--- AfterStep-1.4.5.55N6/src/afanimate/Animate.c	Thu May 28 21:57:56 1998
+***************
+*** 27,32 ****
+--- 27,36 ----
+  #include <unistd.h>
+  #include <string.h>
+  #include <ctype.h>
++ #ifdef __EMX__
++ #include <fcntl.h>
++ #include <strings.h>
++ #endif
+  #include <X11/Xlib.h>
+  #include "../../include/configure.h"
+  #include "../../include/module.h"
+***************
+*** 343,348 ****
+--- 347,356 ----
+   
+      temp = strrchr(argv[0], '/');
+      ProgName = temp ? temp + 1 : argv[0];
++ #ifdef __EMX__
++     temp = strrchr(ProgName, '.');
++     if (temp) *temp = '\0';
++ #endif
+      if (argc != 6) {
+  	fprintf(stderr,"%s Version %s should only be executed by afterstep!\n",ProgName, VERSION);
+  	exit(1);
+***************
+*** 353,358 ****
+--- 361,370 ----
+      
+      Channel[0] = atoi(argv[1]);
+      Channel[1] = atoi(argv[2]);
++ #ifdef __EMX__
++     setmode(Channel[0], O_BINARY);
++     setmode(Channel[1], O_BINARY);
++ #endif
+      
+      dpy = XOpenDisplay("");
+      if (dpy==NULL) {
+***************
+*** 484,490 ****
+--- 496,506 ----
+  
+      line = safemalloc(MAXLINELENGTH);
+  
++ #ifndef __EMX__
+      fd = fopen(filename,"r");
++ #else
++     fd = fopen(filename,"rt");
++ #endif
+      if(fd == (FILE *)0)
+      {
+          fprintf(stderr,"%s: can't open config file %s",ProgName,filename);
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afanimate/Imakefile AfterStep-1.4.5.55N6/src/afanimate/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/afanimate/Imakefile	Wed May 13 09:33:46 1998
+--- AfterStep-1.4.5.55N6/src/afanimate/Imakefile	Thu May 28 22:01:28 1998
+***************
+*** 2,11 ****
+--- 2,15 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
+  
+  DEPLIBS = $(DEPXLIB)  ../../lib/libafterstep.a   
++ #else
++ DEPLIBS = $(DEPXLIB)  ../../lib/afterstep.a
++ #endif
+  
+  LOCAL_LIBRARIES = $(XPMLIB) $(XLIB) -L../../lib -lafterstep -lm
+  
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afaudio/Audio.c AfterStep-1.4.5.55N6/src/afaudio/Audio.c
+*** AfterStep-1.4.5.55N6.orig/src/afaudio/Audio.c	Wed May 13 09:33:40 1998
+--- AfterStep-1.4.5.55N6/src/afaudio/Audio.c	Thu May 28 22:02:18 1998
+***************
+*** 23,28 ****
+--- 23,34 ----
+  /*
+   * afterstep includes:
+   */
++ #ifdef __EMX__
++ #include <os2.h>
++ #define INCL_OS2MM
++ #define INCL_MCIOS2
++ #include <os2me.h>
++ #endif
+  #include <stdio.h>
+  #include <signal.h>
+  #include <fcntl.h>
+***************
+*** 36,41 ****
+--- 42,51 ----
+  #include "../../include/module.h"
+  #include "../../include/aftersteplib.h"
+  
++ #ifdef __EMX__
++ extern const char *__XOS2RedirRoot(const char *);
++ #endif
++ 
+  /*
+   * rplay includes:
+   */
+***************
+*** 57,62 ****
+--- 67,76 ----
+  #ifdef HAVE_RPLAY
+  int rplay_fd = -1;
+  #endif
++ #ifdef __EMX__
++ int use_mci = 0;
++ #endif
++ static	time_t 		now, last_time = 0;
+  
+  /* prototypes */
+  void Loop(int *);
+***************
+*** 87,92 ****
+--- 101,110 ----
+      "end_windowlist",
+      "icon_location",
+      "map",
++     "shade",
++     "unshade",
++     "unknown",
++     "new_background",
+  /* add builtins here */
+      "startup",
+      "shutdown",
+***************
+*** 115,120 ****
+--- 133,142 ----
+  
+      MyName = safemalloc(strlen(temp) + 1);
+      strcpy(MyName, temp);
++ #ifdef __EMX__
++     s = strrchr(MyName, '.');
++     if(s) *s='\0';
++ #endif
+  
+      if ((argc != 6) && (argc != 7)) {
+  	fprintf(stderr, "%s Version %s should only be executed by AfterStep!\n",
+***************
+*** 126,135 ****
+--- 148,171 ----
+  
+      fd[0] = atoi(argv[1]);
+      fd[1] = atoi(argv[2]);
++ #ifdef __EMX__
++     setmode(fd[0], O_BINARY);
++     setmode(fd[1], O_BINARY);
++ #endif
+  
+      audio_play_dir[0] = '\0';
+      audio_play_cmd_line[0] = '\0';
+  
++ #ifdef __EMX__
++     if ((s=getenv("MMBASE"))) {
++ 	if ((temp = strchr(s, ';'))) {
++ 		strncpy(audio_play_dir, s, temp-s);
++ 		strcpy(audio_play_dir+(temp-s), "\\sounds");
++ 	}
++ 	else
++ 		sprintf(audio_play_dir, "%s\\sounds", s);
++     }
++ #endif
+      /*
+       * Read the sound configuration.
+       */
+***************
+*** 179,185 ****
+--- 215,225 ----
+      int priority = RPLAY_DEFAULT_PRIORITY;
+  #endif
+  
++ #ifndef __EMX__
+      fp = fopen(config_file, "r");
++ #else
++     fp = fopen(config_file, "rt");
++ #endif
+      if (fp == NULL) {
+  	done(1);
+      }
+***************
+*** 212,218 ****
+  	    } else if (mystrcasecmp(p, CatString3("*", MyName, "Path")) == 0) {
+  		p = strtok(NULL, " \t");
+  		if (p && *p) {
+! 		    strcpy(audio_play_dir, p);
+  		}
+  	    } else if (mystrcasecmp(p, CatString3("*", MyName, "Delay")) == 0) {
+  		p = strtok(NULL, " \t");
+--- 252,263 ----
+  	    } else if (mystrcasecmp(p, CatString3("*", MyName, "Path")) == 0) {
+  		p = strtok(NULL, " \t");
+  		if (p && *p) {
+! #ifdef __EMX__
+! 		    if (*p == '/')
+! 			strcpy(audio_play_dir, __XOS2RedirRoot(p));
+! 		    else
+! #endif
+! 		    strcpy(audio_play_dir, PutHome(p));
+  		}
+  	    } else if (mystrcasecmp(p, CatString3("*", MyName, "Delay")) == 0) {
+  		p = strtok(NULL, " \t");
+***************
+*** 300,305 ****
+--- 345,358 ----
+  	}
+      }
+  #endif
++ #ifdef __EMX__
++     /*
++      * Builtin MCI support is enabled when AudioPlayCmd == builtin-mci.
++      */
++     p = strtok(audio_play_cmd_line, " \t");
++     if (mystrcasecmp(p, "builtin-mci") == 0)
++ 	use_mci = 1;
++ #endif
+  }
+  
+  /***********************************************************************
+***************
+*** 313,323 ****
+      unsigned long header[3], *body;
+      char *cbody;
+      int body_length, count, count2 = 0, total;
+-     time_t now, last_time = 0;
+      unsigned long code;
+  
+      while (1) {
+  	if ((count = read(fd[1], header, 3 * sizeof(unsigned long))) > 0) {
+  	    /*
+  	     * Ignore messages that occur during the delay
+  	     * period.
+--- 366,376 ----
+      unsigned long header[3], *body;
+      char *cbody;
+      int body_length, count, count2 = 0, total;
+      unsigned long code;
+  
+      while (1) {
+  	if ((count = read(fd[1], header, 3 * sizeof(unsigned long))) > 0) {
++ #if 0
+  	    /*
+  	     * Ignore messages that occur during the delay
+  	     * period.
+***************
+*** 327,332 ****
+--- 380,386 ----
+  		continue;
+  	    }
+  	    last_time = now;
++ #endif
+  
+  	    if (header[0] == START_FLAG) {
+  		body_length = header[2] - 3;
+***************
+*** 405,413 ****
+--- 459,507 ----
+  {
+      static char buf[MAXLINELENGTH];
+  
++ #ifdef __EMX__
++     if (use_mci) {
++ 	if (sound_table[sound]) {
++ 	    char s[256], *tmp, buf[256];
++ 	    /*
++ 	     * Ignore messages that occur during the delay
++ 	     * period.
++ 	     */
++ 	    now = time(0);
++ 	    if (now < (last_time + audio_delay))
++ 	    {
++ 		return 1;
++ 	    }
++ 	    last_time = now;
++ 
++ #define open_wave	"open waveaudio alias wave shareable wait"
++ #define play_wave	"play wave wait"
++ #define close_wave	"close wave wait"
++ 	    if (audio_play_dir[0] == '\0' || sound_table[sound][0] == '/')
++ 		sprintf(s,"load wave %s wait",sound_table[sound]);
++ 	    else
++ 		sprintf(s,"load wave %s\\%s wait", audio_play_dir, sound_table[sound]);
++ 	    mciSendString(open_wave, buf, 256, 0, 0);
++ 	    mciSendString(s, buf, 256, 0, 0);
++ 	    mciSendString(play_wave, buf, 256, 0, 0);
++ 	    mciSendString(close_wave, buf, 256, 0, 0);
++ 	}
++ 	return 0;
++     }
++ #endif
+  #ifdef HAVE_RPLAY
+      if (rplay_fd != -1) {
+  	if (rplay_table[sound]) {
++ 		/*
++ 		 * Ignore messages that occur during the delay
++ 		 * period.
++ 		 */
++ 		now = time(0);
++ 		if (now < (last_time + audio_delay))
++ 		{
++ 			return 1;
++ 		}
++ 		last_time = now;
+  	    if (rplay(rplay_fd, rplay_table[sound]) < 0) {
+  		rplay_perror("rplay");
+  	    }
+***************
+*** 417,422 ****
+--- 511,527 ----
+  #endif
+  
+      if (sound_table[sound]) {
++ 	/*
++ 	 * Ignore messages that occur during the delay
++ 	 * period.
++ 	 */
++ 	now = time(0);
++ 	if (now < (last_time + audio_delay))
++ 	{
++ 		return 1;
++ 	}
++ 	last_time = now;
++ 
+  	memset(buf, 0, MAXLINELENGTH);
+  
+  	/*
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afaudio/Imakefile AfterStep-1.4.5.55N6/src/afaudio/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/afaudio/Imakefile	Wed May 13 09:33:40 1998
+--- AfterStep-1.4.5.55N6/src/afaudio/Imakefile	Thu May 28 22:03:12 1998
+***************
+*** 2,9 ****
+--- 2,11 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
++ #endif
+  
+  /*
+   * Uncomment the line below to add builtin support for the
+***************
+*** 29,37 ****
+--- 31,44 ----
+  
+  EXTRA_LIBRARIES = $(AUDIO_LIBRARIES)
+  
++ #ifndef OS2Architecture
+  DEPLIBS = $(DEPXLIB)  ../../lib/libafterstep.a
+  
+  LOCAL_LIBRARIES = -L../../lib -lafterstep
++ #else
++ DEPLIBS = $(DEPXLIB)  ../../lib/afterstep.a
++ LOCAL_LIBRARIES = -L../../lib -lafterstep $(XLIB) -los2me
++ #endif
+  
+  LINTLIBS = $(LINTXLIB)
+  
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afauto/Auto.c AfterStep-1.4.5.55N6/src/afauto/Auto.c
+*** AfterStep-1.4.5.55N6.orig/src/afauto/Auto.c	Wed May 13 09:33:40 1998
+--- AfterStep-1.4.5.55N6/src/afauto/Auto.c	Thu May 28 22:04:18 1998
+***************
+*** 31,37 ****
+  #include <string.h>
+  #include <sys/wait.h>
+  #include <sys/time.h>
+! #if defined ___AIX || defined _AIX || defined __QNX__ || defined ___AIXV3 || defined AIXV3 || defined _SEQUENT_
+  #include <sys/select.h>
+  #endif
+  #include <unistd.h>
+--- 31,37 ----
+  #include <string.h>
+  #include <sys/wait.h>
+  #include <sys/time.h>
+! #if defined ___AIX || defined _AIX || defined __QNX__ || defined ___AIXV3 || defined AIXV3 || defined _SEQUENT_ || defined __EMX__
+  #include <sys/select.h>
+  #endif
+  #include <unistd.h>
+***************
+*** 95,100 ****
+--- 95,104 ----
+    
+    fd[0] = atoi(argv[1]);
+    fd[1] = atoi(argv[2]);
++ #ifdef __EMX__
++   setmode(fd[0], O_BINARY);
++   setmode(fd[1], O_BINARY);
++ #endif
+  
+    timeout = atoi(argv[6]);
+    t_secs = timeout/1000;
+***************
+*** 119,125 ****
+--- 123,133 ----
+  {
+    unsigned long header[HEADER_SIZE], *body;
+    fd_set in_fdset;
++ #ifndef __EMX__
+    struct itimerval value;
++ #else
++   struct timeval value;
++ #endif
+    int retval;
+    int Raised = 0;
+  
+***************
+*** 130,137 ****
+--- 138,150 ----
+  
+        /* set up a time-out, in case no packets arrive before we have to
+         * iconify something */
++ #ifndef __EMX__
+        value.it_value.tv_usec = t_usecs;
+        value.it_value.tv_sec = t_secs;
++ #else
++       value.tv_usec = t_usecs;
++       value.tv_sec = t_secs;
++ #endif
+  
+  #ifdef __hpux
+        if((timeout > 0)&&(Raised == 0))
+***************
+*** 140,146 ****
+--- 153,163 ----
+  	retval=select(fd_width,(int *)&in_fdset, 0, 0, NULL);  
+  #else      
+        if((timeout > 0)&&(Raised == 0))
++ # ifndef __EMX__
+  	retval=select(fd_width,&in_fdset, 0, 0, &value.it_value);
++ # else
++ 	retval=select(fd_width,&in_fdset, 0, 0, &value);
++ # endif
+        else
+  	retval=select(fd_width,&in_fdset, 0, 0, NULL);  
+  #endif
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afauto/Imakefile AfterStep-1.4.5.55N6/src/afauto/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/afauto/Imakefile	Wed May 13 09:33:40 1998
+--- AfterStep-1.4.5.55N6/src/afauto/Imakefile	Thu May 28 22:04:56 1998
+***************
+*** 2,11 ****
+--- 2,15 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
+  
+  DEPLIBS = $(DEPXLIB)  ../../lib/libafterstep.a
++ #else
++ DEPLIBS = $(DEPXLIB)  ../../lib/afterstep.a
++ #endif
+  
+  LOCAL_LIBRARIES = -L../../lib -lafterstep
+  
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afbanner/Banner.c AfterStep-1.4.5.55N6/src/afbanner/Banner.c
+*** AfterStep-1.4.5.55N6.orig/src/afbanner/Banner.c	Wed May 13 09:33:42 1998
+--- AfterStep-1.4.5.55N6/src/afbanner/Banner.c	Thu May 28 22:05:38 1998
+***************
+*** 178,183 ****
+--- 178,187 ----
+  
+    myName = safemalloc(strlen(string)+1);
+    strcpy(myName, string);
++ #ifdef __EMX__
++   string = strrchr(myName, '.');
++   if(string) *string='\0';
++ #endif
+  
+    if((argc != 6)&&(argc != 7))
+      {
+***************
+*** 192,197 ****
+--- 196,205 ----
+        /* sever our connection with afterstep, if we have one. */
+        fd[0] = atoi(argv[1]);
+        fd[1] = atoi(argv[2]);
++ #ifdef __EMX__
++       setmode(fd[0], O_BINARY);
++       setmode(fd[1], O_BINARY);
++ #endif
+    }
+  
+    if (argc > 6) {
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afbanner/Imakefile AfterStep-1.4.5.55N6/src/afbanner/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/afbanner/Imakefile	Wed May 13 09:33:42 1998
+--- AfterStep-1.4.5.55N6/src/afbanner/Imakefile	Thu May 28 22:06:38 1998
+***************
+*** 2,16 ****
+--- 2,22 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
++ #endif
+  
+  #ifdef XPM
+  XPMLIB = XPMLIBRARY
+  
+  DEPLIBS = $(DEPXLIB) 
+  
++ #ifndef OS2Architecture
+  LOCAL_LIBRARIES = $(XPMLIB) $(XLIB) -L../../lib -lafterstep  
++ #else
++ LOCAL_LIBRARIES = $(XPMLIB) -L../../lib -lafterstep $(XLIB)
++ #endif
+  
+  LINTLIBS = $(LINTXLIB)
+  
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afclean/Clean.c AfterStep-1.4.5.55N6/src/afclean/Clean.c
+*** AfterStep-1.4.5.55N6.orig/src/afclean/Clean.c	Wed May 13 09:33:42 1998
+--- AfterStep-1.4.5.55N6/src/afclean/Clean.c	Thu May 28 22:07:22 1998
+***************
+*** 80,85 ****
+--- 80,89 ----
+  
+    MyName = safemalloc(strlen(temp)+1);
+    strcpy(MyName, temp);
++ #ifdef __EMX__
++   temp = strrchr(MyName, '.');
++   if(temp) *temp='\0';
++ #endif
+  
+    if((argc != 6)&&(argc != 7))
+      {
+***************
+*** 97,108 ****
+--- 101,120 ----
+  
+    MyName = safemalloc(strlen(temp)+1);
+    strcpy(MyName, temp);
++ #ifdef __EMX__
++   temp = strrchr(MyName, '.');
++   if(temp) *temp='\0';
++ #endif
+  
+    /* Dead pipes mean AfterStep died */
+    signal (SIGPIPE, DeadPipe);  
+    
+    fd[0] = atoi(argv[1]);
+    fd[1] = atoi(argv[2]);
++ #ifdef __EMX__
++   setmode(fd[0], O_BINARY);
++   setmode(fd[1], O_BINARY);
++ #endif
+  
+    /* scan config file for set-up parameters */
+  
+***************
+*** 119,125 ****
+--- 131,141 ----
+         realconfigfile = PutHome(configfile);
+    }
+  }
++ #ifndef __EMX__
+    file = fopen(realconfigfile,"r");
++ #else
++   file = fopen(realconfigfile,"rt");
++ #endif
+  
+    if(file != (FILE *)NULL)
+      {
+***************
+*** 177,183 ****
+--- 193,203 ----
+  {
+    unsigned long header[3], *body;
+    fd_set in_fdset;
++ #ifndef __EMX__
+    struct itimerval value;
++ #else
++   struct timeval value;
++ #endif
+    int retval, count;
+  
+    while(1)
+***************
+*** 190,197 ****
+--- 210,222 ----
+        
+        /* set up a time-out, in case no packets arrive before we have to
+         * iconify something */
++ #ifndef __EMX__
+        value.it_value.tv_usec = 0;
+        value.it_value.tv_sec = next_event_time - t0;
++ #else
++       value.tv_usec = 0;
++       value.tv_sec = next_event_time - t0;
++ #endif
+  
+  #ifdef __hpux
+        if(value.it_value.tv_sec > 0)
+***************
+*** 199,206 ****
+--- 224,236 ----
+        else
+  	retval=select(fd_width,(int *)&in_fdset, 0, 0, NULL);  
+  #else      
++ # ifndef __EMX__
+        if(value.it_value.tv_sec > 0)
+  	retval=select(fd_width,&in_fdset, 0, 0, &value.it_value);
++ # else
++       if(value.tv_sec > 0)
++ 	retval=select(fd_width,&in_fdset, 0, 0, &value);
++ # endif
+        else
+  	retval=select(fd_width,&in_fdset, 0, 0, NULL);  
+  #endif
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afclean/Imakefile AfterStep-1.4.5.55N6/src/afclean/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/afclean/Imakefile	Wed May 13 09:33:42 1998
+--- AfterStep-1.4.5.55N6/src/afclean/Imakefile	Thu May 28 22:07:56 1998
+***************
+*** 2,11 ****
+--- 2,15 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
+  
+  DEPLIBS = $(DEPXLIB) ../../lib/libafterstep.a
++ #else
++ DEPLIBS = $(DEPXLIB) ../../lib/afterstep.a
++ #endif
+  
+  LOCAL_LIBRARIES = -L../../lib -lafterstep
+  
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afform/Form.c AfterStep-1.4.5.55N6/src/afform/Form.c
+*** AfterStep-1.4.5.55N6.orig/src/afform/Form.c	Wed May 13 09:33:42 1998
+--- AfterStep-1.4.5.55N6/src/afform/Form.c	Thu May 28 22:08:34 1998
+***************
+*** 295,301 ****
+--- 295,305 ----
+      XLoadQueryFont(dpy, "fixed");
+    fonts[f_text] = fonts[f_input] = fonts[f_button] = xfs[f_text]->fid;
+  
++ #ifndef __EMX__
+    if (!(fp = fopen(file_name, "r"))) {
++ #else
++   if (!(fp = fopen(file_name, "rt"))) {
++ #endif
+      fprintf(fp_err, "%s: can't open config file %s.\n", prog_name, file_name);
+      exit(1);
+    }
+***************
+*** 1571,1576 ****
+--- 1575,1587 ----
+    if (i > 0)
+      prog_name = prog_name + (i + 1);
+    fprintf(fp_err, "%s started...\n", prog_name);
++ #ifdef __EMX__
++ {
++   char *tmp;
++   tmp = strrchr(prog_name, '.');
++   if(tmp) *tmp='\0';
++ }
++ #endif
+  
+    if (argc < 6) {
+  #ifndef DEBUG
+***************
+*** 1586,1591 ****
+--- 1597,1606 ----
+        prog_name = argv[6];
+      fd_out = atoi(argv[1]);
+      fd_in = atoi(argv[2]);
++ #ifdef __EMX__
++     setmode(fd_out, O_BINARY);
++     setmode(fd_in, O_BINARY);
++ #endif
+      ref = strtol(argv[4], NULL, 16);
+      if (ref == 0) ref = None;
+  #ifdef DEBUG
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afform/Imakefile AfterStep-1.4.5.55N6/src/afform/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/afform/Imakefile	Wed May 13 09:33:42 1998
+--- AfterStep-1.4.5.55N6/src/afform/Imakefile	Thu May 28 22:09:06 1998
+***************
+*** 2,11 ****
+--- 2,15 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
+  
+  DEPLIBS = $(DEPXLIB)  ../../lib/libafterstep.a   
++ #else
++ DEPLIBS = $(DEPXLIB)  ../../lib/afterstep.a   
++ #endif
+  
+  LOCAL_LIBRARIES = $(XLIB) -L../../lib -lafterstep
+  
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afident/Ident.c AfterStep-1.4.5.55N6/src/afident/Ident.c
+*** AfterStep-1.4.5.55N6.orig/src/afident/Ident.c	Wed May 13 09:33:42 1998
+--- AfterStep-1.4.5.55N6/src/afident/Ident.c	Thu May 28 22:09:44 1998
+***************
+*** 107,112 ****
+--- 107,116 ----
+  
+      MyName = safemalloc(strlen(temp) + 1);
+      strcpy(MyName, temp);
++ #ifdef __EMX__
++     temp = strrchr(MyName, '.');
++     if(temp) *temp='\0';
++ #endif
+      Clength = strlen(MyName);
+  
+      if ((argc != 6) && (argc != 7)) {
+***************
+*** 119,124 ****
+--- 123,132 ----
+  
+      fd[0] = atoi(argv[1]);
+      fd[1] = atoi(argv[2]);
++ #ifdef __EMX__
++     setmode(fd[0], O_BINARY);
++     setmode(fd[1], O_BINARY);
++ #endif
+  
+      /* An application window may have already been selected - look for it */
+      sscanf(argv[4], "%x", (unsigned int *) &app_win);
+***************
+*** 152,158 ****
+--- 160,170 ----
+  	realconfigfile = PutHome(configfile);
+      }
+  }
++ #ifndef __EMX__
+      file = fopen(realconfigfile, "r");
++ #else
++     file = fopen(realconfigfile, "rt");
++ #endif
+  
+      if (file != (FILE *) NULL) {
+  	char line[MAXLINELENGTH];
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afident/Imakefile AfterStep-1.4.5.55N6/src/afident/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/afident/Imakefile	Wed May 13 09:33:42 1998
+--- AfterStep-1.4.5.55N6/src/afident/Imakefile	Thu May 28 22:10:12 1998
+***************
+*** 2,11 ****
+--- 2,15 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
+  
+  DEPLIBS = $(DEPXLIB)  ../../lib/libafterstep.a   
++ #else
++ DEPLIBS = $(DEPXLIB)  ../../lib/afterstep.a   
++ #endif
+  
+  LOCAL_LIBRARIES = $(XLIB) -L../../lib -lafterstep
+  
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afpager/Imakefile AfterStep-1.4.5.55N6/src/afpager/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/afpager/Imakefile	Wed May 13 09:33:42 1998
+--- AfterStep-1.4.5.55N6/src/afpager/Imakefile	Thu May 28 22:12:16 1998
+***************
+*** 4,15 ****
+--- 4,21 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
+  
+  DEPLIBS = $(DEPXLIB)  ../../lib/libafterstep.a   
+  
+  LOCAL_LIBRARIES = $(XLIB) XPMLIBRARY  -L../../lib -lafterstep
++ #else
++ DEPLIBS = $(DEPXLIB)  ../../lib/afterstep.a   
++ 
++ LOCAL_LIBRARIES = XPMLIBRARY  -L../../lib -lafterstep $(XLIB)
++ #endif
+  SRCS = Pager.c x_pager.c
+  OBJS = Pager.o x_pager.o
+  
+***************
+*** 17,27 ****
+--- 23,35 ----
+  
+  ComplexProgramTarget(Pager)
+  
++ #ifndef OS2Architecture
+  install::
+  	ln -sf Pager $(DESTDIR)$(BINDIR)/WPager
+  	ln -sf Pager $(DESTDIR)$(BINDIR)/XPager
+  	ln -sf Pager $(DESTDIR)$(BINDIR)/YPager
+  	ln -sf Pager $(DESTDIR)$(BINDIR)/ZPager
++ #endif
+  
+  /* Why hell can't it work on linux machines ?? */
+  /*	LinkFile($(BINDIR)/WPager,$(BINDIR)/Pager)*/
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afpager/Pager.c AfterStep-1.4.5.55N6/src/afpager/Pager.c
+*** AfterStep-1.4.5.55N6.orig/src/afpager/Pager.c	Wed May 13 09:33:42 1998
+--- AfterStep-1.4.5.55N6/src/afpager/Pager.c	Thu May 28 22:10:52 1998
+***************
+*** 116,121 ****
+--- 116,125 ----
+  
+      MyName = safemalloc(strlen(temp) + 1);
+      strcpy(MyName, temp);
++ #ifdef __EMX__
++     s = strrchr(MyName, '.');
++     if(s) *s='\0';
++ #endif
+  
+      if ((argc != 7) && (argc != 6)) {
+  	fprintf(stderr, "%s Version %s should only be executed by afterstep!\n", MyName,
+***************
+*** 133,138 ****
+--- 137,146 ----
+  
+      fd[0] = atoi(argv[1]);
+      fd[1] = atoi(argv[2]);
++ #ifdef __EMX__
++     setmode(fd[0], O_BINARY);
++     setmode(fd[1], O_BINARY);
++ #endif
+  
+      fd_width = GetFdWidth();
+  
+***************
+*** 796,802 ****
+--- 804,814 ----
+      Scr.ASRoot = NULL;
+      Scr.Hilite = NULL;
+  
++ #ifndef __EMX__
+      fd = fopen(filename, "r");
++ #else
++     fd = fopen(filename, "rt");
++ #endif
+      if (fd == (FILE *) 0) {
+  	fprintf(stderr, "%s: can't open config file %s", MyName, filename);
+  	exit(1);
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afpager_noxpm/Imakefile AfterStep-1.4.5.55N6/src/afpager_noxpm/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/afpager_noxpm/Imakefile	Wed May 13 09:33:42 1998
+--- AfterStep-1.4.5.55N6/src/afpager_noxpm/Imakefile	Thu May 28 22:13:54 1998
+***************
+*** 4,15 ****
+--- 4,21 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
+  
+  DEPLIBS = $(DEPXLIB)  ../../lib/libafterstep.a   
+  
+  LOCAL_LIBRARIES = $(XLIB) -L../../lib -lafterstep
++ #else
++ DEPLIBS = $(DEPXLIB)  ../../lib/afterstep.a   
++ 
++ LOCAL_LIBRARIES = -L../../lib -lafterstep $(XLIB)
++ #endif
+  SRCS = Pager.c x_pager.c
+  OBJS = Pager-noxpm.o x_pager-noxpm.o
+  
+***************
+*** 18,27 ****
+--- 24,35 ----
+  ComplexProgramTarget(Pager)
+  
+  /* LinkFile would be better */
++ #ifndef OS2Architecture
+  install::
+  	ln -sf Pager $(DESTDIR)$(BINDIR)/WPager
+  	ln -sf Pager $(DESTDIR)$(BINDIR)/XPager
+  	ln -sf Pager $(DESTDIR)$(BINDIR)/YPager
+  	ln -sf Pager $(DESTDIR)$(BINDIR)/ZPager
++ #endif
+   
+  #endif
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afpager_noxpm/Pager-noxpm.c AfterStep-1.4.5.55N6/src/afpager_noxpm/Pager-noxpm.c
+*** AfterStep-1.4.5.55N6.orig/src/afpager_noxpm/Pager-noxpm.c	Wed May 13 09:33:42 1998
+--- AfterStep-1.4.5.55N6/src/afpager_noxpm/Pager-noxpm.c	Thu May 28 22:12:52 1998
+***************
+*** 109,114 ****
+--- 109,118 ----
+    
+    MyName = safemalloc(strlen(temp)+2);
+    strcpy(MyName, temp);
++ #ifdef __EMX__
++   s = strrchr(MyName, '.');
++   if(s) *s='\0';
++ #endif
+    
+    if((argc != 7)&&(argc != 6))
+      {
+***************
+*** 129,134 ****
+--- 133,142 ----
+    
+    fd[0] = atoi(argv[1]);
+    fd[1] = atoi(argv[2]);
++ #ifdef __EMX__
++   setmode(fd[0], O_BINARY);
++   setmode(fd[1], O_BINARY);
++ #endif
+    
+    fd_width = GetFdWidth();
+    
+***************
+*** 810,816 ****
+--- 818,828 ----
+    Scr.Vx = 0;
+    Scr.Vy = 0;
+    
++ #ifndef __EMX__
+    fd = fopen(filename,"r");
++ #else
++   fd = fopen(filename,"rt");
++ #endif
+    if(fd == (FILE *)0)
+      {
+        fprintf(stderr,"%s: can't open config file %s",MyName,filename);
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afsave/Imakefile AfterStep-1.4.5.55N6/src/afsave/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/afsave/Imakefile	Wed May 13 09:33:42 1998
+--- AfterStep-1.4.5.55N6/src/afsave/Imakefile	Thu May 28 22:15:36 1998
+***************
+*** 2,11 ****
+--- 2,15 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
+  
+  DEPLIBS = $(DEPXLIB) ../../lib/libafterstep.a
++ #else
++ DEPLIBS = $(DEPXLIB) ../../lib/afterstep.a
++ #endif
+  
+  LOCAL_LIBRARIES = $(XLIB) -L../../lib -lafterstep
+  
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afsave/Save.c AfterStep-1.4.5.55N6/src/afsave/Save.c
+*** AfterStep-1.4.5.55N6.orig/src/afsave/Save.c	Wed May 13 09:33:44 1998
+--- AfterStep-1.4.5.55N6/src/afsave/Save.c	Thu May 28 22:15:02 1998
+***************
+*** 74,79 ****
+--- 74,83 ----
+  
+    MyName = safemalloc(strlen(temp)+1);
+    strcpy(MyName, temp);
++ #ifdef __EMX__
++   temp = strrchr(MyName, '.');
++   if(temp) *temp='\0';
++ #endif
+  
+    if((argc != 6)&&(argc != 7))
+      {
+***************
+*** 98,103 ****
+--- 102,111 ----
+    
+    fd[0] = atoi(argv[1]);
+    fd[1] = atoi(argv[2]);
++ #ifdef __EMX__
++   setmode(fd[0], O_BINARY);
++   setmode(fd[1], O_BINARY);
++ #endif
+  
+    fd_width = GetFdWidth();
+  
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afscroll/Imakefile AfterStep-1.4.5.55N6/src/afscroll/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/afscroll/Imakefile	Wed May 13 09:33:44 1998
+--- AfterStep-1.4.5.55N6/src/afscroll/Imakefile	Thu May 28 22:16:54 1998
+***************
+*** 2,11 ****
+--- 2,15 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
+  
+  DEPLIBS = $(DEPXLIB)  ../../lib/libafterstep.a   
++ #else
++ DEPLIBS = $(DEPXLIB)  ../../lib/afterstep.a   
++ #endif
+  
+  LOCAL_LIBRARIES = $(XLIB) -L../../lib -lafterstep
+  
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afscroll/Scroll.c AfterStep-1.4.5.55N6/src/afscroll/Scroll.c
+*** AfterStep-1.4.5.55N6.orig/src/afscroll/Scroll.c	Wed May 13 09:33:44 1998
+--- AfterStep-1.4.5.55N6/src/afscroll/Scroll.c	Thu May 28 22:16:26 1998
+***************
+*** 92,97 ****
+--- 92,101 ----
+    
+    MyName = safemalloc(strlen(temp)+1);
+    strcpy(MyName, temp);
++ #ifdef __EMX__
++   s = strrchr(MyName, '.');
++   if(s) *s='\0';
++ #endif
+    Clength = strlen(MyName);
+  
+    if((argc != 6)&&(argc != 7))
+***************
+*** 118,123 ****
+--- 122,131 ----
+  
+    fd[0] = atoi(argv[1]);
+    fd[1] = atoi(argv[2]);
++ #ifdef __EMX__
++   setmode(fd[0], O_BINARY);
++   setmode(fd[1], O_BINARY);
++ #endif
+  
+    /* An application window may have already been selected - look for it */
+    sscanf(argv[4],"%x",(unsigned int *)&app_win);
+***************
+*** 152,158 ****
+--- 160,170 ----
+                 realconfigfile = PutHome(configfile);
+         }
+  }
++ #ifndef __EMX__
+    file = fopen(realconfigfile,"r");
++ #else
++   file = fopen(realconfigfile,"rt");
++ #endif
+  
+    if(file != (FILE *)NULL)
+      {
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afsound/ASSound.c AfterStep-1.4.5.55N6/src/afsound/ASSound.c
+*** AfterStep-1.4.5.55N6.orig/src/afsound/ASSound.c	Wed May 13 09:33:46 1998
+--- AfterStep-1.4.5.55N6/src/afsound/ASSound.c	Thu May 28 22:00:00 1998
+***************
+*** 23,28 ****
+--- 23,31 ----
+   * replace the Audio module 
+   */
+  
++ #ifdef __EMX__
++ #include <sys/types.h>
++ #endif
+  #include <stdlib.h>
+  #include <stdio.h>
+  #include <sys/stat.h>
+***************
+*** 31,37 ****
+--- 34,44 ----
+  #include <sys/time.h>
+  #include <signal.h>
+  #include <unistd.h>
++ #ifndef __EMX__
+  #define AUDIO_DEVICE		"/dev/audio"
++ #else
++ #include <process.h>
++ #endif
+  
+  typedef struct LList {
+      struct LList *next;
+***************
+*** 88,101 ****
+--- 95,113 ----
+      if (stat(sound_file, &stat_buf)<0) {
+  	fprintf(stderr,"%s: sound file %s not found\n",ProgName,
+  		sound_file);
++ 	SoundTable[code]=ckmalloc(sizeof(SoundEntry));	
++ 	SoundTable[code]->size = -1;
+  	return;
+      }
+      SoundTable[code]=ckmalloc(sizeof(SoundEntry));
++ #ifndef __EMX__
+      if (SoundPlayer!=NULL) {
++ #endif
+  	SoundTable[code]->data=ckmalloc(strlen(sound_file));
+  	SoundTable[code]->size=1;
+  	strcpy(SoundTable[code]->data,sound_file);
+  	return;
++ #ifndef __EMX__
+      }
+      SoundTable[code]->data=ckmalloc(stat_buf.st_size);
+      file=open(sound_file, O_RDONLY);
+***************
+*** 117,122 ****
+--- 129,135 ----
+  	return;
+      }
+      close(file);
++ #endif
+  }
+  
+  /*
+***************
+*** 135,140 ****
+--- 148,154 ----
+      }
+      if (SoundPlayer!=NULL) {
+  	static char cmd[1024];
++ #ifndef __EMX__
+  	pid_t child;
+  	
+  	child = fork();
+***************
+*** 144,155 ****
+--- 158,188 ----
+  	} else {
+  	    while (wait(NULL)<0);
+  	}	
++ #else
++ 	spawnlp(P_WAIT,SoundPlayer,SoundPlayer,SoundTable[sid]->data,NULL);
++ #endif	
+  	/*
+  	sprintf(cmd,"%s %s",SoundPlayer,SoundTable[sid]->data);
+  	system(cmd);
+  	 */
+  	return;
+      }
++ #ifdef __EMX__
++     {
++ 	char s[1024], buf[256];
++ #define open_wave	"open waveaudio alias wave shareable wait"
++ #define play_wave	"play wave wait"
++ #define close_wave	"close wave wait"
++ 	sprintf(s,"load wave %s wait",SoundTable[sid]->data);
++ 	mciSendString(open_wave, buf, 256, 0, 0);
++ 	mciSendString(s, buf, 256, 0, 0);
++ 	mciSendString(play_wave, buf, 256, 0, 0);
++ 	mciSendString(close_wave, buf, 256, 0, 0);
++     }
++ #undef open_wave
++ #undef play_wave
++ #undef close_wave
++ #endif
+  #if 0    
+      audio = open(AUDIO_DEVICE,O_WRONLY|O_NONBLOCK);
+      if ((audio<0) && errno==EAGAIN) {
+***************
+*** 220,225 ****
+--- 253,259 ----
+  int main(int argc, char **argv) 
+  {
+      int i;
++     int fd_width;
+  
+      signal(SIGUSR1, HandleRequest);
+      ProgName=argv[0];
+***************
+*** 231,237 ****
+--- 265,273 ----
+      SoundPlayer=argv[2];
+      if (SoundPlayer[0]=='-' && SoundPlayer[1]==0) {
+  	SoundPlayer=NULL;
++ #ifndef __EMX__
+  	printf("%s:need a sound player.\n",ProgName);
++ #endif
+      }
+      SoundTable=ckmalloc(sizeof(SoundEntry *)*(argc-3));
+      for(i=3; i<argc; i++) {
+***************
+*** 239,245 ****
+--- 275,294 ----
+      }
+      LastSound=i-3;
+      InPipe = atoi(argv[1]);
++ #ifdef __EMX__
++     setmode(InPipe, O_BINARY);
++ #endif
++     fd_width = GetFdWidth();
+      while(1) {
++ 	fd_set in_fdset;
++ 	FD_ZERO(&in_fdset);
++ 	FD_SET(InPipe,&in_fdset);
++ #ifdef __hpux
++ 	select(fd_width,(int *)&in_fdset, 0, 0, NULL);
++ #else
++ 	select(fd_width,&in_fdset, 0, 0, NULL);
++ #endif
++ 	
+  #if 0	
+  	LList *tmp;
+  	while (OldestQueued!=NULL) {
+***************
+*** 251,256 ****
+--- 300,306 ----
+  	}
+  	pause();
+  #endif	
++ 	if(FD_ISSET(InPipe, &in_fdset))
+  	HandleRequest(0);
+      }    
+  }
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afsound/Imakefile AfterStep-1.4.5.55N6/src/afsound/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/afsound/Imakefile	Wed May 13 09:33:46 1998
+--- AfterStep-1.4.5.55N6/src/afsound/Imakefile	Thu May 28 22:58:48 1998
+***************
+*** 2,13 ****
+--- 2,18 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
+  
+  DEPLIBS = $(DEPXLIB)  ../../lib/libafterstep.a   
+  
+  LOCAL_LIBRARIES = $(XLIB) -L../../lib -lafterstep
++ #else
++ DEPLIBS = $(DEPXLIB)  ../../lib/afterstep.a
++ LOCAL_LIBRARIES = $(XLIB) -L../../lib -lafterstep -los2me
++ #endif
+  
+  LINTLIBS = $(LINTXLIB)
+  
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afterstep/afterstep.c AfterStep-1.4.5.55N6/src/afterstep/afterstep.c
+*** AfterStep-1.4.5.55N6.orig/src/afterstep/afterstep.c	Tue May 26 03:38:26 1998
+--- AfterStep-1.4.5.55N6/src/afterstep/afterstep.c	Thu May 28 22:27:16 1998
+***************
+*** 623,631 ****
+--- 623,633 ----
+  	w = w / hints.width_inc;
+  	h = h / hints.height_inc;
+      }
++ #ifndef __EMX__
+      if (!first) {
+  	fprintf(savewindow_fd, "&\n");
+      }
++ #endif
+      first = 0;
+      for (i = 0; i < client_argc; i++) {
+  	if (strcmp(client_argv[i], "-geometry") == 0) {
+***************
+*** 833,839 ****
+--- 835,845 ----
+  		    ((ks = XKeycodeToKeysym(dpy, kc, 0)) != NoSymbol)) {
+  		    kn = XKeysymToString(ks);
+  		    knl = strlen(kn);
++ #ifndef __EMX__
+  		    if ((knl > 6) && (strcasecmp(kn + knl - 4, "lock") == 0))
++ #else
++ 		    if ((knl > 6) && (mystrcasecmp(kn + knl - 4, "lock") == 0))
++ #endif
+  			lockmask |= (1 << m);
+  		}
+  	    }
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afterstep/configure.c AfterStep-1.4.5.55N6/src/afterstep/configure.c
+*** AfterStep-1.4.5.55N6.orig/src/afterstep/configure.c	Tue May 26 02:48:40 1998
+--- AfterStep-1.4.5.55N6/src/afterstep/configure.c	Thu May 28 22:28:38 1998
+***************
+*** 33,38 ****
+--- 33,41 ----
+  
+  #include "../../include/configure.h"
+  
++ #ifdef __EMX__
++ #include <sys/types.h>
++ #endif
+  #include <stdio.h>
+  #include <signal.h>
+  #include <string.h>
+***************
+*** 48,53 ****
+--- 51,57 ----
+  
+  #include <X11/Xproto.h>
+  #include <X11/Xatom.h>
++ #include <X11/Xlib.h>
+  
+  #include "../../include/afterstep.h"
+  #include "../../include/menus.h"
+***************
+*** 529,535 ****
+--- 533,543 ----
+  
+  	thisconfigfile++;
+  
++ #ifndef __EMX__
+  	config_fd = fopen(afterstep_file, "r");
++ #else
++ 	config_fd = fopen(afterstep_file, "rt");
++ #endif
+  
+  	if (config_fd == (FILE *) NULL) {
+  	    afterstep_err("can't open %s, exiting now.\nIf this file exists, please type the full path.", one_configfile, NULL, NULL);
+***************
+*** 1434,1440 ****
+--- 1442,1452 ----
+  	    if ((config != NULL) && (isspace(an_char[strlen(config->keyword)])))
+  		fprintf(start_menu, " %s\n", an_char);
+  	    else
++ #ifndef __EMX__
+  		fprintf(start_menu, " Exec \"%s\" exec %s\n", list[i]->d_name, an_char);
++ #else
++ 		fprintf(start_menu, " Exec \"%s\" %s\n", list[i]->d_name, an_char);
++ #endif
+  	    fgets(an_char, 254, source);
+  	    if (mystrncasecmp(an_char, "MiniPixmap", 10) == 0)
+  		fprintf(start_menu, "  %s\n", an_char);
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afterstep/events.c AfterStep-1.4.5.55N6/src/afterstep/events.c
+*** AfterStep-1.4.5.55N6.orig/src/afterstep/events.c	Mon May 25 15:57:50 1998
+--- AfterStep-1.4.5.55N6/src/afterstep/events.c	Thu May 28 22:27:16 1998
+***************
+*** 1186,1192 ****
+--- 1186,1196 ----
+  int My_XNextEvent(Display * dpy, XEvent * event)
+  {
+      extern int fd_width, x_fd;
++ #ifndef __EMX__
+      struct itimerval value;
++ #else
++     struct timeval value;
++ #endif
+      fd_set in_fdset, out_fdset;
+      Window child;
+      Window targetWindow;
+***************
+*** 1207,1214 ****
+--- 1211,1223 ----
+  	return 0;
+      }
+  #ifndef TIME_WITH_SYS_TIME
++ # ifndef __EMX__
+      value.it_value.tv_usec = 0;
+      value.it_value.tv_sec = 0;
++ # else
++     value.tv_usec = 0;
++     value.tv_sec = 0;
++ # endif
+  #else
+      getitimer(ITIMER_REAL, &value);
+  #endif
+***************
+*** 1244,1255 ****
+--- 1253,1273 ----
+      ReapChildren();
+  
+      XFlush(dpy);
++ #ifndef __EMX__
+      if ((value.it_value.tv_usec != 0) ||
+  	(value.it_value.tv_sec != 0))
++ #else
++     if ((value.tv_usec != 0) ||
++ 	(value.tv_sec != 0))
++ #endif
+  #ifdef __hpux
+  	retval = select(fd_width, (int *) &in_fdset, 0, 0, &value.it_value);
+  #else
++ # ifndef __EMX__
+  	retval = select(fd_width, &in_fdset, 0, 0, &value.it_value);
++ # else
++ 	retval=select(fd_width,&in_fdset, 0, 0, &value);
++ # endif
+  #endif
+      else
+  #ifdef __hpux
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afterstep/functions.c AfterStep-1.4.5.55N6/src/afterstep/functions.c
+*** AfterStep-1.4.5.55N6.orig/src/afterstep/functions.c	Tue May 26 03:38:18 1998
+--- AfterStep-1.4.5.55N6/src/afterstep/functions.c	Thu May 28 22:27:16 1998
+***************
+*** 45,50 ****
+--- 45,53 ----
+  #include <ctype.h>
+  #include <unistd.h>
+  #include <limits.h>
++ #ifdef __EMX__
++ #include <process.h>
++ #endif
+  
+  #include "../../include/afterstep.h"
+  #include "../../include/menus.h"
+***************
+*** 375,383 ****
+--- 378,390 ----
+  		     Scr.Root, Scr.ASCursors[WAIT], CurrentTime);
+  	XSync(dpy, 0);
+  
++ #ifndef __EMX__
+  	if (!(fork()))		/* child process */
+  	    if (execl("/bin/sh", "/bin/sh", "-c", action, (char *) 0) == -1)
+  		exit(100);
++ #else
++ 	spawnl(P_NOWAIT, "cmd.exe", "cmd.exe", "/c", action, NULL);
++ #endif
+  	XUngrabPointer(dpy, CurrentTime);
+  	XSync(dpy, 0);
+  	break;
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afterstep/icons.c AfterStep-1.4.5.55N6/src/afterstep/icons.c
+*** AfterStep-1.4.5.55N6.orig/src/afterstep/icons.c	Tue May 26 03:38:02 1998
+--- AfterStep-1.4.5.55N6/src/afterstep/icons.c	Thu May 28 22:27:16 1998
+***************
+*** 76,81 ****
+--- 76,83 ----
+  
+  /* First, see if it was specified in config. files  */
+      SearchIcon(tmp_win, &tmp_win->icon_bitmap_file);
++     if (tmp_win->icon_bitmap_file == NULL)
++ 	tmp_win->icon_bitmap_file = Scr.DefaultIcon;
+      GetIcon(tmp_win);
+  
+  #ifdef NO_ICON_BACKGROUND
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afterstep/Imakefile AfterStep-1.4.5.55N6/src/afterstep/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/afterstep/Imakefile	Mon May 25 15:57:50 1998
+--- AfterStep-1.4.5.55N6/src/afterstep/Imakefile	Thu May 28 22:34:06 1998
+***************
+*** 2,9 ****
+--- 2,11 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
++ #endif
+  
+  #ifdef XPM
+  XPMLIB = XPMLIBRARY
+***************
+*** 20,26 ****
+--- 22,32 ----
+  #ifdef SunArchitecture
+  LOCAL_LIBRARIES = $(XPMLIB) $(XLIB) -L../../lib -lafterstep
+  #else
++ #ifdef OS2Architecture
++ LOCAL_LIBRARIES = $(XPMLIB) -L../../lib -lafterstep $(XLIB) 
++ #else
+  LOCAL_LIBRARIES = $(XPMLIB) $(XLIB) -lafterstep -L../../lib
++ #endif /* OS2Architecture */
+  #endif /* SunArchitecture */
+  #endif /* HPArchitecture */
+  #endif /* AlphaArchitecture */
+***************
+*** 38,40 ****
+--- 44,51 ----
+         stepgfx.o hashtable.o
+  
+  ComplexProgramTarget(afterstep)
++ 
++ #ifdef OS2Architecture
++ all::
++ 	emxbind -a afterstep.exe -h255
++ #endif
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afterstep/module.c AfterStep-1.4.5.55N6/src/afterstep/module.c
+*** AfterStep-1.4.5.55N6.orig/src/afterstep/module.c	Mon May 25 15:57:52 1998
+--- AfterStep-1.4.5.55N6/src/afterstep/module.c	Thu May 28 22:31:38 1998
+***************
+*** 134,140 ****
+--- 134,148 ----
+  	if ((*aptr == 0) || (*aptr == '\n'))
+  	    aptr = NULL;
+      }
++ #ifndef __EMX__
+      arg1 = findIconFile(cptr, ModulePath, X_OK);
++ #else
++ {
++     char s[256];
++     sprintf(s, "%s.exe", cptr);
++     arg1 = findIconFile(s, ModulePath, X_OK);
++ }
++ #endif
+      if (arg1 == NULL) {
+  	fprintf(stderr, "AfterStep: No such module %s %s\n", ModulePath, cptr);
+  	return;
+***************
+*** 160,165 ****
+--- 168,179 ----
+  	close(afterstep_to_app[1]);
+  	return;
+      }
++ #ifdef __EMX__
++     setmode(app_to_afterstep[0],O_BINARY);
++     setmode(app_to_afterstep[1],O_BINARY);
++     setmode(afterstep_to_app[0],O_BINARY);
++     setmode(afterstep_to_app[1],O_BINARY);
++ #endif
+      val = fork();
+      if (val > 0) {
+  	/* This fork remains running afterstep */
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afwharf/Imakefile AfterStep-1.4.5.55N6/src/afwharf/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/afwharf/Imakefile	Wed May 13 09:33:44 1998
+--- AfterStep-1.4.5.55N6/src/afwharf/Imakefile	Thu May 28 22:19:50 1998
+***************
+*** 2,17 ****
+--- 2,29 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
++ #endif
+  
+  #ifdef XPM
+  XPMLIB = XPMLIBRARY
++ #ifndef OS2Architecture
+  DEPLIBS = $(DEPXLIB) ../../lib/libafterstep.a   
+  LOCAL_LIBRARIES = $(XPMLIB) $(XLIB) -L../../lib -lafterstep
+  #else
++ DEPLIBS = $(DEPXLIB) ../../lib/afterstep.a   
++ LOCAL_LIBRARIES = $(XPMLIB) -L../../lib -lafterstep $(XLIB)
++ #endif
++ #else
++ #ifndef OS2Architecture
+  DEPLIBS = $(DEPXLIB) ../../lib/libafterstep.a
+  LOCAL_LIBRARIES = $(XLIB) -L../../lib -lafterstep
++ #else
++ DEPLIBS = $(DEPXLIB) ../../lib/afterstep.a
++ LOCAL_LIBRARIES = -L../../lib -lafterstep $(XLIB)
++ #endif
+  #endif
+  
+  EXTRA_INCLUDES = -I.
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afwharf/Wharf.c AfterStep-1.4.5.55N6/src/afwharf/Wharf.c
+*** AfterStep-1.4.5.55N6.orig/src/afwharf/Wharf.c	Mon May 25 17:04:28 1998
+--- AfterStep-1.4.5.55N6/src/afwharf/Wharf.c	Thu May 28 22:20:50 1998
+***************
+*** 82,87 ****
+--- 82,90 ----
+  int PlayerChannel[2];
+  
+  char *ModulePath=AFTER_DIR;
++ #ifdef __EMX__
++ extern char *__XOS2RedirRoot(const char *);
++ #endif
+  #endif
+  
+  char *MyName;
+***************
+*** 198,203 ****
+--- 201,210 ----
+    
+    MyName = safemalloc(strlen(temp)+1);
+    strcpy(MyName, temp);
++ #ifdef __EMX__
++   s = strrchr(MyName, '.');
++   if(s) *s='\0';
++ #endif
+    
+    back_button = new_button(NULL);
+    root_folder = new_folder();
+***************
+*** 216,221 ****
+--- 223,232 ----
+  
+    fd[0] = atoi(argv[1]);
+    fd[1] = atoi(argv[2]);
++ #ifdef __EMX__
++   setmode(fd[0], O_BINARY);
++   setmode(fd[1], O_BINARY);
++ #endif
+    
+    if (!(dpy = XOpenDisplay(display_name))) 
+      {
+***************
+*** 249,254 ****
+--- 260,276 ----
+  			  M_WINDOW_NAME));
+    SendText(fd,set_mask_mesg,0);
+  
++ #if defined(__EMX__) && defined(ENABLE_SOUND)
++     if ((s=getenv("MMBASE"))) {
++ 	SoundPath = safemalloc(MAXPATHLEN);
++ 	if ((temp = strchr(s, ';'))) {
++ 		strncpy(SoundPath, s, temp-s);
++ 		strcpy(SoundPath+(temp-s), "\\sounds");
++ 	}
++ 	else
++ 		sprintf(SoundPath, "%s\\sounds", s);
++     }
++ #endif
+  if (strstr(argv[3], "steprc")!= NULL)
+      ParseOptions(argv[3]);
+  else {
+***************
+*** 290,303 ****
+  		int i;
+  
+  		margv[0]="ASSound";
+  		name = findIconFile("ASSound",ModulePath,X_OK);
+  		if(name == NULL) {
+  		    fprintf(stderr,"Wharf: couldn't find ASSound\n");
+  		    SoundActive = 0;
+  		} else {
+  		    margv[1]=safemalloc(16);
+  		    close(PlayerChannel[1]);
+! 		    sprintf(margv[1],"%x",PlayerChannel[0]);
+  		    if (SoundPlayer!=NULL) 
+  		      margv[2]=SoundPlayer;
+  		    else 
+--- 312,329 ----
+  		int i;
+  
+  		margv[0]="ASSound";
++ #ifndef __EMX__
+  		name = findIconFile("ASSound",ModulePath,X_OK);
++ #else
++ 		name = findIconFile("ASSound.exe",ModulePath,X_OK);
++ #endif
+  		if(name == NULL) {
+  		    fprintf(stderr,"Wharf: couldn't find ASSound\n");
+  		    SoundActive = 0;
+  		} else {
+  		    margv[1]=safemalloc(16);
+  		    close(PlayerChannel[1]);
+! 		    sprintf(margv[1],"%d",PlayerChannel[0]);
+  		    if (SoundPlayer!=NULL) 
+  		      margv[2]=SoundPlayer;
+  		    else 
+***************
+*** 306,314 ****
+  			if (Sounds[i][0]=='.') {
+  			    margv[i+3]=Sounds[i];
+  			} else {
+  			    margv[i+3]=safemalloc(strlen(Sounds[i])
+! 						  +strlen(SoundPath)+4);
+! 			    sprintf(margv[i+3],"%s/%s",SoundPath,Sounds[i]);
+  			}
+  		    }
+  		    margv[i+3]=NULL;
+--- 332,346 ----
+  			if (Sounds[i][0]=='.') {
+  			    margv[i+3]=Sounds[i];
+  			} else {
++ 			    char *p;
++ 			    p = SoundPath;
++ 			    if (*p == '/')
++ 				p = __XOS2RedirRoot(p);
++ 			    else
++ 				p = PutHome(p);
+  			    margv[i+3]=safemalloc(strlen(Sounds[i])
+! 						  +strlen(p)+4);
+! 			    sprintf(margv[i+3],"%s/%s",p,Sounds[i]);
+  			}
+  		    }
+  		    margv[i+3]=NULL;
+***************
+*** 316,323 ****
+--- 348,359 ----
+  		    fprintf(stderr,"Wharf: couldn't spawn ASSound\n");
+  		    exit(1);
+  		}
++ 		exit(1);
+  	    } else { /* in parent */
+  		close(PlayerChannel[0]);
++ #ifdef __EMX__
++ 		setmode(PlayerChannel[1], O_BINARY);
++ #endif
+  	    }
+  	}
+       }    
+***************
+*** 1392,1398 ****
+--- 1428,1438 ----
+    char *tline,*orig_tline,*tmp;
+    int Clength, len;
+    
++ #ifndef __EMX__
+    fd = fopen(filename,"r");
++ #else
++   fd = fopen(filename,"rt");
++ #endif
+    if(fd == (FILE *)0)
+      {
+        fprintf(stderr,"%s: can't open config file %s",MyName,filename);
+***************
+*** 1539,1544 ****
+--- 1579,1588 ----
+          {
+  	    bind_sound(&tline[Clength+6]);
+  	    SoundActive = 1;
++         } else if((strlen(&tline[0])>1)&&
++ 		(mystrncasecmp(tline,CatString3("*",MyName,"AudioPath"),Clength+10)==0))
++         {
++           CopyString(&SoundPath,&tline[Clength+10]);
+          }
+  #endif	
+  	 else if((strlen(&tline[0])>1)
+***************
+*** 1579,1585 ****
+--- 1623,1633 ----
+    char *tline,*orig_tline;
+    int Clength;
+  
++ #ifndef __EMX__
+    fd = fopen(filename,"r");
++ #else
++   fd = fopen(filename,"rt");
++ #endif
+    if(fd == (FILE *)0)
+      {
+        fprintf(stderr,"%s: can't open base file %s",MyName,filename);
+***************
+*** 1608,1616 ****
+          {
+            CopyString(&SoundPath,&tline[9]);
+          }
+!       else if((strlen(&tline[0])>1)&&(mystrncasecmp(tline,"ModulePath",11)==0))
+          {
+!           CopyString(&ModulePath,&tline[11]);
+          }
+  #endif
+  
+--- 1656,1664 ----
+          {
+            CopyString(&SoundPath,&tline[9]);
+          }
+!       else if((strlen(&tline[0])>1)&&(mystrncasecmp(tline,"ModulePath",10)==0))
+          {
+!           CopyString(&ModulePath,&tline[10]);
+          }
+  #endif
+  
+***************
+*** 1852,1858 ****
+  	  actual->hangon[i2-i-1] = 0;
+  	  actual->swallow = 1;
+  	}
+!       n = 7;
+        while((isspace(tline[n]))&&(tline[n]!=0))
+  	n++;
+        len = strlen(&tline[n]);
+--- 1900,1907 ----
+  	  actual->hangon[i2-i-1] = 0;
+  	  actual->swallow = 1;
+  	}
+! /* add support for MaxSwallowModule */
+!       n=(tline[0] == 's' || tline[0] == 'S') ? 7 : 10;
+        while((isspace(tline[n]))&&(tline[n]!=0))
+  	n++;
+        len = strlen(&tline[n]);
+***************
+*** 2431,2437 ****
+--- 2480,2490 ----
+        	  {
+        	    kn = XKeysymToString(ks);
+        	    knl = strlen(kn);
++ #ifndef __EMX__
+        	    if ((knl > 6) && (strcasecmp(kn + knl - 4, "lock") == 0))
++ #else
++       	    if ((knl > 6) && (mystrcasecmp(kn + knl - 4, "lock") == 0))
++ #endif
+        		lockmask |= (1 << m);
+        	  }
+              }
+***************
+*** 2605,2610 ****
+--- 2658,2664 ----
+      if (!SoundActive) 
+        return;
+      if (Sounds[event]==NULL) return;
++     if (strcmp(Sounds[event], ".") == 0) return;
+      write(PlayerChannel[1],&event,sizeof(event));
+      timestamp = clock();
+      write(PlayerChannel[1],&timestamp,sizeof(timestamp));    
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afwinlist/ButtonArray.c AfterStep-1.4.5.55N6/src/afwinlist/ButtonArray.c
+*** AfterStep-1.4.5.55N6.orig/src/afwinlist/ButtonArray.c	Wed May 13 09:33:46 1998
+--- AfterStep-1.4.5.55N6/src/afwinlist/ButtonArray.c	Thu May 28 22:46:06 1998
+***************
+*** 19,24 ****
+--- 19,26 ----
+   * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+   */
+  
++ #include "../../include/configure.h"
++ 
+  #include <stdlib.h>
+  #include <stdio.h>
+  #include <X11/Xlib.h>
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afwinlist/Imakefile AfterStep-1.4.5.55N6/src/afwinlist/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/afwinlist/Imakefile	Wed May 13 09:33:46 1998
+--- AfterStep-1.4.5.55N6/src/afwinlist/Imakefile	Thu May 28 22:22:34 1998
+***************
+*** 2,11 ****
+--- 2,15 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
+  
+  DEPLIBS = $(DEPXLIB) ../../lib/libafterstep.a
++ #else
++ DEPLIBS = $(DEPXLIB) ../../lib/afterstep.a
++ #endif
+  
+  LOCAL_LIBRARIES = $(XLIB) -L../../lib -lafterstep
+  
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afwinlist/WinList.c AfterStep-1.4.5.55N6/src/afwinlist/WinList.c
+*** AfterStep-1.4.5.55N6.orig/src/afwinlist/WinList.c	Wed May 13 09:33:46 1998
+--- AfterStep-1.4.5.55N6/src/afwinlist/WinList.c	Thu May 28 22:22:06 1998
+***************
+*** 122,127 ****
+--- 122,131 ----
+    /* Setup my name */
+    Module = safemalloc(strlen(temp)+1);
+    strcpy(Module, temp);
++ #ifdef __EMX__
++   s = strrchr(Module, '.');
++   if(s) *s='\0';
++ #endif
+    Clength = strlen(Module);
+  
+    if((argc != 6)&&(argc != 7)) {
+***************
+*** 137,142 ****
+--- 141,150 ----
+  
+    fd[0] = atoi(argv[1]);
+    fd[1] = atoi(argv[2]);
++ #ifdef __EMX__
++   setmode(fd[0], O_BINARY);
++   setmode(fd[1], O_BINARY);
++ #endif
+  
+    signal (SIGPIPE, DeadPipe);  
+  
+***************
+*** 404,410 ****
+--- 412,422 ----
+  char *tline;
+  char *tmpOrient;
+  FILE *ptr;
++ #ifndef __EMX__
+    ptr=fopen(file,"r");
++ #else
++   ptr=fopen(file,"rt");
++ #endif
+    if(ptr != (FILE *)NULL) {
+  
+      tline = fgets(line,(sizeof line)-1,ptr);
+***************
+*** 436,442 ****
+          else if(mystrncasecmp(tline,CatString3("*", Module, "Orientation"),
+  		 Clength+12)==0) {
+  	  CopyString(&tmpOrient,&tline[Clength+12]);
+! 	  if(strcasecmp(tmpOrient,"across")==0)
+  	    OrientVert = FALSE;
+  	}
+        }
+--- 448,454 ----
+          else if(mystrncasecmp(tline,CatString3("*", Module, "Orientation"),
+  		 Clength+12)==0) {
+  	  CopyString(&tmpOrient,&tline[Clength+12]);
+! 	  if(mystrcasecmp(tmpOrient,"across")==0)
+  	    OrientVert = FALSE;
+  	}
+        }
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afzharf/Imakefile AfterStep-1.4.5.55N6/src/afzharf/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/afzharf/Imakefile	Wed May 13 09:33:44 1998
+--- AfterStep-1.4.5.55N6/src/afzharf/Imakefile	Thu May 28 22:24:46 1998
+***************
+*** 2,17 ****
+--- 2,29 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
++ #endif
+  
+  #ifdef XPM
+  XPMLIB = XPMLIBRARY
++ #ifndef OS2Architecture
+  DEPLIBS = $(DEPXLIB) ../../lib/libafterstep.a   
+  LOCAL_LIBRARIES = $(XPMLIB) $(XLIB) -L../../lib -lafterstep
+  #else
++ DEPLIBS = $(DEPXLIB) ../../lib/afterstep.a   
++ LOCAL_LIBRARIES = $(XPMLIB) -L../../lib -lafterstep $(XLIB)
++ #endif
++ #else
++ #ifndef OS2Architecture
+  DEPLIBS = $(DEPXLIB) ../../lib/libafterstep.a
+  LOCAL_LIBRARIES = $(XLIB) -L../../lib -lafterstep
++ #else
++ DEPLIBS = $(DEPXLIB) ../../lib/afterstep.a
++ LOCAL_LIBRARIES = -L../../lib -lafterstep $(XLIB)
++ #endif
+  #endif
+  
+  EXTRA_INCLUDES = -I.
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/afzharf/Zharf.c AfterStep-1.4.5.55N6/src/afzharf/Zharf.c
+*** AfterStep-1.4.5.55N6.orig/src/afzharf/Zharf.c	Wed May 13 09:33:44 1998
+--- AfterStep-1.4.5.55N6/src/afzharf/Zharf.c	Thu May 28 22:25:14 1998
+***************
+*** 119,124 ****
+--- 119,128 ----
+  
+      MyName = safemalloc(strlen(temp) + 1);
+      strcpy(MyName, temp);
++ #ifdef __EMX__
++     s = strrchr(MyName, '.');
++     if(s) *s='\0';
++ #endif
+  
+      for (i = 0; i < MAX_BUTTONS; i++) {
+  	Buttons[i].title = NULL;
+***************
+*** 144,149 ****
+--- 148,157 ----
+      }
+      fd[0] = atoi(argv[1]);
+      fd[1] = atoi(argv[2]);
++ #ifdef __EMX__
++     setmode(fd[0], O_BINARY);
++     setmode(fd[1], O_BINARY);
++ #endif
+  
+      if (!(dpy = XOpenDisplay(display_name))) {
+  	fprintf(stderr, "%s: can't open display %s", MyName,
+***************
+*** 887,893 ****
+--- 895,905 ----
+      char *tline, *orig_tline, *tmp;
+      int Clength, len;
+  
++ #ifndef __EMX__
+      fd = fopen(filename, "r");
++ #else
++     fd = fopen(filename, "rt");
++ #endif
+      if (fd == (FILE *) 0) {
+  	fprintf(stderr, "%s: can't open config file %s", MyName, filename);
+  	exit(1);
+***************
+*** 962,968 ****
+--- 974,984 ----
+      char *tline, *orig_tline, *tmp;
+      int Clength, len;
+  
++ #ifndef __EMX__
+      fd = fopen(filename, "r");
++ #else
++     fd = fopen(filename, "rt");
++ #endif
+      if (fd == (FILE *) 0) {
+  	fprintf(stderr, "%s: can't open config file %s", MyName, filename);
+  	exit(1);
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/ascd/ascd.c AfterStep-1.4.5.55N6/src/ascd/ascd.c
+*** AfterStep-1.4.5.55N6.orig/src/ascd/ascd.c	Wed May 13 09:33:32 1998
+--- AfterStep-1.4.5.55N6/src/ascd/ascd.c	Thu May 28 21:54:02 1998
+***************
+*** 75,81 ****
+--- 75,85 ----
+  /* Global stuff *****************************************/
+  
+  /*{{{*/
++ #ifndef __EMX__
+  #define DEFAULTDEVICE "/dev/cdrom"
++ #else
++ #define DEFAULTDEVICE ""
++ #endif
+  
+  #define PLAY 0
+  #define PAUSE 1
+***************
+*** 690,696 ****
+--- 694,704 ----
+  			 XFlush(Disp);
+  			 RedrawWindow(&currentXPM);
+  		  }
++ #ifndef __EMX__
+  		usleep(50000L);
++ #else
++ 		_sleep2(50);
++ #endif
+  		RedrawWindow(&currentXPM);
+  	 }
+  } /*}}}*/
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/ascd/cdrom.c AfterStep-1.4.5.55N6/src/ascd/cdrom.c
+*** AfterStep-1.4.5.55N6.orig/src/ascd/cdrom.c	Wed May 13 09:33:32 1998
+--- AfterStep-1.4.5.55N6/src/ascd/cdrom.c	Thu May 28 21:54:04 1998
+***************
+*** 572,578 ****
+--- 572,580 ----
+  {
+  	struct timeval	tv;
+  
++ #ifndef __EMX__
+  	timerclear(&tv);
++ #endif
+  	tv.tv_sec = usec / 1000000;
+  	tv.tv_usec = usec % 1000000;
+  	return (select(0, NULL, NULL, NULL, &tv));
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/ascd/Imakefile AfterStep-1.4.5.55N6/src/ascd/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/ascd/Imakefile	Wed May 13 09:33:32 1998
+--- AfterStep-1.4.5.55N6/src/ascd/Imakefile	Thu May 28 21:54:04 1998
+***************
+*** 2,25 ****
+  
+  /* OVERRIDE_COMPILER */
+  
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
+  
+  #ifdef XPM
+  XPMLIB = XPMLIBRARY
+  
+  DEPLIBS = $(DEPXLIB) 
+  
+  LOCAL_LIBRARIES = $(XPMLIB) $(XLIB)  
+  
+  LINTLIBS = $(LINTXLIB)
+  
+  SRCS = ascd.c cdrom.c cdinfo.c plat_freebsd.c plat_sun.c plat_hpux.c \
+  	  plat_ultrix.c plat_news.c plat_bsd386.c plat_osf1.c plat_linux.c \
+! 	  drv_sony.c drv_toshiba.c scsi.c strmcpy.c
+  OBJS = ascd.o cdrom.o cdinfo.o plat_freebsd.o plat_sun.o plat_hpux.o \
+  	  plat_ultrix.o plat_news.o plat_bsd386.o plat_osf1.o plat_linux.o \
+! 	  drv_sony.o drv_toshiba.o scsi.o strmcpy.o
+  
+  ComplexProgramTarget(ascd)
+  #endif
+--- 2,31 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
++ #endif
+  
+  #ifdef XPM
+  XPMLIB = XPMLIBRARY
+  
+  DEPLIBS = $(DEPXLIB) 
+  
++ #ifndef OS2Architecture
+  LOCAL_LIBRARIES = $(XPMLIB) $(XLIB)  
++ #else
++ LOCAL_LIBRARIES = $(XPMLIB) $(XLIB)  -los2me
++ #endif
+  
+  LINTLIBS = $(LINTXLIB)
+  
+  SRCS = ascd.c cdrom.c cdinfo.c plat_freebsd.c plat_sun.c plat_hpux.c \
+  	  plat_ultrix.c plat_news.c plat_bsd386.c plat_osf1.c plat_linux.c \
+! 	  drv_sony.c drv_toshiba.c scsi.c strmcpy.c plat_os2.c
+  OBJS = ascd.o cdrom.o cdinfo.o plat_freebsd.o plat_sun.o plat_hpux.o \
+  	  plat_ultrix.o plat_news.o plat_bsd386.o plat_osf1.o plat_linux.o \
+! 	  drv_sony.o drv_toshiba.o scsi.o strmcpy.o plat_os2.o
+  
+  ComplexProgramTarget(ascd)
+  #endif
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/ascd/plat_os2.c AfterStep-1.4.5.55N6/src/ascd/plat_os2.c
+*** AfterStep-1.4.5.55N6.orig/src/ascd/plat_os2.c	Thu Jan  1 00:00:00 1970
+--- AfterStep-1.4.5.55N6/src/ascd/plat_os2.c	Thu May 28 21:54:04 1998
+***************
+*** 0 ****
+--- 1,446 ----
++ /*
++  * plat_os2.c	by Hung-Chi Chu <hcchu@r350.ee.ntu.edu.tw> 1998/05/26
++  *
++  */
++ 
++ #ifdef __EMX__
++ 
++ #include <os2.h>
++ 
++ #define  INCL_OS2MM
++ #define  INCL_MCIOS2
++ #include <os2me.h>
++ 
++ #include <stdio.h>
++ #include <stdlib.h>
++ 
++ #include "struct.h"
++ 
++ #define XBUFSIZE	256
++ #define MSF_TO_FRAMES(x) (MSF_MINUTE(x)*60*75+MSF_SECOND(x)*75+MSF_FRAME(x))
++ #define FRAMES_TO_MSF(x,y) (MSF_MINUTE(y)=(x/60/75),\
++ 			    MSF_SECOND(y)=(x%(60*75))/75,\
++ 			    MSF_FRAME(y) =(x%75))
++ 
++ int	min_volume = 0;
++ int	max_volume = 100;
++ 
++ extern char	*cd_device;
++ extern enum cd_modes	cur_cdmode;
++ 
++ static void mci_err(ULONG rc)
++ {
++ 	char buff[XBUFSIZE];
++ 
++ 	cur_cdmode = EJECTED;	/* force to reread toc */
++ 	if (mciGetErrorString(rc, buff, XBUFSIZE) == MCIERR_SUCCESS)
++ 		fprintf(stderr, "MCI error: %s\n", buff);
++ 	else
++ 		fprintf(stderr, "MCI error #%d has occured!\n", rc);
++ }
++ 
++ /*
++  * Initialize the drive.  A no-op for the generic driver.
++  */
++ int
++ gen_init(d)
++ 	struct wm_drive	*d;
++ {
++ 	return (0);
++ }
++ 
++ /*
++  * Get the number of tracks on the CD.
++  */
++ int
++ gen_get_trackcount(d, tracks)
++ 	struct wm_drive	*d;
++ 	int		*tracks;
++ {
++ 	MCI_STATUS_PARMS msts;
++ 	ULONG rc;
++ 
++ 	msts.ulItem = MCI_STATUS_NUMBER_OF_TRACKS;
++ 	rc = mciSendCommand(d->fd,
++ 			    MCI_STATUS,
++ 			    MCI_WAIT | MCI_STATUS_ITEM,
++ 			    &msts,
++ 			    0);
++ 	if (LOUSHORT(rc) != MCIERR_SUCCESS) {
++ 		mci_err(rc);
++ 		return -1;
++ 	}
++ 	*tracks = msts.ulReturn;
++ 	return 0;
++ }
++ 
++ /*
++  * Get the start time and mode (data or audio) of a track.
++  */
++ int
++ gen_get_trackinfo(d, track, data, startframe)
++ 	struct wm_drive	*d;
++ 	int		track, *data, *startframe;
++ {
++ 	MCI_STATUS_PARMS msts;
++ 	ULONG rc;
++ 
++ 	msts.ulItem = MCI_STATUS_POSITION;
++ 	msts.ulValue = track;
++ 	rc = mciSendCommand(d->fd,
++ 			    MCI_STATUS,
++ 			    MCI_WAIT | MCI_TRACK | MCI_STATUS_ITEM,
++ 			    &msts,
++ 			    0);
++ 	if (LOUSHORT(rc) != MCIERR_SUCCESS) {
++ 		mci_err(rc);
++ 		return -1;
++ 	}
++ 	*data = 0;	/* XXX */
++ 	*startframe = MSF_TO_FRAMES(msts.ulReturn);
++ 	return 0;
++ }
++ 
++ /*
++  * Get the number of frames on the CD.
++  */
++ int
++ gen_get_cdlen(d, frames)
++ 	struct wm_drive	*d;
++ 	int		*frames;
++ {
++ 	MCI_STATUS_PARMS msts;
++ 	ULONG rc;
++ 
++ 	msts.ulItem = MCI_STATUS_LENGTH;
++ 	rc = mciSendCommand(d->fd,
++ 			    MCI_STATUS,
++ 			    MCI_WAIT | MCI_STATUS_ITEM,
++ 			    &msts,
++ 			    0);
++ 	if (LOUSHORT(rc) != MCIERR_SUCCESS) {
++ 		mci_err(rc);
++ 		return -1;
++ 	}
++ 	*frames = MSF_TO_FRAMES(msts.ulReturn);
++ 	return 0;
++ }
++ 
++ /*
++  * Get the current status of the drive: the current play mode, the absolute
++  * position from start of disc (in frames), and the current track and index
++  * numbers if the CD is playing or paused.
++  */
++ int
++ gen_get_drive_status(d, oldmode, mode, pos, track, index)
++ 	struct wm_drive	*d;
++ 	enum cd_modes	oldmode, *mode;
++ 	int		*pos, *track, *index;
++ {
++ 	MCI_STATUS_PARMS msts;
++ 	ULONG rc;
++ 
++ 	msts.ulItem = MCI_STATUS_MODE;
++ 	rc = mciSendCommand(d->fd,
++ 			    MCI_STATUS,
++ 			    MCI_WAIT | MCI_STATUS_ITEM,
++ 			    &msts,
++ 			    0);
++ 	if (LOUSHORT(rc) != MCIERR_SUCCESS) {
++ 		mci_err(rc);
++ 		mciSendCommand(d->fd, MCI_CLOSE, MCI_WAIT, 0, 0);
++ 		*mode = EJECTED;
++ 		d->fd = -1;
++ 		return 0;
++ 	}
++ 	switch (msts.ulReturn) {
++ 		case MCI_MODE_NOT_READY:
++ 			mciSendCommand(d->fd, MCI_CLOSE, MCI_WAIT, 0, 0);
++ 			*mode = EJECTED;
++ 			d->fd = -1;
++ 			break;
++ 		case MCI_MODE_PAUSE:
++ 			*mode = PAUSED;
++ 			break;
++ 		case MCI_MODE_STOP:
++ 			*mode = STOPPED;
++ 			break;
++ 		case MCI_MODE_PLAY:
++ 			*mode = PLAYING;
++ 			break;
++ 		case MCI_MODE_SEEK:
++ 			*mode = TRACK_DONE;
++ 			break;
++ 		default:	/* XXX */
++ 			*mode = STOPPED;
++ 	}
++ 	if ((*mode == PAUSED && oldmode == PAUSED) ||
++ 	    (*mode == PAUSED && oldmode == PLAYING) ||
++ 	    *mode == PLAYING) {
++ 		msts.ulItem = MCI_STATUS_POSITION;
++ 		rc = mciSendCommand(d->fd,
++ 				    MCI_STATUS,
++ 				    MCI_WAIT | MCI_STATUS_ITEM,
++ 				    &msts,
++ 				    0);
++ 		if (LOUSHORT(rc) != MCIERR_SUCCESS) {
++ 			mci_err(rc);
++ 			return -1;
++ 		}
++ 		*pos = MSF_TO_FRAMES(msts.ulReturn);
++ 		msts.ulItem = MCI_STATUS_CURRENT_TRACK;
++ 		rc = mciSendCommand(d->fd,
++ 				    MCI_STATUS,
++ 				    MCI_WAIT | MCI_STATUS_ITEM,
++ 				    &msts,
++ 				    0);
++ 		if (LOUSHORT(rc) != MCIERR_SUCCESS) {
++ 			mci_err(rc);
++ 			return -1;
++ 		}
++ 		*track = msts.ulReturn;
++ /* ??? */
++ 		msts.ulItem = MCI_STATUS_POSITION_IN_TRACK;
++ 		rc = mciSendCommand(d->fd,
++ 				    MCI_STATUS,
++ 				    MCI_WAIT | MCI_STATUS_ITEM,
++ 				    &msts,
++ 				    0);
++ 		if (LOUSHORT(rc) != MCIERR_SUCCESS) {
++ 			mci_err(rc);
++ 			return -1;
++ 		}
++ 		*index = msts.ulReturn;
++ 	}
++ 	return 0;
++ }
++ 
++ /*
++  * Set the volume level for the left and right channels.  Their values
++  * range from 0 to 100.
++  */
++ int
++ gen_set_volume(d, left, right)
++ 	struct wm_drive	*d;
++ 	int		left, right;
++ {
++ 	MCI_SET_PARMS mset;
++ 	ULONG rc;
++ 
++ 	/* XXX just can set both ? */
++ 	mset.ulLevel = (left <= right) ? left : right;
++ 	mset.ulAudio = MCI_SET_AUDIO_ALL;
++ 	rc = mciSendCommand(d->fd,
++ 			    MCI_SET,
++ 			    MCI_WAIT | MCI_SET_AUDIO | MCI_SET_VOLUME,
++ 			    &mset,
++ 			    0);
++ 	if (LOUSHORT(rc) != MCIERR_SUCCESS) {
++ 		mci_err(rc);
++ 		return -1;
++ 	}
++ 	return 0;
++ }
++ 
++ /*
++  * Read the initial volume from the drive, if available.  Each channel
++  * ranges from 0 to 100, with -1 indicating data not available.
++  */
++ int
++ gen_get_volume(d, left, right)
++ 	struct wm_drive	*d;
++ 	int		*left, *right;
++ {
++ 	MCI_STATUS_PARMS msts;
++ 	ULONG rc;
++ 
++ 	msts.ulItem = MCI_STATUS_VOLUME;
++ 	rc = mciSendCommand(d->fd,
++ 			    MCI_STATUS,
++ 			    MCI_WAIT | MCI_STATUS_ITEM,
++ 			    &msts,
++ 			    0);
++ 	if (LOUSHORT(rc) != MCIERR_SUCCESS) {
++ 		mci_err(rc);
++ 		return -1;
++ 	}
++ 	*left = LOUSHORT(msts.ulReturn);
++ 	*right = HIUSHORT(msts.ulReturn);
++ 	return 0;
++ }
++ 
++ /*
++  * Pause the CD.
++  */
++ int
++ gen_pause(d)
++ 	struct wm_drive	*d;
++ {
++ 	ULONG rc;
++ 
++ 	rc = mciSendCommand(d->fd,
++ 			    MCI_PAUSE,
++ 			    MCI_WAIT,
++ 			    0,
++ 			    0);
++ 	if (LOUSHORT(rc) != MCIERR_SUCCESS) {
++ 		mci_err(rc);
++ 		return -1;
++ 	}
++ 	return 0;
++ }
++ 
++ /*
++  * Resume playing the CD (assuming it was paused.)
++  */
++ int
++ gen_resume(d)
++ 	struct wm_drive	*d;
++ {
++ 	ULONG rc;
++ 
++ 	rc = mciSendCommand(d->fd,
++ 			    MCI_RESUME,
++ 			    MCI_WAIT,
++ 			    0,
++ 			    0);
++ 	if (LOUSHORT(rc) != MCIERR_SUCCESS) {
++ 		mci_err(rc);
++ 		return -1;
++ 	}
++ 	return 0;
++ }
++ 
++ /*
++  * Stop the CD.
++  */
++ int
++ gen_stop(d)
++ 	struct wm_drive	*d;
++ {
++ 	ULONG rc;
++ 
++ 	rc = mciSendCommand(d->fd,
++ 			    MCI_STOP,
++ 			    MCI_WAIT,
++ 			    0,
++ 			    0);
++ 	if (LOUSHORT(rc) != MCIERR_SUCCESS) {
++ 		mci_err(rc);
++ 		return -1;
++ 	}
++ 	return 0;
++ }
++ 
++ /*
++  * Play the CD from one position to another (both in frames.)
++  */
++ int
++ gen_play(d, start, end)
++ 	struct wm_drive	*d;
++ 	int		start, end;
++ {
++ 	MCI_PLAY_PARMS mplay;
++ 	ULONG rc;
++ 
++ 	FRAMES_TO_MSF(start, mplay.ulFrom);
++ 	FRAMES_TO_MSF(end, mplay.ulTo);
++ 	rc = mciSendCommand(d->fd,
++ 			    MCI_PLAY,
++ 			    MCI_FROM | MCI_TO,
++ 			    &mplay,
++ 			    0);
++ 	if (LOUSHORT(rc) != MCIERR_SUCCESS) {
++ 		mci_err(rc);
++ 		return -1;
++ 	}
++ 	return 0;
++ }
++ 
++ /*
++  * Eject the current CD, if there is one.
++  */
++ int
++ gen_eject(d)
++ 	struct wm_drive	*d;
++ {
++ 	ULONG rc;
++ 
++ 	rc = mciSendCommand(d->fd,
++ 			    MCI_SET,
++ 			    MCI_WAIT | MCI_SET_DOOR_OPEN | MCI_SET_DOOR_UNLOCK,
++ 			    0,
++ 			    0);
++ 	if (LOUSHORT(rc) != MCIERR_SUCCESS) {
++ 		mci_err(rc);
++ 		return -1;
++ 	}
++ 	return 0;
++ }
++ 
++ /*
++  * Send a SCSI command out the bus.
++  */
++ int
++ wm_scsi(d, cdb, cdblen, retbuf, retbuflen, getreply)
++ 	struct wm_drive	*d;
++ 	unsigned char	*cdb;
++ 	int		cdblen;
++ 	void		*retbuf;
++ 	int		retbuflen;
++ 	int		getreply;
++ {
++ 	return (-1);
++ }
++ 
++ /*
++  * Open the CD and figure out which kind of drive is attached.
++  */
++ int
++ wmcd_open(d)
++ 	struct wm_drive	*d;
++ {
++ 	MCI_OPEN_PARMS mop;
++ 	ULONG rc;
++ 	MCI_SET_PARMS mset;
++ 
++ 	if (d->fd >= 0)		/* Device already open? */
++ 		return(0);
++ 	if (cd_device == NULL || *cd_device == '\0')
++ 		cd_device = MCI_DEVTYPE_CD_AUDIO_NAME;
++ 	mop.pszDeviceType = cd_device;
++ 	mop.pszElementName = 0;
++ 	rc = mciSendCommand(0,
++ 			    MCI_OPEN,
++ 			    MCI_WAIT | MCI_OPEN_SHAREABLE,
++ 			    &mop,
++ 			    0);
++ 	if (LOUSHORT(rc) != MCIERR_SUCCESS) {
++ 		if (LOUSHORT(rc) != MCIERR_DEVICE_NOT_READY) {
++ 			mci_err(rc);
++ 			exit(1);
++ 		}
++ 		else
++ 			return 1;
++ 	}
++ 	mset.ulTimeFormat = MCI_FORMAT_MSF;
++ 	rc = mciSendCommand(mop.usDeviceID,
++ 			    MCI_SET,
++ 			    MCI_WAIT | MCI_SET_TIME_FORMAT,
++ 			    &mset,
++ 			    0);
++ 	if (LOUSHORT(rc) != MCIERR_SUCCESS) {
++ 		mci_err(rc);
++ 		return(1);
++ 	}
++ 	*d = *(find_drive_struct("", "", ""));
++ 	d->fd = mop.usDeviceID;
++ 	d->aux = NULL;
++ 	d->daux = NULL;
++ 	return(0);
++ }
++ 
++ void
++ keep_cd_open() { }
++ 
++ #endif
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/asclock/asclock.c AfterStep-1.4.5.55N6/src/asclock/asclock.c
+*** AfterStep-1.4.5.55N6.orig/src/asclock/asclock.c	Wed May 13 09:33:34 1998
+--- AfterStep-1.4.5.55N6/src/asclock/asclock.c	Thu May 28 21:54:58 1998
+***************
+*** 8,13 ****
+--- 8,16 ----
+  #include <X11/extensions/shape.h>
+  #include <time.h>
+  #include <X11/Xatom.h>
++ #ifdef __EMX__
++ #include <stdlib.h>
++ #endif
+  
+  #include "clk.xpm"
+  #include "led.xpm"
+***************
+*** 128,135 ****
+--- 131,143 ----
+  	continue;
+        case 'e':
+  	if(++i >=argc) usage();
++ #ifdef __EMX__
++ 	strcpy(&Execute[0], "start");
++ 	strcat(&Execute[0], argv[i]);
++ #else
+  	strcpy(&Execute[0], argv[i]);
+  	strcat(&Execute[0], " &");
++ #endif
+  	continue;
+        case 's':
+  	ONLYSHAPE=1;
+***************
+*** 296,302 ****
+--- 304,314 ----
+  #ifdef SYSV
+        poll((struct poll *) 0, (size_t) 0, 50);
+  #else
++ # ifndef __EMX__
+        usleep(50000L);			/* 5/100 sec */
++ # else
++       _sleep2(50);
++ # endif
+  #endif
+      }
+    return 0;
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/asclock/Imakefile AfterStep-1.4.5.55N6/src/asclock/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/asclock/Imakefile	Wed May 13 09:33:34 1998
+--- AfterStep-1.4.5.55N6/src/asclock/Imakefile	Thu May 28 21:54:58 1998
+***************
+*** 2,9 ****
+--- 2,11 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
++ #endif
+  
+  #ifdef XPM
+  XPMLIB = XPMLIBRARY
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/asload/asload.c AfterStep-1.4.5.55N6/src/asload/asload.c
+*** AfterStep-1.4.5.55N6.orig/src/asload/asload.c	Wed May 13 09:33:36 1998
+--- AfterStep-1.4.5.55N6/src/asload/asload.c	Thu May 28 21:55:50 1998
+***************
+*** 11,16 ****
+--- 11,24 ----
+  #include <math.h>
+  #include <fcntl.h>
+  #include <X11/Xatom.h>
++ #ifdef __EMX__
++ #define INCL_BASE
++ #include <os2.h>
++ #include <stdio.h>
++ #include <stdlib.h>
++ #include <string.h>
++ #include "perfutil.h"
++ #endif
+  
+  #include "back.xpm"
+  #include "mask2.xbm"
+***************
+*** 25,32 ****
+--- 33,42 ----
+  #define NCPUSTATES 4
+  
+  /* Global Data storage/structures ********************************************/
++ #ifndef __EMX__
+  static long cp_time[NCPUSTATES];
+  static long last[NCPUSTATES];
++ #endif
+  int ONLYSHAPE=0; /* default value is noshape */
+  int updatespeed = 4;
+  static char *help_message[] = {
+***************
+*** 276,282 ****
+--- 286,296 ----
+  #ifdef SYSV
+        poll((struct poll *) 0, (size_t) 0, 50);
+  #else
++ #ifndef __EMX__
+        usleep(50000L);			/* 5/100 sec */
++ #else
++       _sleep2(50);
++ #endif
+  #endif
+      }
+    return 0;
+***************
+*** 415,420 ****
+--- 429,435 ----
+      return (char *)p;
+  }
+  
++ #ifndef __EMX__
+  void GetLoad(int Maximum, int *usr, int *nice, int *sys, int *free)
+  { 
+    char buffer[100];/*[4096+1];*/
+***************
+*** 494,496 ****
+--- 509,591 ----
+        XCopyArea(dpy, asload.pixmap, visible.pixmap, NormalGC,
+  		Shape(9), Shape(6), 1, FreeTime, Shape(57), Shape(6)); 
+  }
++ #else
++ 
++ /*
++    Convert 8-byte (low, high) time value to double
++ */
++ #define LL2F(high, low) (4294967296.0*(high)+(low))
++ 
++ void GetLoad(int Maximum, int *busy, int *intr, int *free)
++ { 
++     APIRET        rc;
++     static int    iter;
++     double        ts_val, ts_delta, idle_val, busy_val, intr_val;
++     static double ts_val_prev, idle_val_prev, busy_val_prev, intr_val_prev;
++     CPUUTIL       CPUUtil;
++ 
++     rc = DosPerfSysCall(CMD_KI_RDCNT,(ULONG) &CPUUtil,0,0);
++     if (rc) {
++         fprintf(stderr, "DosPerfSysCall(): CMD_KI_RDCNT failed rc = %d\n",rc);
++         exit(1);
++     }
++     ts_val = LL2F(CPUUtil.ulTimeHigh, CPUUtil.ulTimeLow);
++     idle_val = LL2F(CPUUtil.ulIdleHigh, CPUUtil.ulIdleLow);
++     busy_val = LL2F(CPUUtil.ulBusyHigh, CPUUtil.ulBusyLow);
++     intr_val = LL2F(CPUUtil.ulIntrHigh, CPUUtil.ulIntrLow);
++ 
++     if (iter > 0) {
++       ts_delta = ts_val - ts_val_prev;
++       *free = rint(Maximum * (idle_val - idle_val_prev)/ts_delta);
++       *busy = rint(Maximum * (busy_val - busy_val_prev)/ts_delta);
++       *intr = rint(Maximum * (intr_val - intr_val_prev)/ts_delta);
++     }
++     else {
++       *free = Maximum;
++       *busy = *intr = 0;
++       iter = 1;
++     }
++ 
++     ts_val_prev = ts_val;
++     idle_val_prev = idle_val;
++     busy_val_prev = busy_val;
++     intr_val_prev = intr_val;
++ }
++ 
++ void InsertLoad()
++ {
++   int BusyTime, IntrTime, FreeTime, act, constrain;
++   GetLoad( 52, &BusyTime, &IntrTime, &FreeTime);
++ 
++   constrain = (BusyTime + IntrTime + FreeTime);
++   if(constrain == 53)
++     {
++       if(FreeTime > 0) FreeTime--;
++       else if(IntrTime > 0) IntrTime--;
++       else if(BusyTime > 0) BusyTime--;
++     }
++   else if(constrain == 51) FreeTime++;
++ 
++   /* Move the area */
++     XCopyArea(dpy, visible.pixmap, visible.pixmap, NormalGC,
++         	Shape(7), Shape(6), 51, 52, Shape(6), Shape(6));
++ 
++ 
++     /* Busy Time */
++     act = 58 - BusyTime;
++     if(BusyTime > 0)
++       XCopyArea(dpy, asload.pixmap, visible.pixmap, NormalGC,
++ 		Shape(6), Shape(6), 1, BusyTime, Shape(57), Shape(act));
++ 
++     /* Intr Time */
++     act = act - IntrTime;
++     if(IntrTime > 0)
++       XCopyArea(dpy, asload.pixmap, visible.pixmap, NormalGC,
++ 		Shape(8), Shape(6), 1, IntrTime, Shape(57), Shape(act));
++ 
++     /* Free Time */
++     if(FreeTime > 0)
++       XCopyArea(dpy, asload.pixmap, visible.pixmap, NormalGC,
++ 		Shape(9), Shape(6), 1, FreeTime, Shape(57), Shape(6)); 
++ }
++ #endif
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/asload/Imakefile AfterStep-1.4.5.55N6/src/asload/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/asload/Imakefile	Wed May 13 09:33:36 1998
+--- AfterStep-1.4.5.55N6/src/asload/Imakefile	Thu May 28 21:55:52 1998
+***************
+*** 2,16 ****
+--- 2,22 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
++ #endif
+  
+  #ifdef XPM
+  XPMLIB = XPMLIBRARY
+  
+  DEPLIBS = $(DEPXLIB) 
+  
++ #ifndef OS2Architecture
+  LOCAL_LIBRARIES = $(XPMLIB) $(XLIB) -lm
++ #else
++ LOCAL_LIBRARIES = $(XPMLIB) $(XLIB) -L. -lperfapi
++ #endif
+  
+  LINTLIBS = $(LINTXLIB)
+  
+***************
+*** 18,21 ****
+--- 24,34 ----
+  OBJS = asload.o
+  
+  ComplexProgramTarget(asload)
++ 
++ #ifdef OS2Architecture
++ asload.exe: perfapi.a
++ 
++ perfapi.a: perfapi.imp
++ 	emximp -o $@ $<
++ #endif
+  #endif
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/asload/perfapi.imp AfterStep-1.4.5.55N6/src/asload/perfapi.imp
+*** AfterStep-1.4.5.55N6.orig/src/asload/perfapi.imp	Thu Jan  1 00:00:00 1970
+--- AfterStep-1.4.5.55N6/src/asload/perfapi.imp	Thu May 28 21:55:52 1998
+***************
+*** 0 ****
+--- 1 ----
++ DosPerfSysCall		doscalls 976 4
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/asload/perfutil.h AfterStep-1.4.5.55N6/src/asload/perfutil.h
+*** AfterStep-1.4.5.55N6.orig/src/asload/perfutil.h	Thu Jan  1 00:00:00 1970
+--- AfterStep-1.4.5.55N6/src/asload/perfutil.h	Thu May 28 21:55:52 1998
+***************
+*** 0 ****
+--- 1,43 ----
++ #ifdef __cplusplus
++   extern "C" {
++ #endif
++ 
++ #ifndef  PERFCALL_INCLUDED
++ #define  PERFCALL_INCLUDED
++ 
++ /*
++    DosPerfSysCall Function Prototype
++ */
++ 
++ /* The  ordinal for DosPerfSysCall (in BSEORD.H) */
++ /* is defined as ORD_DOS32PERFSYSCALL         */
++ 
++ APIRET APIENTRY DosPerfSysCall(ULONG ulCommand, ULONG ulParm1, ULONG ulParm2, ULONG ulParm3);
++ 
++ /***
++  *
++  * CPU Utilization
++  * ---------------
++  *
++  **/
++ 
++ #define   CMD_KI_RDCNT    (0x63)
++ 
++  typedef struct _CPUUTIL {
++    ULONG ulTimeLow;     /* Low 32 bits of time stamp      */
++    ULONG ulTimeHigh;    /* High 32 bits of time stamp     */
++    ULONG ulIdleLow;     /* Low 32 bits of idle time       */
++    ULONG ulIdleHigh;    /* High 32 bits of idle time      */
++    ULONG ulBusyLow;     /* Low 32 bits of busy time       */
++    ULONG ulBusyHigh;    /* High 32 bits of busy time      */
++    ULONG ulIntrLow;     /* Low 32 bits of interrupt time  */
++    ULONG ulIntrHigh;    /* High 32 bits of interrupt time */
++   } CPUUTIL;
++ 
++  typedef CPUUTIL *PCPUUTIL;
++ 
++ #endif
++ 
++ #ifdef __cplusplus
++   }
++ #endif
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/asmail/asmail.c AfterStep-1.4.5.55N6/src/asmail/asmail.c
+*** AfterStep-1.4.5.55N6.orig/src/asmail/asmail.c	Wed May 13 09:33:36 1998
+--- AfterStep-1.4.5.55N6/src/asmail/asmail.c	Sat Jun  6 14:23:24 1998
+***************
+*** 23,28 ****
+--- 23,33 ----
+  #include <unistd.h>
+  #include <ctype.h>
+  
++ #ifdef __EMX__
++ extern char *__XOS2RedirRoot(const char *);
++ #define strcasecmp mystrcasecmp
++ #endif
++ 
+  /* XPM struct and icons ***************************************************** */
+  typedef struct _XpmIcon {
+      Pixmap pixmap;
+***************
+*** 64,70 ****
+--- 69,79 ----
+  void AddXpmToAnim(XpmIcon * Icon, XpmIcon * List, int ListNo);
+  
+  /* Global stuff ************************************************************* */
++ #ifndef __EMX__
+  #define SYSCFGFILE		"/usr/share/afterstep/" /* FILENAME is added */
++ #else
++ #define SYSCFGFILE		"/XFree86/lib/X11/afterstep/" /* FILENAME is added */
++ #endif
+  #define USRCFGFILE		"/GNUstep/Library/AfterStep/" /* + home */
+  #define FILENAME		"asmail"
+  #define DEFINTERVAL		5	/* Default interval 5 sec */
+***************
+*** 154,172 ****
+  
+  
+      /* Open config file */
+      File = fopen(CfgFile, "r");
+      if (File != NULL) {
+  	ParseCfgFile(File);
+  	fclose(File);
+      } else {
+  	strcpy(CfgFile, SYSCFGFILE);
+          strcat(CfgFile, FILENAME);
+  	File = fopen(CfgFile, "r");
+  	if (File != NULL) {
+  	    ParseCfgFile(File);
+  	    fclose(File);
+  	} else
+! 	    fprintf(stderr, "asmail: '%s' not found in '%s' or '%s', using default settings\n", FILENAME, USRCFGFILE, SYSCFGFILE);
+  	}
+  
+  	/* Check interval */
+--- 163,189 ----
+  
+  
+      /* Open config file */
++ #ifndef __EMX__
+      File = fopen(CfgFile, "r");
++ #else
++     File = fopen(CfgFile, "rt");
++ #endif
+      if (File != NULL) {
+  	ParseCfgFile(File);
+  	fclose(File);
+      } else {
+  	strcpy(CfgFile, SYSCFGFILE);
+          strcat(CfgFile, FILENAME);
++ #ifndef __EMX__
+  	File = fopen(CfgFile, "r");
++ #else
++ 	File = fopen(__XOS2RedirRoot(CfgFile), "rt");
++ #endif
+  	if (File != NULL) {
+  	    ParseCfgFile(File);
+  	    fclose(File);
+  	} else
+! 	    fprintf(stderr, "asmail: '%s' not found in '%s' or '%s', using default settings\n", FILENAME, USRCFGFILE, __XOS2RedirRoot(SYSCFGFILE));
+  	}
+  
+  	/* Check interval */
+***************
+*** 673,679 ****
+--- 690,700 ----
+  	char Buffer[30] = "";
+  	int NewMailn = 0;
+  
++ #ifndef __EMX__
+  	 MailFile = fopen(Mbox, "r");
++ #else
++ 	 MailFile = fopen(Mbox, "rt");
++ #endif
+  
+  	if (MailFile == NULL)
+  	     return 0;
+***************
+*** 697,703 ****
+--- 718,728 ----
+  	int NewMailn = 0;
+  
+  	 MailCounter = 0;
++ #ifndef __EMX__
+  	 MailFile = fopen(Mbox, "r");
++ #else
++ 	 MailFile = fopen(Mbox, "rt");
++ #endif
+  
+  	if (MailFile == NULL)
+  	     return 0;
+***************
+*** 722,728 ****
+--- 747,757 ----
+  	FILE *MailFile = 0;
+  	int Ret = 0;
+  
++ #ifndef __EMX__
+  	 MailFile = fopen(Mbox, "r");
++ #else
++ 	 MailFile = fopen(Mbox, "rt");
++ #endif
+  	if (MailFile == 0)
+  	     Ret = 0;
+  	else {
+***************
+*** 813,818 ****
+--- 842,852 ----
+  	    strcat(realfilename, "/");
+  	    strcat(realfilename, &XpmFile[2]);
+  	} else
++ #ifdef __EMX__
++ 	if (XpmFile[0] == '/')
++ 	    realfilename = __XOS2RedirRoot(XpmFile);
++ 	else
++ #endif
+  	     realfilename = XpmFile;
+  
+  
+diff -c -r -N AfterStep-1.4.5.55N6.orig/src/asmail/Imakefile AfterStep-1.4.5.55N6/src/asmail/Imakefile
+*** AfterStep-1.4.5.55N6.orig/src/asmail/Imakefile	Wed May 13 09:33:36 1998
+--- AfterStep-1.4.5.55N6/src/asmail/Imakefile	Thu May 28 21:55:52 1998
+***************
+*** 2,9 ****
+--- 2,11 ----
+  
+  /* OVERRIDE_COMPILER */
+  
++ #ifndef OS2Architecture
+  AFTER_BIN_DIR
+  AFTER_MAN_DIR
++ #endif
+  
+  #ifdef XPM
+  XPMLIB = XPMLIBRARY

@@ -1,0 +1,134 @@
+#########################################################
+# Do not signal when new mail is found			#
+#########################################################
+NoBeep
+
+
+#########################################################
+# Mailfile(s) to use, overrides $MAIL			#
+#########################################################
+MailFiles
+	e:/home/mailbox
+End
+#	/var/spool/mail/guylhem
+#	/home/guylhem/mail/mbox
+
+
+#########################################################
+# Update frequency (default 5 sec)			#
+#########################################################
+Update 60
+
+
+#########################################################
+# Program to execute when left mousebutton is pressed	#
+#########################################################
+Execute detach xterm -T elm -e elm
+
+
+#########################################################
+# Program to execute when new mail is found		#
+#########################################################
+#NewMailExecute detach showaudio message.au
+
+
+#########################################################
+# Program to execute every update			#
+#########################################################
+#ExecuteOnUpdate popclient -3 -s -u GUYLHEM -p PASSWORD -o ~/mail/mbox mail.server.com
+
+#########################################################
+# Always execute when new mail is found			#
+# If this option is revomed asmail will only execute 	#
+# when new mail is found and when the status is changed #
+# from "nomail/oldmail" to "newmail"			#
+#########################################################
+AlwaysNewMailExecute
+
+
+#########################################################
+# This option is useful if you are using utilities 	#
+# like procmail. Asmail will change status to 		#
+# "New Mail" when the time-stamp of the last 		#
+# modification of the mailfile is changed		#
+#########################################################
+TimeStampMode
+
+
+#########################################################
+# Animation speed (default 10 = 1 sec)			#
+#		NoMail	OldMail	NewMail			#
+#########################################################
+AnimationSpeed  100	100	2
+
+
+#########################################################
+# Tunrs off shaped window				#
+#########################################################
+#NoShape
+
+
+#########################################################
+# Use this option if all icons have the same shape and 	#
+# size,	this will save some CPU time if you are using 	#
+# animations						#
+#########################################################
+#LockShape
+
+
+#########################################################
+# Display the number of messages and/or new messages	#
+# in the mailbox. This option can not be used if you 	#
+# have more then one mailbox specified. 		#
+# Modes:						#
+# 	0	Disable feature (default)		#
+#	1	NumOfNewMail/NumOfMail			#
+#	2	NumOfNewMail				#
+#	3	NumOfMail				#
+#########################################################
+#NumOfMsgMode 1
+
+
+#########################################################
+# Position of text, must be inside the icon mask	#
+#########################################################
+NumOfMsgPosition 2 10
+
+
+#########################################################
+# Font to use						#
+#########################################################
+NumOfMsgFont -*-helvetica-medium-o-*-*-9-*-*-*-*-*-*-*
+
+#########################################################
+# Assign icons/animations				#
+#########################################################
+
+NoMail  
+	/XFree86/lib/X11/afterstep/desktop/icons/16bpp/e-no.xpm
+End
+#	/XFree86/lib/X11/afterstep/desktop/icons/16bpp/nomail_s.xpm
+
+OldMail  	
+	/XFree86/lib/X11/afterstep/desktop/icons/16bpp/e1.xpm
+End
+#	/XFree86/lib/X11/afterstep/desktop/icons/16bpp/oldmail_s.xpm
+
+NewMail
+	/XFree86/lib/X11/afterstep/desktop/icons/16bpp/e1.xpm
+	/XFree86/lib/X11/afterstep/desktop/icons/16bpp/e2.xpm
+	/XFree86/lib/X11/afterstep/desktop/icons/16bpp/e3.xpm
+	/XFree86/lib/X11/afterstep/desktop/icons/16bpp/e4.xpm
+	/XFree86/lib/X11/afterstep/desktop/icons/16bpp/e5.xpm
+	/XFree86/lib/X11/afterstep/desktop/icons/16bpp/e6.xpm
+	/XFree86/lib/X11/afterstep/desktop/icons/16bpp/e7.xpm
+	/XFree86/lib/X11/afterstep/desktop/icons/16bpp/e8.xpm
+	/XFree86/lib/X11/afterstep/desktop/icons/16bpp/e9.xpm
+	/XFree86/lib/X11/afterstep/desktop/icons/16bpp/e10.xpm
+	/XFree86/lib/X11/afterstep/desktop/icons/16bpp/e11.xpm  
+End
+#	/XFree86/lib/X11/afterstep/desktop/icons/16bpp/newmail_s.xpm
+
+#########################################################
+# End of file 						#
+#########################################################

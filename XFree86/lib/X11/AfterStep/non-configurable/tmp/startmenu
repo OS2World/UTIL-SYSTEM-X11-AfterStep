@@ -1,0 +1,314 @@
+Popup "Pictures"
+ Title "Pictures"
+ Background "Back.xpm" /XFree86/lib/X11/AfterStep/desktop/backgrounds/Back.xpm
+ Background "SlateGray.xpm" /XFree86/lib/X11/AfterStep/desktop/backgrounds/SlateGray.xpm
+ Background "Wave.xpm" /XFree86/lib/X11/AfterStep/desktop/backgrounds/Wave.xpm
+ Background "aquamarine.xpm" /XFree86/lib/X11/AfterStep/desktop/backgrounds/aquamarine.xpm
+ Background "black.xpm" /XFree86/lib/X11/AfterStep/desktop/backgrounds/black.xpm
+ Background "darkblue.xpm" /XFree86/lib/X11/AfterStep/desktop/backgrounds/darkblue.xpm
+ Background "darkgreen.xpm" /XFree86/lib/X11/AfterStep/desktop/backgrounds/darkgreen.xpm
+ Background "granit.xpm" /XFree86/lib/X11/AfterStep/desktop/backgrounds/granit.xpm
+ Background "midnightblue.xpm" /XFree86/lib/X11/AfterStep/desktop/backgrounds/midnightblue.xpm
+ Background "purple.xpm" /XFree86/lib/X11/AfterStep/desktop/backgrounds/purple.xpm
+ Background "wheat.xpm" /XFree86/lib/X11/AfterStep/desktop/backgrounds/wheat.xpm
+EndPopup
+
+Popup "Look"
+ Title "Look"
+ ChangeLook "look.AfterStep" /XFree86/lib/X11/AfterStep/looks/look.AfterStep
+ ChangeLook "look.Black" /XFree86/lib/X11/AfterStep/looks/look.Black
+ ChangeLook "look.DEFAULT" /XFree86/lib/X11/AfterStep/looks/look.DEFAULT
+ ChangeLook "look.Dark" /XFree86/lib/X11/AfterStep/looks/look.Dark
+ ChangeLook "look.DeepBlue" /XFree86/lib/X11/AfterStep/looks/look.DeepBlue
+ ChangeLook "look.Guylhem" /XFree86/lib/X11/AfterStep/looks/look.Guylhem
+ ChangeLook "look.James" /XFree86/lib/X11/AfterStep/looks/look.James
+ ChangeLook "look.Neptho" /XFree86/lib/X11/AfterStep/looks/look.Neptho
+ ChangeLook "look.NewFeatures" /XFree86/lib/X11/AfterStep/looks/look.NewFeatures
+ ChangeLook "look.Nextish" /XFree86/lib/X11/AfterStep/looks/look.Nextish
+ ChangeLook "look.Stone" /XFree86/lib/X11/AfterStep/looks/look.Stone
+ ChangeLook "look.Wouter" /XFree86/lib/X11/AfterStep/looks/look.Wouter
+ ChangeLook "look.greyblue" /XFree86/lib/X11/AfterStep/looks/look.greyblue
+ ChangeLook "look.lightblue" /XFree86/lib/X11/AfterStep/looks/look.lightblue
+ ChangeLook "look.lightgrey" /XFree86/lib/X11/AfterStep/looks/look.lightgrey
+ ChangeLook "look.nogradient" /XFree86/lib/X11/AfterStep/looks/look.nogradient
+ ChangeLook "look.orchid" /XFree86/lib/X11/AfterStep/looks/look.orchid
+ ChangeLook "look.os2port" /XFree86/lib/X11/AfterStep/looks/look.os2port
+ ChangeLook "look.purenext" /XFree86/lib/X11/AfterStep/looks/look.purenext
+ ChangeLook "look.red" /XFree86/lib/X11/AfterStep/looks/look.red
+ ChangeLook "look.redish" /XFree86/lib/X11/AfterStep/looks/look.redish
+ ChangeLook "look.turquoise" /XFree86/lib/X11/AfterStep/looks/look.turquoise
+EndPopup
+
+Popup "Feel"
+ Title "Feel"
+ ChangeFeel "feel.AutoRaise" /XFree86/lib/X11/AfterStep/feels/feel.AutoRaise
+ ChangeFeel "feel.ClickToFocus" /XFree86/lib/X11/AfterStep/feels/feel.ClickToFocus
+ ChangeFeel "feel.DEFAULT" /XFree86/lib/X11/AfterStep/feels/feel.DEFAULT
+ ChangeFeel "feel.ICCCM" /XFree86/lib/X11/AfterStep/feels/feel.ICCCM
+ ChangeFeel "feel.PureNeXT" /XFree86/lib/X11/AfterStep/feels/feel.PureNeXT
+ ChangeFeel "feel.Windowish" /XFree86/lib/X11/AfterStep/feels/feel.Windowish
+ ChangeFeel "feel.os2port" /XFree86/lib/X11/AfterStep/feels/feel.os2port
+EndPopup
+
+
+PopUp "3"
+ Title "Accessories"
+ Exec "Calculator" xcalc
+
+ Exec "Change defaults" editres
+
+ Exec "Change keyboard" xkeycaps
+
+ Exec "Clock" xclock -bg "#00001f" -fg "gold" -hd "midnightblue" -hl "gold"
+
+ Exec "Color map" xshowcmap
+
+ Exec "Color name" xcolor
+
+ Exec "Colors" xcolorsel
+
+ Exec "Grab screen" xgrab
+
+ Exec "Help" xman
+
+ Exec "Keyboard leds" xkbvleds
+
+ Exec "Notepad" xclipboard
+
+ Exec "Reset color map" xstdcmap -default
+
+ Exec "Screen magnify" xmag
+
+ Exec "System load" xload
+
+ Exec "Window infos" xwininfo
+
+ EndPopUp
+
+PopUp "4"
+ Title "Games"
+ Exec "Block Out" xbl
+
+ Exec "Galaga" xgal
+
+ Exec "Invaders" xinvaders
+
+ Exec "X Boing" xboing
+
+ Exec "X Eyes" xeyes
+
+ EndPopUp
+
+PopUp "5"
+ Title "Medias"
+ Exec "CD Player" xplaycd
+
+ Exec "MPEG-3" mp3
+
+ Exec "Midi" xplaymidi
+
+ Exec "Mixer" xmix
+
+ Exec "Modules" Mod4x
+
+ Exec "Pictures" xv
+
+ Exec "The gimp" gimp
+
+ EndPopUp
+
+PopUp "6"
+ Title "Network"
+ Exec "Ftp" xterm -e ftp
+
+ Exec "Irc" xterm -bg black -fg white -e irc2
+
+ Exec "Lynx" xterm -bg black -fg white -e xlynx
+
+ Exec "Mail" xterm -e elm
+
+ Exec "Netscape" netscape
+
+ Exec "News" xterm -e tin
+
+ Exec "Telnet" xterm -e telnet
+
+ Exec "X Ftp" xdir
+
+ EndPopUp
+
+PopUp "7"
+ Title "Office"
+ Exec "Dvi viewer" xdvi -background peachpuff -hl midnightblue -cr red -margins 1cm -s 4
+
+ Exec "File manager" xfm
+
+ Exec "Finance" xfinans
+
+ Exec "HP 48" x48
+
+ Exec "Invest" Xinvest
+
+ Exec "Lyx" lyx
+
+ Exec "Plot" xterm -T "GNU Plot" -e gnuplot
+
+ Exec "Ps viewer" gv
+
+ Exec "RPN calculator" xterm -bg black -fg white -e hp67
+
+ Exec "XEmacs" xemacs
+
+ Exec "XEphemeride" xephem
+
+ EndPopUp
+
+PopUp "2"
+ Title "Applications"
+ PopUp "Accessories" 3
+ PopUp "Games" 4
+ PopUp "Medias" 5
+ PopUp "Network" 6
+ PopUp "Office" 7
+ EndPopUp
+
+PopUp "9"
+ Title "Animations"
+ Exec "Firework" ps -k xlock & xlock -nolock -mode pyro -inroot
+
+ Exec "Forest" ps -k xlock & xlock -nolock -mode forest -inroot
+
+ Exec "Laser" ps -k xlock & xlock -nolock -mode laser -inroot
+
+ Exec "Mountain" ps -k xlock & xlock -nolock -mode mountain -inroot
+
+ Exec "Qix" ps -k xlock & xlock -nolock -mode qix -inroot
+
+ Exec "Shape" ps -k xlock & xlock -nolock -mode shape -inroot
+
+ Exec "Spermatozoid" ps -k xlock & xlock -nolock -mode swarm -inroot
+
+ Exec "Spline" ps -k xlock & xlock -nolock -mode spline -inroot
+
+ Exec "Star Trek" ps -k xlock & xlock -nolock -mode rock -inroot
+
+ EndPopUp
+
+PopUp "8"
+ Title "Decorations"
+ PopUp "Animations" 9
+ Exec "Stop animation" ps -k xlock
+
+ Exec "X earth" xearth -nice 19 -nomarkers -stars -mag 1
+
+ Exec "X fishtank" xfishtank -d -b 50 -f 12
+
+ EndPopUp
+
+PopUp "10"
+ Title "Forms"
+ Module "FTP to..." Form FTPForm
+
+ Module "Quit..." Form QuitForm
+
+ Module "Run a command..." Form RUNForm
+
+ Module "XLock with..." Form XLOCKForm
+
+ EndPopUp
+
+PopUp "11"
+ Title "Modules"
+ Module "Animate" Animate
+
+ Module "Audio" Audio
+
+ Module "Auto" Auto 500
+
+ Module "Banner" Banner
+
+ Module "Clean" Clean
+
+ Module "Ident" Ident
+
+ Module "Pager" Pager 0 3
+
+ Module "Scroll" Scroll
+
+ Module "Wharf" Wharf
+
+ Module "WinList" WinList
+
+ Module "Zharf" Zharf
+
+ EndPopUp
+
+PopUp "12"
+ Title "Quit"
+ Quit "Close this session"
+
+ Module "Exit ?" Form QuitForm
+
+ Nop ""
+
+ Restart "Restart this session" afterstep
+
+ Restart "Restart with FVWM-95" fvwm95
+
+ Nop ""
+
+ QuickRestart "Update all" all
+
+ QuickRestart "Update look and feel" look&feel
+
+ QuickRestart "Update startmenu" startmenu
+
+ EndPopUp
+
+PopUp "13"
+ Title "Screen savers"
+ Exec "Firework" xlock -nolock -mode pyro
+
+ Exec "Forest" xlock -nolock -mode forest
+
+ Exec "Laser" xlock -nolock -mode laser
+
+ Exec "Mountain" xlock -nolock -mode mountain
+
+ Exec "Qix" xlock -nolock -mode qix
+
+ Exec "Shape" xlock -nolock -mode shape
+
+ Exec "Spermatozoid" xlock -nolock -mode swarm
+
+ Exec "Spline" xlock -nolock -mode spline
+
+ Exec "Star Trek" xlock -nolock -mode rock
+
+ Exec "Stop animation" ps -k xlock
+
+ EndPopUp
+
+PopUp "Start"
+ Title "start"
+ PopUp "Applications" 2
+ PopUp "Decorations" 8
+ PopUp "Forms" 10
+ PopUp "Modules" 11
+ PopUp "Quit" 12
+ PopUp "Screen savers" 13
+ Exec "AfterStepDoc" xterm -e "xlynx /XFree86/doc/AfterStep/afterdoc/afterstep.html"
+
+ Exec "Run a command" Form RUNForm
+
+ Exec "Screen saver" xlock -nolock -mode random
+
+ Exec "X terminal" xterm -bg black -fg green -sl 500 -vb
+
+ Exec "X terminal (big)" xterm -bg black -fg green -sl 500 -fn 10x20 -vb
+
+ Exec "X terminal (no sb)" xterm -bg black -fg green -sl 500 -fn 10x20 -vb +sb
+
+ Exec "X terminal (pixmap)" rxvt -pixmap /XFree86/lib/X11/AfterStep/desktop/backgrounds/Wave.xpm -sl 500 -vb
+
+ EndPopUp

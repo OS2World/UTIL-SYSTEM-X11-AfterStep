@@ -1,0 +1,203 @@
+1) New configuration mode
+
+
+1-1) Directories
+
+Now, everything goes to ~/GNUstep/Library/AfterStep or /usr/share/afterstep !
+
+You can use your old .steprc config file with afterstep -f myoldsteprc,
+however, this isn't recommended.
+
+New versions of asapps (ie the nice little programs included in apps/) will
+also put their config. file here in a near future, like modules currently do.
+
+1-2) AfterStep config. files & colordeph
+
+If your colordepth is 8bpp, files ending by .8bpp will be used, the same for
+16bpp & 32bpp : it allows you to have different configuration for color-rich
+or color-poor X, different videocards, etc.
+
+1-3) Config. files in this directory
+
+
+1-3-A) Files you must *not* change
+
+1-3-A1) "autoexec.(yourcolordepth)bpp" will launch several programs at startup;
+however, your desktop configuration when you close AfterStep is saved in
+~/GNUstep/Library/AfterStep/.windows (this file is called from autoexec)
+
+1-3-A2) "base.(yourcolordepth)bpp" configures directories where AfterStep, its
+modules & its pixmaps are
+
+1-3-A3) "startmenu" is remade everytime you start/restart AfterStep : don't
+edit it ! All changes will be lost !
+
+1-3-A4) in "desktop" directory, you mustn't change files in desks/ hierarchy.
+
+
+YOU SHOULDN'T NEED TO MODIFY THEESE FILES !!!
+
+
+1-3-B) Files you can change
+
+1-3-B1) "modulesname" configures modules (like Auto, Wharf, Pager, Audio) :
+change it the way you like (except Pager background files)
+
+1-3-B2) "start" directory : simply put here files to add to 'Start' menu, for
+exemple, creating a file called 'My option' containing 'xedit' will create a
+'My option' entry in 'Start' menu, which will lauch 'xedit' when clicked.
+
+You can also createe subdirectories to create submenus !
+
+All this is read when AfterStep is launch & a temporary "startmenu" file is
+created, so don't edit it since all your changes will be lost !
+
+Since 1.4.3, you don't need to end the line by a carriage return, which made
+AfterStep complain about the popup lacking an end spec or something.
+
+1-3-B3) "desktop/backgrounds" directory : put there pictures you'd like to put
+in the background, however XPM format is obligatory !
+
+cp mypicture.xpm ~/GNUstep/Library/AfterStep/desktop/backgrounds
+
+Then, restart AfterStep & open 'Start/Desktop/Background pictures' to change
+screen background : your picture has been automatically added to Desktop menu.
+
+Solid colors can also be put, just copy this example :
+~/GNUstep/Library/AfterStep/desktop/backgrounds/black.xpm
+
+1-3-B4) "desktop/buttons" directory : if you add your own window buttons here,
+you will have to create a look file
+
+1-3-B5) "desktop/icons" directory : if you add your own window icons here,
+you will have to create a feel file
+
+1-3-B6) "desktop/sounds" directory : if you add your own sounds here, you will
+have to edit "modules" to configure Audio
+
+1-3-B7) "desktop/feels/" & "desktop/looks" : see section below
+
+
+
+2) New functions
+
+Start menu is opened when you left click in the root window while right
+clicking will open a list of all windows opened
+
+2-1) look & feel files
+
+"look" & "feel" files live in "desktop/looks" & "desktop/feels/"; they define
+windows colors & reactions !
+
+If you wish to create your own file, just refer to afterstep man page !
+
+If you want to change AfterStep look without restart it, just select the look
+of your choice in 'Start/Desktop/Looks/', in 2 seconds all windows will be
+redrawn with that look & all modules will be restarted.
+
+If you want to change AfterStep feel (ie the way it reacts), just do the same
+with feel files !
+
+NB : You can use diffent look & different feel files on different desktops,
+however since this is very CPU hungry, it isn't defined by default !
+
+Just edit configure.h & define DIFFERENTLOOKNFEELFOREACHDESKTOP !
+
+NB2: But by default, you can use different pictures for each desktop, just
+change them in 'Start/Desktop/Background picture', to add more options simply
+put XPM pictures in "desktop/backgrounds" directory.
+
+2-2) GetHelp
+
+When you want to open a program manpage, just right click on left button !
+Help program is defined in configure.h
+
+2-3) Zap
+
+When you want to change to next window with the less effort possible, just
+type Alt-Tab or left click on left button !
+
+2-4) Menu fonctions
+
+To move a windows to another desktop (you can also drag in from the pager), to
+resize it (...) just left click on second left button
+
+2-5) Windows opened
+
+To know which windows are opened, just right click on second left button.
+You can also focus on a specific window clicking on it in this list !
+
+2-6) Put in foreground / Put in background
+
+Click on the titlebar to do this ; Alt-F11 will put current window on top af
+all the others while Alt-F10 will put current window in the backgound of all
+the others !
+
+2-7) Iconify/Maximise
+
+Iconifying a window is changing it to a little picture (with or without
+background, edit configure.h to change this)
+
+Left clicking/Right clicking on first right button will respectively do this !
+
+2-8) Shade/Stick
+
+Shading a window is hiding it behind its titlebar.
+Sticking it is making the window follow you on any screen.
+
+Left clicking/Right clicking on second right button will respectively do this !
+
+2-9) Closing/Killing
+
+Closing a window is ending a program normally.
+Killing a window is closing a program which doesn't answer anylonger.
+
+Left clicking/Right clicking on third right button will respectively do this !
+
+2-10) Desktop saving
+
+When you close AfterStep, all the windows still opened are saved in
+~/GNUstep/Library/AfterStep/.windows, next time you start, AfterStep will
+open them by himself !
+
+Edit configure.h  & add NO_SAVEWINDOWS if you don't want that.
+
+Module Save isn't doing the same : it writes desktop state in ~/.xinitrc
+(default for each relauch), so for exemple :
+
+* put "modules/Save/Save desktop into xinitrc" into
+"~/GNUstep/Library/AfterStep/start/Modules/" & restart afterstep : this entry
+is added into startmenu.
+
+* open a clock, a biff, some programs you always want to have & run :
+Modules/Save desktop into xinitrc
+
+* close all this stuff FIRST, then afterstep & restart : it's back here !
+
+* if you then reclose & restart AF, programs you've written in xinitrc will
+also be written in ~/GNUstep/Library/AfterStep/.windows, therefore you should
+ONLY USE afterstep default saving rather than Module Save's ugly one !
+
+
+2-11) Start/Quit/Close this session
+
+This will ask you wheter or not you want to close current session.
+
+2-12) asapps
+
+Many programs are included, like asclock, ascd ...
+
+To run any, just click on 'Start/Application/StEP Applications'
+
+NB : if you don't compile & install xiterm with XPM support, you won't be able
+to run "X terminal (pixmap)" !
+
+NB2: IF YOU WANT TO USE "pppchecker" TO CALL, DON'T FORGET TO CREATE ~/.ppprc ;
+AN EXEMPLE IS INCLUDED IN applications/asppp/ppprc
+
+NB3: If you're using bash & xiterm, try :
+PS1='(\u@\h:\w)% \[\033]0;\w\007\]'
+tcsh fans will use :
+set prompt="%{\033]2;%n@%M:%/ - %l\007\033]1;%l@%m\007%}[%T] %B%m%b:%.02 %# "
+
+And watch xiterm titlebar while you change directory ... very COOL !
